@@ -25,8 +25,11 @@
         <button id="connect-modal-button-connect" type="button" class="cesium-button" style="margin: 0; font-size: 125%;">Connect to Web3</button>
       </p>
       <p id="connect-select">
+        <input type="radio" name="connector" id="connector-infura" value="WalletConnect" style="height: inherit;">
+        <label for="connector-infura">Infura</label>
+        <!-- <br> -->
         <input type="radio" id="connector-browserextension" name="connector" value="BrowserExtension" style="height: inherit;" checked>
-        <label for="connector-browserextension">Browser Plugin</label>
+        <label for="connector-browserextension">Browser</label>
         <!-- <br> -->
         <input type="radio" name="connector" id="connector-walletconnect" value="WalletConnect" style="height: inherit;">
         <label for="connector-walletconnect">WalletConnect</label>

@@ -97,35 +97,46 @@ export async function initWeb3(): Promise<EARTH> {
     return ethereum;
   }
 
-  var ethereum: EthereumProvider;
-  if ((document.getElementById('connector-browserextension') as HTMLInputElement).checked) {
-    ethereum = await connectWithWindow();
-  } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
-    ethereum = await connectWithWalletConnect();
-  } else if ((document.getElementById('connector-web3auth') as HTMLInputElement).checked) {
-    ethereum = await connectWithWeb3Auth();
+  var provider: ethers.providers.Provider;
+  var signer: ethers.Signer;
+  if ((document.getElementById('connector-infura') as HTMLInputElement).checked) {
+    provider = new ethers.providers.InfuraProvider("goerli", "de775d75c32e4d7f98f1e73caff8c616");
+    signer = ethers.Wallet.createRandom().connect(provider);
   } else {
-    throw new Error("Invalid Web3 provider selection.");
+    // Instantiate Ethereum provider.
+    var ethereum: EthereumProvider;
+    if ((document.getElementById('connector-browserextension') as HTMLInputElement).checked) {
+      ethereum = await connectWithWindow();
+    } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
+      ethereum = await connectWithWalletConnect();
+    } else if ((document.getElementById('connector-web3auth') as HTMLInputElement).checked) {
+      ethereum = await connectWithWeb3Auth();
+    } else {
+      throw new Error("Invalid Web3 provider selection.");
+    }
+
+    // Handle events.
+    ethereum.on('chainChanged', function (chainID: any) {
+      alert('Network changed. Please reload the page!');
+    });
+    ethereum.on('accountsChanged', function (accounts: any[]) {
+      alert('Account changed. Please reload the page!');
+    });
+
+    // Initialize Web3 provider.
+    const web3Provider = new ethers.providers.Web3Provider(ethereum);
+
+    // Set return values.
+    provider = web3Provider;
+    signer = web3Provider.getSigner();
   }
 
-  // Initialize Web3 provider.
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  ethereum.on('chainChanged', function (chainID: any) {
-    alert('Network changed. Please reload the page!');
-  });
-
   // Check network.
-  const chainId = await provider.send('eth_chainId', []);
+  provider.sendTransaction
+  const chainId = (await provider.getNetwork()).chainId;
   if (chainId != CHAIN_ID) {
     throw `Not connected to network ${CHAIN_ID} (${CHAIN_NAME}). Please change network.`
   }
-
-  // Get signer.
-  const signer = provider.getSigner();
-  console.log(`account = ${await signer.getAddress()}`);
-  ethereum.on('accountsChanged', function (accounts: any[]) {
-    alert('Account changed. Please reload the page!');
-  });
 
   // Initialize contract.
   const earth = EARTH__factory.connect(EARTH_ADDRESS, signer);
