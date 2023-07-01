@@ -24,9 +24,8 @@ npm run generate-images # requires Python, Selenium, Firefox
 
 ## TODO
 
-- If connected to wrong network, prompt in MetaMask to change network.
+- If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Show world without connecting.
 - Deploy contracts with source code.
 - Add arbitrary state to each NFT in contract.
 - Add withdraw functionality.
-- Add favicon.ico

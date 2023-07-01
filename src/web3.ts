@@ -11,7 +11,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
   // Initialize provider.
   const ethereum = (window as any).ethereum;
   if (ethereum === undefined) {
-    const msg = "Error: window.ethereum undefined. Please install Metamask extension.";
+    const msg = "Error: window.ethereum undefined. Please install Web3 extension such as Metamask.";
     alert(msg);
     throw new Error(msg);
   }
@@ -20,7 +20,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     alert('Network changed. Please reload the page!');
   });
 
-  // Connect to MetaMask.
+  // Connect to Web3.
   const accounts = provider.send("eth_requestAccounts", []);
   const connecting = document.getElementById('connect-modal-display-connecting');
   connecting.style.display = 'block';
