@@ -45,6 +45,11 @@ function showConnectModal() {
         paintTiles(viewer, tiles, earth), // Paint tiles according to ownership.
       ]);
 
+      // Display random tile.
+      if (!parseUrlParams().get('tile')) {
+        displayRandomTile();
+      }
+
       connectModal.style.display = 'none';
     } catch (err) {
       document.getElementById('connect-modal-status').style.display = 'none';
@@ -57,8 +62,7 @@ function showConnectModal() {
 showConnectModal();
 
 function parseQueryParams() {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
+  const urlParams = parseUrlParams();
   const tileParam = urlParams.get('tile');
   if (tileParam) {
     const i = parseInt(tileParam);
@@ -78,3 +82,23 @@ function parseQueryParams() {
 }
 
 parseQueryParams();
+
+function parseUrlParams() {
+  const queryString = window.location.search;
+  return new URLSearchParams(queryString);
+}
+
+function displayRandomTile() {
+  // Select random tile.
+  const numTiles = 812;
+  const idx = Math.floor(Math.random() * numTiles);
+  const t = tiles[idx];
+  viewer.selectedEntity = t;
+
+  // Fly camera.
+  viewer.flyTo(t, {offset: {
+    heading: viewer.camera.heading,
+    pitch: viewer.camera.pitch,
+    range: viewer.camera.positionCartographic.height,
+  }});
+}
