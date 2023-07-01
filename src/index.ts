@@ -24,9 +24,9 @@ function showConnectModal() {
     // Disable window.Ethereum option.
     const optionPlugin = document.getElementById('connector-browserextension') as HTMLInputElement;
     optionPlugin.disabled = true;
-    // Ensure other option checked.
-    const optionWeb3Auth = document.getElementById('connector-web3auth') as HTMLInputElement;
-    optionWeb3Auth.checked = true;
+    // Ensure fallback option checked.
+    const optionFallback = document.getElementById('connector-infura') as HTMLInputElement;
+    optionFallback.checked = true;
   }
 
   const connectModal = document.getElementById('connect-modal');
