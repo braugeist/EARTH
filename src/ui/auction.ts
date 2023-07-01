@@ -107,6 +107,8 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
 
       // Update payout visibility.
       const readyToConclude = new Date() >= date;
+      const concludable = readyToConclude && hasBidder;
+      document.getElementById('auction-modal-payout').style.display = concludable ? 'initial' : 'none';
       payoutButton.disabled = !readyToConclude || !hasBidder;
       document.getElementById('auction-modal-button-payout-info').style.display = !readyToConclude || !hasBidder ? 'initial' : 'none';
 
