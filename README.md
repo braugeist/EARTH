@@ -28,19 +28,22 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## TODO
 
-- Refine auction model: Extend bid time on last minute bid?
-- Add LICENSE?
+- Add more attributes? (Climate zone, Highest point, Lowest point, Population)
+- Refine LND auction model: Extend bid time on last minute bid?
 - Prepare setup for deployment on Mainnet.
     - Set auction duration to 1day.
     - Prepare OpenSea text.
+- Add LICENSE?
 
 ### Low Priority
 
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Rename `EARTH.attributes` to `EARTH.customData`?
+- Cleanup HTML and CSS
+- Re-introduce # before tile number (website and metadata title)?
 
 ## Testnet URLs
 
-OpenSEA: https://testnets.opensea.io/collection/earth-ozaiynq6xl
-LAND: https://rinkeby.etherscan.io/token/0x36154023b3a7d15c60fe99f14c1ed4d0b0de53d4#writeContract
-EARTH: https://rinkeby.etherscan.io/address/0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3#tokentxns
+- [OpenSea](https://testnets.opensea.io/collection/earth-tiles)
+- [LAND](https://rinkeby.etherscan.io/token/0x36154023b3a7d15c60fe99f14c1ed4d0b0de53d4#writeContract)
+- [EARTH](https://rinkeby.etherscan.io/address/0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3#tokentxns)
