@@ -5,17 +5,16 @@ import "./openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "./LAND.sol";
 
 contract EARTH is ERC721 {
-    //TODO insert hash of tile mesh coordinates
+    string constant NAME = "Earth";
+    string constant SYMBOL = "EARTH";
+    string constant BASE_URI = "ipfs://"; //TODO insert hash of tile mesh coordinates
 
     event OwnershipTaken(uint256 indexed index);
-
-    string constant _name = "Earth";
-    string constant _symbol = "EARTH";
 
     address _token;
     uint256 _maxSupply;
 
-    constructor(address token) ERC721(_name, _symbol) {
+    constructor(address token) ERC721(NAME, SYMBOL) {
         _token = token;
         _maxSupply = LAND(_token).maxSupply();
     }
@@ -41,5 +40,9 @@ contract EARTH is ERC721 {
     // ownership returns the owner of item `index` or zero if not owned.
     function ownership(uint256 index) public view returns (address owner) {
         return _exists(index) ? ownerOf(index) : address(0);
+    }
+
+    function _baseURI() internal pure override returns (string memory) {
+        return BASE_URI;
     }
 }
