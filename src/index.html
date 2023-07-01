@@ -85,6 +85,10 @@
           <span id="tile-modal-customdata-loader-text">Submitting transaction...</span> <span class="loader"></span>
         </p>
       </div>
+
+      <p style="text-align: center; font-size: 150%;">
+        <a href="https://testnets.opensea.io/assets/goerli/0x471bc93addd1237e14b4fcc7f09e2a980f30d694/0" target="_blank">View Tile at OpenSea</a>
+      </p>
     </div>
   </div>
 
@@ -122,13 +126,33 @@
   </div>
 
   <!-- Help modal -->
-  <div id="help-modal" class="modal">
+  <div id="help-modal" class="modal" style="display: initial;">
     <div class="modal-content cesium-infoBox-description">
       <span id="help-modal-close" class="close">&times;</span>
       <h1 style="min-width: 10em;">About EARTH</h1>
-      <p>EARTH defines an equal area mesh for planet Earth. The mesh consists of 812 tiles, out of which 12 are pentagons and the rest are hexagons.</p>
-      <p>Tile owners can set a custom message for the world to see.</p>
-      <p style="font-size: 75%;">This project is built with <a href="https://github.com/CesiumGS/cesium" target="_blank">Cesium</a>.</p>
+      <p>
+        Project EARTH is an NFT collection that divides planet Earth into 812 nearly identically-spaced tiles.
+      </p>
+      <ul>
+        <li>
+          <b>Structure:</b>
+          The tile structure forms a <a href="https://en.wikipedia.org/wiki/Truncated_icosahedron" target="_blank">truncated icosahedron</a> where 12 pentagon tiles connect 20 patches of 40 hexagon tiles.
+        </li>
+        <li>
+          <b>Ownable:</b>
+          Each tile is an NFT that can be acquired and traded at an NFT marketplace such as <a id="help-modal-ownable-link" href="https://testnets.opensea.io/collection/earth-jatpl9tg0m" target="_blank">OpenSea</a>.
+        </li>
+        <li>
+          <b>Customizable:</b>
+          Tile owners can set a custom message for their tile and display it to the world.
+        </li>
+      </ul>
+      <p style="text-align: center; font-size: 150%;">
+        <a id="help-modal-view-link" href="https://testnets.opensea.io/collection/earth-jatpl9tg0m" target="_blank">View EARTH at OpenSea</a>
+      </p>
+      <p>
+        The visualization is based on <a href="https://github.com/CesiumGS/cesium" target="_blank">CesiumJS</a>.
+      </p>
     </div>
   </div>
 </body>
