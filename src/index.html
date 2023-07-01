@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-  <title>EARTH</title>
+  <title>EARTH Tiles</title>
 </head>
 
 <body>
@@ -34,20 +34,42 @@
     <div class="modal-content cesium-infoBox-description">
       <span id="tile-modal-close" class="close">&times;</span>
       <h1 style="padding-right: 1em;">EARTH Tile <span id="tile-modal-index"></span></h1>
-      <h2>Coordinates</h2>
-      <p id="tile-modal-coordinates"></p>
-      <h2>Owner</h2>
-      <p><span id="tile-modal-owner"></span></p>
-      <div>
-        <hr>
+      
+      <p>
+        <b>Coordinates:</b>
+        <span id="tile-modal-coordinates"></span>
+      </p>
+
+      <p>
+        <b>Owner:</b>
+        <span id="tile-modal-owner" style="word-break: break-all;"></span>
+      </p>
+      <div id="tile-modal-buy">
         <p>
-          <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Buy for 1 LND</button>
+          <b>Mint:</b>
+          <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Mint for 1 LND</button>
           <button id="tile-modal-button-get-lnd" type="button" class="cesium-button" style="margin: 0;">Get LND</button>
         </p>
         <p id="tile-modal-button-buy-loader" style="display: none;">
           <span id="tile-modal-button-buy-loader-text">Submitting transaction...</span> <span class="loader"></span>
         </p>
-        <p id="tile-modal-trade-info">Ownership already taken. Go to your favorite market place for trading.</p>
+      </div>
+
+      <div id="tile-modal-customdata">
+        <p>
+          <b>Custom message:</b>
+          <span id="tile-modal-customdata-value"></span>
+        </p>
+        <div id="tile-modal-customdata-setdata">
+          <p>
+            <b>Set message:</b>
+            <input type="text" id="tile-modal-customdata-input" style="max-width: 10em;" value="">
+            <button id="tile-modal-customdata-submit" type="button" class="cesium-button" style="margin: 0;">Submit</button>
+          </p>
+          <p id="tile-modal-customdata-loader" style="display: none;">
+            <span id="tile-modal-customdata-loader-text">Submitting transaction...</span> <span class="loader"></span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
