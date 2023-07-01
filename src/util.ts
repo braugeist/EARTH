@@ -46,10 +46,10 @@ export function handlePromiseRejection(reason: any) {
   function extractMessage(reason: any) {
     if (reason.code == -32603) {
       return reason.data.message;
-    } else if (reason.code !== undefined) {
+    } else if (reason.message !== undefined) {
       return reason.message;
     } else {
-      return reason;
+      return reason.toString();
     }
   }
 
