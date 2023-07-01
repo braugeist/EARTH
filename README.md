@@ -28,7 +28,6 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## TODO
 
-- Add arbitrary state to each NFT in contract.
 - Prepare setup for deployment on Mainnet.
     - Which wallet to use?
     - Set auction duration to 1day.
