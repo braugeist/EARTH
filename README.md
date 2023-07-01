@@ -29,13 +29,16 @@ npm run generate-contract-flat # generate single-file contracts
 ## TODO
 
 - Add arbitrary state to each NFT in contract.
-- Add more admin functions to UI? (e.g., `transferOwnership`)
 - Prepare setup for deployment on Mainnet.
     - Which wallet to use?
     - Set auction duration to 1day.
     - Prepare OpenSea text.
 
+### Low Priority
+
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
+- Add more admin functions to UI? (e.g., `transferOwnership`)
+- Check allowance before requesting to set allowance.
 
 ## Testnet URLs
 
