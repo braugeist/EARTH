@@ -13,7 +13,7 @@ contract EARTH is ERC721 {
 
     address _token;
     uint256 _maxSupply;
-    mapping(uint256 => bytes) _attributes;
+    mapping(uint256 => bytes) _customData;
 
     constructor(address token) ERC721(NAME, SYMBOL) {
         _token = token;
@@ -47,12 +47,12 @@ contract EARTH is ERC721 {
         return BASE_URI;
     }
 
-    function setAttribute(uint256 index, bytes calldata data) public {
+    function setCustomData(uint256 index, bytes calldata data) public {
         require(ownerOf(index) == msg.sender, "not owner");
-        _attributes[index] = data;
+        _customData[index] = data;
     }
 
-    function attribute(uint256 index) public view returns (bytes memory) {
-        return _attributes[index];
+    function customData(uint256 index) public view returns (bytes memory) {
+        return _customData[index];
     }
 }

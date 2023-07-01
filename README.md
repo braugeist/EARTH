@@ -28,9 +28,9 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## TODO
 
+- Refine auction model: Extend bid time on last minute bid?
 - Add LICENSE?
 - Prepare setup for deployment on Mainnet.
-    - Which wallet to use?
     - Set auction duration to 1day.
     - Prepare OpenSea text.
 
