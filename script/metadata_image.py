@@ -19,7 +19,7 @@ def snap(i):
     canvas_jpeg = base64.b64decode(canvas_base64[l:])
 
     # Save to a file.
-    with open("../data/image/tile%d.jpeg"%i, 'wb') as f:
+    with open("../tmp/metadata/image/tile%d.jpeg"%i, 'wb') as f:
         f.write(canvas_jpeg)
 
 for i in range(812):

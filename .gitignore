@@ -1,7 +1,4 @@
 /dist/
 /node_modules/
 /src/contract/build/
-/test/ganachedb/
-/data/metadata/
-/data/image/
 /tmp/

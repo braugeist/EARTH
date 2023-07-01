@@ -2,7 +2,7 @@ import { writeFileSync } from 'fs';
 import { size_n_grid } from "../src/grid/grid.js";
 import { tilePoints } from "../src/util.js";
 
-const basePath = "../data/metadata/";
+const basePath = "../tmp/metadata/json/";
 
 const g = size_n_grid(4);
 for (var i = 0; i < g.tiles.length; i++) {

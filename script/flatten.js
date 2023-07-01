@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const rootDir = path.resolve('..');
 const contractDir = path.join(rootDir, 'src/contract/');
-const flatDir = path.join(rootDir, 'tmp/flat/');
+const flatDir = path.join(rootDir, 'tmp/contract/');
 
 async function flattenContract(name) {
     // Create output directory if it does not exist.
