@@ -24,7 +24,16 @@ npm run generate-images # requires Python, Selenium, Firefox
 
 ## TODO
 
-- If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
-- Deploy contracts with source code.
 - Add arbitrary state to each NFT in contract.
-- Rethink auction timing: Disable conclusion fixed time period after bid?
+- Add more admin functions to UI? (e.g., `transferOwnership`)
+- Verify LAND contract.
+- Prepare setup for deployment on Mainnet.
+    - Which wallet to use?
+    - Set auction duration to 1day.
+    - Prepare OpenSea text.
+
+- If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
+
+## Testnet URL OpenSea
+
+https://testnets.opensea.io/collection/earth-ozaiynq6xl

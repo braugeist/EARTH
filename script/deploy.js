@@ -47,9 +47,12 @@ async function deployEarthAndLand(argv) {
     const abi = JSON.parse(fs.readFileSync(`${argv.contractsDir}/${name}.abi`));
     const code = '0x' + fs.readFileSync(`${argv.contractsDir}/${name}.bin`);
     const factory = new ethers.ContractFactory(abi, code, signer);
-    const contract = await factory.deploy(...args, {gasLimit: 3000000});
+    const contract = await factory.deploy(...args, {gasLimit: 3_000_000, gasPrice: 30_000_000_000});
     const tr = await contract.deployTransaction.wait();
-    console.log(`Done. Gas used: ${tr.gasUsed}. Gas Price: ${tr.effectiveGasPrice}.`);
+    const gasUsed = tr.gasUsed.toNumber().toLocaleString();
+    const gasPrice = ethers.utils.formatUnits(tr.effectiveGasPrice, 'gwei');
+    const gasCost = ethers.utils.formatEther(tr.gasUsed.mul(tr.effectiveGasPrice));
+    console.log(`Done. Gas used: ${gasUsed}. Gas Price: ${gasPrice} gwei. Gas cost: ${gasCost} ether.`);
     return contract;
   }
 
