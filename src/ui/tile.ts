@@ -30,6 +30,9 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     //   await tx.wait();
     //   alert("transferred");
     // }
+    const uri = await earth.tokenURI(index);
+    const text = window.atob(uri.substring(29));
+    console.log(text);
 
     function formatLatLng(lat: number, lng: number): string {
       const precision = 8;
