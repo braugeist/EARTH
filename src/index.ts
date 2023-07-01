@@ -22,7 +22,7 @@ function showConnectModal() {
     connect.disabled = true;
 
     // Init Web3 functionality.
-    const [earth, land] = await initWeb3(viewer, tiles);
+    const [earth, land] = await initWeb3();
 
     await Promise.all([
       initToolbar(land), // Init toolbar.

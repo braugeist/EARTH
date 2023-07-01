@@ -1,7 +1,5 @@
-import Viewer from "cesium/Source/Widgets/Viewer/Viewer";
 import { ethers } from "ethers";
 import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
-import { TileEntity } from "./grid";
 import contracts from "./contracts.json";
 
 const CHAIN_ID = contracts.ChainId;
@@ -9,7 +7,7 @@ const CHAIN_NAME = contracts.ChainName;
 const EARTH_ADDRESS = contracts.EARTH;
 const LAND_ADDRESS = contracts.LAND;
 
-export async function initWeb3(viewer: Viewer, tiles: TileEntity[]): Promise<[EARTH, LAND]> {
+export async function initWeb3(): Promise<[EARTH, LAND]> {
   // Initialize provider.
   const ethereum = (window as any).ethereum;
   if (ethereum === undefined) {
