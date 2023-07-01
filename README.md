@@ -50,6 +50,8 @@ The code is not pretty, but it should work.
 
 - Test remove LND and auction.
 - Toggle show/hide all text.
+- Add view only option.
+- Indicate loading.
 - Improve Performance by using different geometry for drawing tiles.
 - Show modal loading when reading chain state.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
