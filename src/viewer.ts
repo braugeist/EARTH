@@ -25,6 +25,9 @@ export function createViewer(): Viewer {
       selectionIndicator: false,
       infoBox: false,
       requestRenderMode: true,
+      contextOptions: {
+        webgl: {preserveDrawingBuffer: true}
+      }
     });
   
     // Disable fog.

@@ -14,6 +14,9 @@ enableErrorHandling();
 const viewer = createViewer();
 const tiles = createGrid(viewer);
 
+import { enableSnap } from "./snap";
+enableSnap(viewer, tiles);
+
 function showConnectModal() {
   const connectModal = document.getElementById('connect-modal');
   connectModal.style.display = 'table';
