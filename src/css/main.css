@@ -38,6 +38,7 @@ html, body, #cesiumContainer {
   border: 1px solid #444;
   border-radius: 10px;
   font-family: courier;
+  overflow: scroll;
 }
 
 /* Close button. */
