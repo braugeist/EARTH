@@ -66,7 +66,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
     document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
-    (document.getElementById('help-modal-ownable-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
+    (document.getElementById('tile-modal-link-opensea') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();
