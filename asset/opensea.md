@@ -8,8 +8,7 @@ opensea/earth-tiles
 
 # Description
 
-`EARTH` defines an equal area mesh for planet Earth. The mesh consists of 812 tiles, out of which 12 are **pentagons** and the rest are **hexagons**.
-Tile owners can set a **custom message** for the world to see.
+`EARTH` defines a regular mesh of 812 tiles over planet Earth, consisting of 12 **pentagons** and 800 **hexagons**, and beautifully visualized at [ownable.earth](https://ownable.earth/). Tile owners can set a **custom message** for everyone to see.
 
 # Category
 
@@ -17,7 +16,7 @@ Collectibles
 
 # Links
 
-- http://ownable.earth
+http://ownable.earth
 
 # Earnings
 

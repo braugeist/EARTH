@@ -34,7 +34,11 @@ The code is not pretty, but it should work.
 
 ## Testnet URLs
 
-### Goerli
+### Goerli (Oct 28)
+- [OpenSea](https://testnets.opensea.io/collection/earth-jatpl9tg0m)
+- [EARTH](https://goerli.etherscan.io/address/0x471bc93addd1237e14b4fcc7f09e2a980f30d694)
+
+### Goerli (Oct 25)
 - [OpenSea](https://testnets.opensea.io/collection/earth-eokepbd3mj)
 - [EARTH](https://goerli.etherscan.io/address/0x23154C4647cfa07E90F5e35B7084034D1586d072)
 
