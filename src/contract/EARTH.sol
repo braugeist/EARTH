@@ -14,6 +14,8 @@ contract EARTH is ERC721Consecutive, Ownable {
     string constant IMAGE_BASE_URI = "ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7";
     uint constant NUM_PENTAGONS = 12;
 
+    event CustomDataChanged(uint256 indexed tokenId);
+
     uint256 _maxSupply;
     mapping(uint256 => bytes) _customData;
     mapping(uint256 => bool) private _transferred;
@@ -98,6 +100,7 @@ contract EARTH is ERC721Consecutive, Ownable {
         require(transferred(index), "not transferred");
         require(ownerOf(index) == msg.sender, "not owner");
         _customData[index] = data;
+        emit CustomDataChanged(index);
     }
 
     function customData(uint256 index) public view returns (bytes memory) {

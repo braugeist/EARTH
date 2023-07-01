@@ -221,6 +221,7 @@ export interface EARTHInterface extends utils.Interface {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
+    "CustomDataChanged(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
@@ -228,6 +229,7 @@ export interface EARTHInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CustomDataChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
@@ -269,6 +271,17 @@ export type ConsecutiveTransferEvent = TypedEvent<
 
 export type ConsecutiveTransferEventFilter =
   TypedEventFilter<ConsecutiveTransferEvent>;
+
+export interface CustomDataChangedEventObject {
+  tokenId: BigNumber;
+}
+export type CustomDataChangedEvent = TypedEvent<
+  [BigNumber],
+  CustomDataChangedEventObject
+>;
+
+export type CustomDataChangedEventFilter =
+  TypedEventFilter<CustomDataChangedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -653,6 +666,13 @@ export interface EARTH extends BaseContract {
       fromAddress?: PromiseOrValue<string> | null,
       toAddress?: PromiseOrValue<string> | null
     ): ConsecutiveTransferEventFilter;
+
+    "CustomDataChanged(uint256)"(
+      tokenId?: PromiseOrValue<BigNumberish> | null
+    ): CustomDataChangedEventFilter;
+    CustomDataChanged(
+      tokenId?: PromiseOrValue<BigNumberish> | null
+    ): CustomDataChangedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
