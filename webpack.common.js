@@ -16,14 +16,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         sourcePrefix: '',
     },
-    amd: {
-        // Enable webpack-friendly use of require in Cesium
-        toUrlUndefined: true,
-    },
     resolve: {
-        alias: {
-            cesium: path.resolve(__dirname, cesiumSource),
-        },
         mainFiles: ['index', 'Cesium'],
         extensions: ['.tsx', '.ts', '.js'],
         fallback: {
@@ -34,7 +27,8 @@ module.exports = {
             "https": require.resolve("https-browserify"),
             "os": require.resolve("os-browserify/browser"),
             "url": require.resolve("url/"),
-            "buffer": require.resolve("buffer")
+            "buffer": require.resolve("buffer"),
+            "zlib": false,
         },
     },
     module: {
@@ -71,10 +65,8 @@ module.exports = {
             // Define relative base path in Cesium for loading assets.
             CESIUM_BASE_URL: JSON.stringify('/'),
         }),
-        new webpack.DefinePlugin({
-            "process.env.NODE_DEBUG": JSON.stringify(process.env.NODE_DEBUG),
-        }),
         new webpack.ProvidePlugin({
+            process: "process/browser",
             Buffer: ['buffer', 'Buffer'],
         }),
     ],

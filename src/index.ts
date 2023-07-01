@@ -1,5 +1,5 @@
-import "cesium/Widgets/widgets.css";
-import "cesium/Widgets/InfoBox/InfoBoxDescription.css";
+import "cesium/Build/Cesium/Widgets/widgets.css";
+import "cesium/Build/Cesium/Widgets/InfoBox/InfoBoxDescription.css";
 import "./css/main.css";
 import { createViewer } from "./viewer";
 import { createGrid, OUTLINE_COLOR_SELECTED } from "./grid";
