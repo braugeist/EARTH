@@ -3,11 +3,16 @@ pragma solidity ^0.8.4;
 
 import "./openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Consecutive.sol";
 import "./openzeppelin-contracts/contracts/access/Ownable.sol";
+import "./openzeppelin-contracts/contracts/utils/Strings.sol";
+import "./openzeppelin-contracts/contracts/utils/Base64.sol";
 
 contract EARTH is ERC721Consecutive, Ownable {
+    using Strings for uint256;
+
     string constant NAME = "Earth";
     string constant SYMBOL = "EARTH";
-    string constant BASE_URI = "ipfs://QmYjJDkjUG94JcYnk5TJ46qg5KjPaFfe6DAxD6iwRRHR2X/";
+    string constant IMAGE_BASE_URI = "ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7";
+    uint constant NUM_PENTAGONS = 12;
 
     uint256 _maxSupply;
     mapping(uint256 => bytes) _customData;
@@ -53,8 +58,40 @@ contract EARTH is ERC721Consecutive, Ownable {
         }
     }
 
-    function _baseURI() internal pure override returns (string memory) {
-        return BASE_URI;
+    /**
+     * @dev See {IERC721Metadata-tokenURI}.
+     */
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        bytes memory dataURI = abi.encodePacked(
+            '{',
+                '"name": "Tile ', tokenId.toString(), '",',
+                '"description": "This is one of ', _maxSupply.toString(), ' EARTH tiles.",',
+                '"image": "', IMAGE_BASE_URI, "/tile", tokenId.toString(), '.jpeg"',
+                '"attributes": ', '[',
+                    '{',
+                        '"trait_type": "Shape",',
+                        '"value": "', _shape(tokenId), '",',
+                    '}',
+                    '{',
+                        '"trait_type": "Message",',
+                        '"value": "', customData(tokenId), '",',
+                    '}',
+                ']',
+            '}'
+        );
+        return string(
+            abi.encodePacked(
+                "data:application/json;base64,",
+                Base64.encode(dataURI)
+            )
+        );
+    }
+
+    function _shape(uint256 tokenId) internal pure returns (string memory) {
+        if (tokenId < NUM_PENTAGONS) {
+            return "Pentagon";
+        }
+        return "Hexagon";
     }
 
     function setCustomData(uint256 index, bytes calldata data) public {
