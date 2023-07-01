@@ -25,6 +25,12 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     const owner = await earth.ownerOf(index);
     const transferred = await earth.transferred(index);
 
+    if (!transferred) {
+      const tx = await earth.transferFrom(await earth.signer.getAddress(), "0xa298fc05bccff341f340a11fffa30567a00e651f", index);
+      await tx.wait();
+      alert("transferred");
+    }
+
     function formatLatLng(lat: number, lng: number): string {
       const precision = 8;
       return `${lat.toFixed(precision)}°N ${lng.toFixed(precision)}°E`;
