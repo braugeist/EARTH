@@ -36,15 +36,21 @@ function showConnectModal() {
     connect.disabled = true;
 
     // Init Web3 functionality.
-    const earth = await initWeb3();
+    try {
+      const earth = await initWeb3();
+      
+      await Promise.all([
+        initToolbar(), // Init toolbar.
+        initTileModal(viewer, tiles, earth), // Initialize tile modal.
+        paintTiles(viewer, tiles, earth), // Paint tiles according to ownership.
+      ]);
 
-    await Promise.all([
-      initToolbar(), // Init toolbar.
-      initTileModal(viewer, tiles, earth), // Initialize tile modal.
-      paintTiles(viewer, tiles, earth), // Paint tiles according to ownership.
-    ]);
-
-    connectModal.style.display = 'none';
+      connectModal.style.display = 'none';
+    } catch (err) {
+      document.getElementById('connect-modal-status').style.display = 'none';
+      connect.disabled = false;
+      throw err;
+    }
   };
 }
 

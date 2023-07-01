@@ -11,11 +11,11 @@ const EARTH_ADDRESS = contracts.EARTH;
 
 export async function initWeb3(): Promise<EARTH> {
   // Notify user if connecting takes longer than expected.
-  const connecting = document.getElementById('connect-modal-display-connecting');
-  connecting.style.display = 'block';
+  const statusDisplay = document.getElementById('connect-modal-status');
+  statusDisplay.innerText = "Connecting...";
+  statusDisplay.style.display = 'block';
   setTimeout(() => {
-    connecting.style.display = 'none';
-    document.getElementById('connect-modal-display-timeout').style.display = 'block';
+    statusDisplay.innerHTML = `Connecting to Web3 takes longer than expected. Consider <span onclick="location.reload()" style="text-decoration: underline; cursor: pointer;">reloading</span> the page.`;
   }, 10_000);
 
   interface EthereumProvider extends ethers.providers.ExternalProvider {
