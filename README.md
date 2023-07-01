@@ -1,5 +1,7 @@
 # EARTH
 
+EARTH is an NFT project that defines an equal area mesh for planet Earth. The mesh consists of 812 tiles, out of which 12 are pentagons and the rest are hexagons. The tiles are displayed visually on a globe and can be equipped with a custom message by their owner.
+
 ## Requirements
 
 - npm
@@ -26,7 +28,19 @@ npm run generate-metadata-images # requires Python, Selenium, Firefox
 npm run generate-contract-flat # generate single-file contracts
 ```
 
+## Disclaimer
+
+The code is not pretty, but it should work.
+
+## Testnet URLs
+
+- [OpenSea](https://testnets.opensea.io/collection/earth-tiles)
+- [LAND](https://rinkeby.etherscan.io/token/0x36154023b3a7d15c60fe99f14c1ed4d0b0de53d4#writeContract)
+- [EARTH](https://rinkeby.etherscan.io/address/0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3#tokentxns)
+
 ## TODO
+
+### High priority
 
 - Improve Performance by using different geometry for drawing tiles.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
@@ -36,15 +50,9 @@ npm run generate-contract-flat # generate single-file contracts
     - Prepare OpenSea text.
 - Add LICENSE?
 
-### Low Priority
+### Low priority
 
 - Rename `EARTH.attributes` to `EARTH.customData`?
 - Cleanup HTML and CSS
 - Re-introduce # before tile number (website and metadata title)?
 - Add more attributes? (Climate zone, Highest point, Lowest point, Population)
-
-## Testnet URLs
-
-- [OpenSea](https://testnets.opensea.io/collection/earth-tiles)
-- [LAND](https://rinkeby.etherscan.io/token/0x36154023b3a7d15c60fe99f14c1ed4d0b0de53d4#writeContract)
-- [EARTH](https://rinkeby.etherscan.io/address/0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3#tokentxns)
