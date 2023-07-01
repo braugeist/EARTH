@@ -3,6 +3,7 @@ import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
 import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Web3Auth } from "@web3auth/web3auth";
+import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
 
 const CHAIN_ID = contracts.ChainId;
 const CHAIN_NAME = contracts.ChainName;
@@ -47,6 +48,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
   }
 
   async function connectWithWeb3Auth(): Promise<EthereumProvider> {
+    // Setup Web3Auth.
     const web3auth = new Web3Auth({
       clientId: "BIElt7i0zJJCzhBEtjvM4b1Cf0VJSRIpBwA1pHABwVOHp7mojRoYGV4-ULzujHobKpypynFMN7flGMn6260nQhQ",
       chainConfig: {
@@ -55,7 +57,25 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
         rpcTarget: "https://goerli.infura.io/v3/de775d75c32e4d7f98f1e73caff8c616",
       },
     });
+
+    // Add Torus Wallet Plugin.
+    const torusPlugin = new TorusWalletConnectorPlugin({
+      torusWalletOpts: {},
+      walletInitOptions: {
+        whiteLabel: {
+          theme: { isDark: true, colors: { primary: "#00a8ff" } },
+          logoDark: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+          logoLight: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
+        },
+        useWalletConnect: true,
+        enableLogging: true,
+      },
+    });
+    web3auth.addPlugin(torusPlugin);
+
+    // Show modal.
     await web3auth.initModal();
+    // await web3auth.logout();
     const ethereum = await web3auth.connect();
     return ethereum;
   }
