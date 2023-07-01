@@ -10,9 +10,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "token",
-        type: "address",
+        internalType: "uint256",
+        name: "maxSupply",
+        type: "uint256",
       },
     ],
     stateMutability: "nonpayable",
@@ -73,12 +73,18 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
       },
     ],
-    name: "OwnershipTaken",
+    name: "OwnershipTransferred",
     type: "event",
   },
   {
@@ -128,7 +134,7 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "owner",
+        name: "addr",
         type: "address",
       },
     ],
@@ -219,6 +225,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -251,22 +270,10 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "ownership",
-    outputs: [
-      {
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -392,19 +399,6 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "takeOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "tokenId",
         type: "uint256",
       },
@@ -439,6 +433,19 @@ const _abi = [
       },
     ],
     name: "transferFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
