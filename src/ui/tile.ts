@@ -1,4 +1,4 @@
-import { BoundingSphere, Cartesian2, Cartesian3, Cartographic, ColorMaterialProperty, ConstantPositionProperty, ConstantProperty, Ellipsoid, Entity, Viewer } from "cesium";
+import { BoundingSphere, Cartesian3, Cartographic, ColorMaterialProperty, ConstantPositionProperty, ConstantProperty, Ellipsoid, LabelGraphics, NearFarScalar, Viewer } from "cesium";
 import { utils } from "ethers";
 import { EARTH, LAND } from "../contract/type";
 import { DEFAULT_SURFACE_COLOR, OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
@@ -51,6 +51,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
       var coords = Cartesian3.fromDegreesArray(entity.coordinates);
       var center = BoundingSphere.fromPoints(coords).center;
       Ellipsoid.WGS84.scaleToGeodeticSurface(center, center);
+      entity.position = new ConstantPositionProperty(center);
       var centerCartographic = Cartographic.fromCartesian(center);
       return centerCartographic;
     }
@@ -77,7 +78,13 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
       document.getElementById('tile-modal-customdata-setdata').style.display = owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
-      customDataDisplay.innerText = utils.toUtf8String(customData);
+      const text = utils.toUtf8String(customData);
+      customDataDisplay.innerText = text.length>0 ? text : "None";
+      tiles[index].label = new LabelGraphics({
+        text: text,
+        scaleByDistance: new NearFarScalar(1.5e2, 1.0, 8.0e7, 0.001),
+      });
+      viewer.scene.requestRender();
       
       const submit = document.getElementById('tile-modal-customdata-submit') as HTMLButtonElement;
       submit.onclick = async e => {
