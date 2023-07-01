@@ -56,15 +56,13 @@
     <div class="modal-content cesium-infoBox-description">
       <span id="auction-modal-close" class="close">&times;</span>
       <h1 id="auction-modal-title">LND Auction <span id="auction-modal-td-index">10 / 812</span></h1>
-      <h2>Highest bid</h2>
       <p>
-         <span id="auction-modal-field-bid" style="word-break: break-all;">50 ETH by 0x0</span>
+        Bid on next LND token. Hightest bid wins.
       </p>
-      <h2>Conclude date</h2>
       <p>
-        <span id="auction-modal-field-payout"></span>
+        <b>Highest bid:</b>
+        <span id="auction-modal-field-bid" style="word-break: break-all;">50 ETH by 0x0</span>
       </p>
-      <hr>
       <p>
         <b>Enter bid:</b>
         <input type="text" id="auction-modal-input-bid" style="max-width: 5em; text-align: right;" value="1.0"> ETH
@@ -75,6 +73,12 @@
       </p>
       <hr>
       <p>
+        The auction can be concluded when the deadline is reached.
+      </p>
+      <p>
+        <b>Ready to conclude:</b> <span id="auction-modal-field-payout"></span>
+      </p>
+      <p>
         <b>Conclude auction:</b>
         <button type="button" id="auction-modal-button-payout" class="cesium-button" style="margin-left: 0;">Conclude</button>
       </p>
@@ -82,7 +86,7 @@
         <span id="auction-modal-button-payout-loader-text">Submitting transaction...</span> <span class="loader"></span>
       </p>
       <p>
-        <span id="auction-modal-button-payout-info">Must have at least 1 bid and reach conclude date.</span>
+        <span id="auction-modal-button-payout-info">Must have at least 1 bid and reached deadline to conclude.</span>
       </p>
     </div>
   </div>
