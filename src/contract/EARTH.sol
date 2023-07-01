@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
+import "./openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Consecutive.sol";
 import "./openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract EARTH is ERC721, Ownable {
+contract EARTH is ERC721Consecutive, Ownable {
     string constant NAME = "Earth";
     string constant SYMBOL = "EARTH";
     string constant BASE_URI = "ipfs://QmYjJDkjUG94JcYnk5TJ46qg5KjPaFfe6DAxD6iwRRHR2X/";
@@ -14,39 +14,10 @@ contract EARTH is ERC721, Ownable {
     mapping(uint256 => bool) private _transferred;
 
     constructor(uint256 maxSupply) ERC721(NAME, SYMBOL) {
+        require(maxSupply < _maxBatchSize(), "supply exceeds limit");
         _maxSupply = maxSupply;
-    }
-
-    /**
-     * @dev See {IERC721-balanceOf}.
-     */
-    function balanceOf(address addr) public view virtual override returns (uint256) {
-        if (addr == owner()) {
-            uint256 count = 0;
-            for (uint i=0; i<_maxSupply; i++) {
-                if (ownerOf(i) == addr) {
-                    count += 1;
-                }
-            }
-            return count;
-        }
-        return ERC721.balanceOf(addr);
-    }
-
-    /**
-     * @dev See {IERC721-ownerOf}.
-     */
-    function ownerOf(uint256 tokenId) public view virtual override returns (address) {
-        require(_exists(tokenId), "ERC721: owner query for nonexistent token");
-        if (!ERC721._exists(tokenId)) {
-            return owner();
-        }
-        address owner = ERC721.ownerOf(tokenId);
-        return owner;
-    }
-
-    function _exists(uint256 tokenId) internal view virtual override returns (bool) {
-        return 0 <= tokenId && tokenId < _maxSupply;
+        address contractOwner = owner();
+        _mintConsecutive(contractOwner, uint96(_maxSupply));
     }
 
     function transferred(uint256 tokenId) public view returns (bool) {
@@ -60,13 +31,26 @@ contract EARTH is ERC721, Ownable {
         }
     }
 
-    function _transfer(
+    /**
+     * @dev Hook that is called after any token transfer. See contract ERC721
+     * for more information.
+     */
+    function _afterTokenTransfer(
         address from,
         address to,
-        uint256 tokenId
+        uint256 firstTokenId,
+        uint256 batchSize
     ) internal virtual override {
-        ERC721._transfer(from, to, tokenId);
-        _transferred[tokenId] = true;
+        super._afterTokenTransfer(from, to, firstTokenId, batchSize);
+
+        // If this is a minting operation, return.
+        if (from == address(0)) {
+            return;
+        }
+
+        for (uint i=firstTokenId; i<firstTokenId+batchSize; i++) {
+            _transferred[i] = true;
+        }
     }
 
     function _baseURI() internal pure override returns (string memory) {

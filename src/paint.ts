@@ -13,4 +13,10 @@ export async function paintTiles(viewer: Viewer, tiles: TileEntity[], earth: EAR
     paintTile(i, b);
   });
   viewer.scene.requestRender();
+
+  const transfer = earth.filters.Transfer();
+  earth.on(transfer, (from, to, index) => {
+    paintTile(index.toNumber(), true);
+    viewer.scene.requestRender();
+  });
 }
