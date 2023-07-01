@@ -73,6 +73,12 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     });
     web3auth.addPlugin(torusPlugin);
 
+    // Fix modal z-index.
+    const styles = '#w3a-container {position: fixed; z-index: 10;}';
+    var styleSheet = document.createElement("style");
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
+
     // Show modal.
     await web3auth.initModal();
     // await web3auth.logout();
