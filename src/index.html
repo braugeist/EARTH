@@ -25,17 +25,17 @@
         <button id="connect-modal-button-connect" type="button" class="cesium-button" style="margin: 0; font-size: 125%;">Connect to Web3</button>
       </p>
       <p id="connect-select">
-        <input type="radio" name="connector" id="connector-infura" value="WalletConnect" style="height: inherit;">
-        <label for="connector-infura">Infura</label>
-        <!-- <br> -->
         <input type="radio" id="connector-browserextension" name="connector" value="BrowserExtension" style="height: inherit;" checked>
-        <label for="connector-browserextension">Browser</label>
+        <label for="connector-browserextension">Via browser wallet</label>
         <!-- <br> -->
         <input type="radio" name="connector" id="connector-walletconnect" value="WalletConnect" style="height: inherit;">
-        <label for="connector-walletconnect">WalletConnect</label>
+        <label for="connector-walletconnect">Via external wallet</label>
         <!-- <br> -->
-        <input type="radio" name="connector" id="connector-web3auth" value="Web3Auth" style="height: inherit;">
-        <label for="connector-web3auth">Web3Auth</label>
+        <input type="radio" name="connector" id="connector-infura" value="WalletConnect" style="height: inherit;">
+        <label for="connector-infura">Without wallet</label>
+        <!-- <br> -->
+        <!-- <input type="radio" name="connector" id="connector-web3auth" value="Web3Auth" style="height: inherit;">
+        <label for="connector-web3auth">Web3Auth</label> -->
       </p>
       <p id="connect-modal-display-connecting" style="display: none;">Connecting...</p>
       <p id="connect-modal-display-timeout" style="display: none;">Connecting to Web3 takes longer than expected. Consider <span onclick="location.reload()" style="text-decoration: underline; cursor: pointer;">reloading</span> the page.</p>
