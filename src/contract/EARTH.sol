@@ -2,45 +2,57 @@
 pragma solidity ^0.8.4;
 
 import "./openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
-import "./LAND.sol";
+import "./openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract EARTH is ERC721 {
+contract EARTH is ERC721, Ownable {
     string constant NAME = "Earth";
     string constant SYMBOL = "EARTH";
     string constant BASE_URI = "ipfs://QmYjJDkjUG94JcYnk5TJ46qg5KjPaFfe6DAxD6iwRRHR2X/";
 
-    event OwnershipTaken(uint256 indexed index);
-
-    address _token;
     uint256 _maxSupply;
     mapping(uint256 => bytes) _customData;
 
-    constructor(address token) ERC721(NAME, SYMBOL) {
-        _token = token;
-        _maxSupply = LAND(_token).maxSupply();
-    }
-
-    function takeOwnership(uint256 index) public {
-        address buyer = msg.sender;
-        require(index < _maxSupply, "out of bounds");
-        require(!_exists(index), "taken");
-        require(LAND(_token).transferFrom(buyer, address(this), 1), "transaction failed");
-
-        _safeMint(buyer, index);
-
-        emit OwnershipTaken(index);
+    constructor(uint256 maxSupply) ERC721(NAME, SYMBOL) {
+        _maxSupply = maxSupply;
     }
 
     function owners() external view returns (address[] memory _owners) {
         _owners = new address[](_maxSupply);
         for (uint i=0; i<_owners.length; i++) {
-            _owners[i] = ownership(i);
+            _owners[i] = ownerOf(i);
         }
     }
 
-    // ownership returns the owner of item `index` or zero if not owned.
-    function ownership(uint256 index) public view returns (address owner) {
-        return _exists(index) ? ownerOf(index) : address(0);
+    /**
+     * @dev See {IERC721-balanceOf}.
+     */
+    function balanceOf(address addr) public view virtual override returns (uint256) {
+        if (addr == owner()) {
+            uint256 count = 0;
+            for (uint i=0; i<_maxSupply; i++) {
+                if (ownerOf(i) == addr) {
+                    count += 1;
+                }
+            }
+            return count;
+        }
+        return ERC721.balanceOf(addr);
+    }
+
+    /**
+     * @dev See {IERC721-ownerOf}.
+     */
+    function ownerOf(uint256 tokenId) public view virtual override returns (address) {
+        require(_exists(tokenId), "ERC721: owner query for nonexistent token");
+        if (!ERC721._exists(tokenId)) {
+            return owner();
+        }
+        address owner = ERC721.ownerOf(tokenId);
+        return owner;
+    }
+
+    function _exists(uint256 tokenId) internal view virtual override returns (bool) {
+        return 0 <= tokenId && tokenId < _maxSupply;
     }
 
     function _baseURI() internal pure override returns (string memory) {

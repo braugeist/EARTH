@@ -15,10 +15,4 @@ export async function paintTiles(viewer: Viewer, tiles: TileEntity[], earth: EAR
     paintTile(i, owned);
   });
   viewer.scene.requestRender();
-
-  const bought = earth.filters.OwnershipTaken();
-  earth.on(bought, index => {
-    paintTile(index.toNumber(), true);
-    viewer.scene.requestRender();
-  });
 }

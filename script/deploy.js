@@ -5,19 +5,13 @@ const yargs = require('yargs');
 const argv = yargs
   .usage(
     '$0 [options]',
-    'Deploy contracts LAND and EARTH.',
+    'Deploy contract EARTH.',
   )
   .option('nodeURL', {
     alias: 'n',
     description: 'The URL of the node to connect to.',
     type: 'string',
     default: 'http://localhost:8545',
-  })
-  .option('auctionDuration', {
-    alias: 'd',
-    description: 'The duration of a LAND auction in seconds.',
-    type: 'number',
-    default: 24 * 3600,
   })
   .option('privateKey', {
     alias: 'k',
@@ -57,14 +51,12 @@ async function deployEarthAndLand(argv) {
   }
 
   const numTiles = 812;
-  const LAND = await deployContract('LAND', numTiles, argv.auctionDuration);
-  const EARTH = await deployContract('EARTH', LAND.address);
+  const EARTH = await deployContract('EARTH', numTiles);
 
   const network = await provider.getNetwork();
   const addresses = {
     "ChainId": network.chainId,
     "ChainName": network.name,
-    "LAND": LAND.address,
     "EARTH": EARTH.address,
   }
   console.log(addresses);

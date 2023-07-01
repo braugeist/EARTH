@@ -4,7 +4,6 @@ const logDisplay = document.getElementById("logdisplay");
 const contractDir = './contract'
 
 const numTiles = 812;
-const auctionDuration = 60;
 
 function log(msg: string) {
   console.log(msg);
@@ -97,15 +96,13 @@ async function main() {
     return contract;
   }
 
-  const LAND = await deployContract('LAND', 2_100_000, numTiles, auctionDuration);
-  const EARTH = await deployContract('EARTH', 3_000_000, LAND.address);
+  const EARTH = await deployContract('EARTH', 3_000_000, numTiles);
 
   // Output configuration.
   const network = await provider.getNetwork();
   const config = {
     "ChainId": network.chainId,
     "ChainName": network.name,
-    "LAND": LAND.address,
     "EARTH": EARTH.address,
   }
   const configString = JSON.stringify(config, null, 2);

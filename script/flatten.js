@@ -43,7 +43,6 @@ async function flattenContract(name) {
 
 async function main() {
     await flattenContract('EARTH');
-    await flattenContract('LAND');
 }
 
 main()

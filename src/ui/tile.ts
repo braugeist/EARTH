@@ -1,11 +1,10 @@
 import { BoundingSphere, Cartesian3, Cartographic, ColorMaterialProperty, ConstantPositionProperty, ConstantProperty, Ellipsoid, LabelGraphics, NearFarScalar, Viewer } from "cesium";
 import { utils } from "ethers";
-import { EARTH, LAND } from "../contract/type";
-import { DEFAULT_SURFACE_COLOR, OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
+import { EARTH } from "../contract/type";
+import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
-import { AUCTION_BUTTON_ID } from "./auction";
 
-export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH, land: LAND) {
+export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {
   const modal = document.getElementById('tile-modal');
 
   // Close on click on close span.
@@ -21,17 +20,9 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     }
   });
 
-  // Handle click on "Get LND".
-  const getLND = document.getElementById('tile-modal-button-get-lnd');
-  getLND.addEventListener('click', e => {
-    modal.style.display = "none";
-    const auctionButton = document.getElementById(AUCTION_BUTTON_ID);
-    auctionButton.dispatchEvent(new Event('click'));
-  });
-
   async function showModal(index: number) {
     // Get current state and display information.
-    const owner = await earth.ownership(index);
+    const owner = await earth.ownerOf(index);
 
     function formatLatLng(lat: number, lng: number): string {
       const precision = 8;
@@ -70,7 +61,6 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
     document.getElementById('tile-modal-owner').innerHTML = hasOwner ? formatOwner(owner) : 'None';
-    document.getElementById('tile-modal-buy').style.display = hasOwner ? 'none' : 'initial';
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();
@@ -111,61 +101,6 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
       }
     }
     await updateCustomData();
-
-    async function updateBuyButton() {
-      const buy = document.getElementById('tile-modal-button-buy') as HTMLButtonElement;
-      if (!hasOwner) {
-        // Update on click handler.
-        buy.onclick = async e => {
-          let loading = document.getElementById("tile-modal-button-buy-loader");
-          let loadingText = document.getElementById("tile-modal-button-buy-loader-text");
-          buy.disabled = true;
-          loading.style.display = "initial";
-          try {
-            const caller = await land.signer.getAddress();
-            const allowance = await land.allowance(caller, earth.address);
-            const price = 1;
-            if (allowance.lt(price)) {
-              loadingText.innerText = "Submitting approve transaction...";
-              const txApprove = await land.approve(earth.address, price);
-              loadingText.innerText = "Waiting for confirmation of approval transaction...";
-              await txApprove.wait();
-            }
-            loadingText.innerText = "Submitting buy transaction...";
-            const txTake = await earth.takeOwnership(index);
-            loadingText.innerText = "Waiting for confirmation of buy transaction...";
-            await txTake.wait();
-            console.log(`bought ${index}`);
-            tiles[index].polygon.material = new ColorMaterialProperty(DEFAULT_SURFACE_COLOR);
-            viewer.scene.requestRender();
-            modal.style.display = "none";
-          } catch (e) {
-            handlePromiseRejection(e);
-          } finally {
-            buy.disabled = false;
-            loading.style.display = "none";
-          }
-        };
-
-        // Update display.
-        const balance = await land.balanceOf(await land.signer.getAddress());
-        if (balance.eq(0)) {
-          // Disable buy button and hide LND hint.
-          buy.disabled = true;
-          getLND.style.display = 'initial';
-        } else {
-          // Enable buy button and show LND hint.
-          buy.disabled = false;
-          getLND.style.display = 'none';
-        }
-      } else {
-        // Disable buy button.
-        buy.disabled = true;
-        getLND.style.display = 'none';
-      }
-    }
-
-    await updateBuyButton();
 
     // Show modal.
     modal.style.display = "block";

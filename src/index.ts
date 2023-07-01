@@ -36,11 +36,11 @@ function showConnectModal() {
     connect.disabled = true;
 
     // Init Web3 functionality.
-    const [earth, land] = await initWeb3();
+    const earth = await initWeb3();
 
     await Promise.all([
-      initToolbar(land), // Init toolbar.
-      initTileModal(viewer, tiles, earth, land), // Initialize tile modal.
+      initToolbar(), // Init toolbar.
+      initTileModal(viewer, tiles, earth), // Initialize tile modal.
       paintTiles(viewer, tiles, earth), // Paint tiles according to ownership.
     ]);
 

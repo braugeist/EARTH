@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
+import { EARTH, EARTH__factory } from "./contract/type";
 import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Web3Auth } from "@web3auth/web3auth";
@@ -8,9 +8,8 @@ import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plu
 const CHAIN_ID = contracts.ChainId;
 const CHAIN_NAME = contracts.ChainName;
 const EARTH_ADDRESS = contracts.EARTH;
-const LAND_ADDRESS = contracts.LAND;
 
-export async function initWeb3(): Promise<[EARTH, LAND]> {
+export async function initWeb3(): Promise<EARTH> {
   // Notify user if connecting takes longer than expected.
   const connecting = document.getElementById('connect-modal-display-connecting');
   connecting.style.display = 'block';
@@ -128,9 +127,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     alert('Account changed. Please reload the page!');
   });
 
-  // Initialize contracts.
+  // Initialize contract.
   const earth = EARTH__factory.connect(EARTH_ADDRESS, signer);
-  const land = LAND__factory.connect(LAND_ADDRESS, signer);
-
-  return [earth, land];
+  return earth;
 }

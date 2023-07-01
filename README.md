@@ -34,7 +34,7 @@ The code is not pretty, but it should work.
 
 ## Testnet URLs
 
-### Goerli
+### Goerli (outdated)
 - [OpenSea](https://testnets.opensea.io/collection/earth-jylngymrm2)
 - [LAND](https://goerli.etherscan.io/address/0xC1ba7b9358adCBb202488EEdb3c94611804EcEE0)
 - [EARTH](https://goerli.etherscan.io/address/0x54B57291a1F5c7A7267Ef3e2e4307688501BA1C8)
