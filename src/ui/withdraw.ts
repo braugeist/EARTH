@@ -1,6 +1,6 @@
 import { utils } from "ethers";
 import { LAND } from "../contract/type";
-import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
+import { closeAllModals, handlePromiseRejection } from "../util";
 
 export function addWithdrawButton(toolbar: Element, land: LAND) {
   const toolbarButton = document.createElement("button");
@@ -9,10 +9,10 @@ export function addWithdrawButton(toolbar: Element, land: LAND) {
   toolbar.appendChild(toolbarButton);
 
   function initModal() {
-    const modal = document.getElementById('withdraw-modal');
+    const modal = document.getElementById('admin-modal');
 
     // Close on click on close span.
-    var close = document.getElementById("withdraw-modal-close");
+    var close = document.getElementById("admin-modal-close");
     close.onclick = function () {
       modal.style.display = "none";
     };
@@ -25,16 +25,22 @@ export function addWithdrawButton(toolbar: Element, land: LAND) {
     });
 
     async function refreshModal() {
-        const balance = await land.income();
-        const balanceDisplay = document.getElementById('withdraw-modal-balance');
-        balanceDisplay.innerHTML = utils.formatEther(balance) + ' ETH';
+      // Update balance.
+      const balance = await land.income();
+      const balanceDisplay = document.getElementById('admin-modal-balance');
+      balanceDisplay.innerHTML = utils.formatEther(balance) + ' ETH';
+
+      // Update current owner.
+      const owner = await land.owner();
+      const ownerDisplay = document.getElementById('admin-modal-current-owner');
+      ownerDisplay.innerHTML = owner;
     }
 
     // Withdraw button click.
-    const withdraw = document.getElementById('withdraw-modal-button-withdraw') as HTMLButtonElement;
+    const withdraw = document.getElementById('admin-modal-button-withdraw') as HTMLButtonElement;
     withdraw.onclick = async e => {
-      let loading = document.getElementById("withdraw-modal-loader");
-      let loadingText = document.getElementById("withdraw-modal-loader-text");
+      let loading = document.getElementById("admin-modal-withdraw-loader");
+      let loadingText = document.getElementById("admin-modal-withdraw-loader-text");
       withdraw.disabled = true;
       loading.style.display = "initial";
       try {
@@ -47,6 +53,36 @@ export function addWithdrawButton(toolbar: Element, land: LAND) {
         handlePromiseRejection(e);
       } finally {
         withdraw.disabled = false;
+        loading.style.display = "none";
+      }
+    };
+
+    // Transfer ownership button click.
+    const transferOwnership = document.getElementById('admin-modal-button-transfer') as HTMLButtonElement;
+    transferOwnership.onclick = async e => {
+      const newOwner = (document.getElementById("admin-modal-new-owner") as HTMLInputElement);
+
+      let loading = document.getElementById("admin-modal-transfer-loader");
+      let loadingText = document.getElementById("admin-modal-transfer-loader-text");
+      transferOwnership.disabled = true;
+      loading.style.display = "initial";
+      try {
+        loadingText.innerText = "Submitting transaction...";
+        const tx = await land.transferOwnership(newOwner.value);
+        loadingText.innerText = "Waiting for transaction confirmation...";
+        await tx.wait();
+
+        // Update UI.
+        newOwner.value = "";
+        refreshModal();
+        if (await land.owner() != await land.signer.getAddress()) {
+          modal.style.display = "none";
+          toolbarButton.style.display = "none";
+        }
+      } catch (e) {
+        handlePromiseRejection(e);
+      } finally {
+        transferOwnership.disabled = false;
         loading.style.display = "none";
       }
     };
@@ -65,6 +101,10 @@ export function addWithdrawButton(toolbar: Element, land: LAND) {
     // Refresh modal on Payout event.
     const payout = land.filters.Concluded();
     land.on(payout, refreshModal);
+
+    // Refresh modal on owner changed event.
+    const ownerChanged = land.filters.OwnershipTransferred();
+    land.on(ownerChanged, refreshModal);
   }
 
   initModal();

@@ -1,4 +1,4 @@
-import { EARTH, LAND } from "../contract/type";
+import { LAND } from "../contract/type";
 import { addHelpButton } from "./help";
 import { addAuctionButton } from "./auction";
 import { addBalanceDisplay } from "./balance";

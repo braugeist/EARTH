@@ -1,6 +1,6 @@
 {
-  "ChainId": 4,
-  "ChainName": "rinkeby",
-  "LAND": "0x36154023b3a7d15C60FE99F14c1ed4d0b0de53d4",
-  "EARTH": "0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3"
+  "ChainId": 1337,
+  "ChainName": "unknown",
+  "LAND": "0x4FB8637Afd28492A3209017556e95Dc2F8086ddb",
+  "EARTH": "0x749D2cB17884896518D7f9dF3122C536b49e0185"
 }

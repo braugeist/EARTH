@@ -92,21 +92,38 @@
     </div>
   </div>
 
-<!-- Withdraw modal -->
-<div id="withdraw-modal" class="modal">
-  <div class="modal-content cesium-infoBox-description">
-    <span id="withdraw-modal-close" class="close">&times;</span>
-    <h1 style="padding-right: 1em;">Withdraw income</h1>
-    <h2>Balance</h2>
-    <p id="withdraw-modal-balance"></p>
-    <p>
-      <button id="withdraw-modal-button-withdraw" type="button" class="cesium-button" style="margin: 0;">Withdraw</button>
-    </p>
-    <p id="withdraw-modal-loader" style="display: none;">
-      <span id="withdraw-modal-loader-text">Submitting transaction...</span> <span class="loader"></span>
-    </p>
+  <!-- Withdraw modal -->
+  <div id="admin-modal" class="modal">
+    <div class="modal-content cesium-infoBox-description">
+      <span id="admin-modal-close" class="close">&times;</span>
+      <h1 style="padding-right: 1em;">Administration</h1>
+
+      <h2>Withdraw earnings 💸</h2>
+      <p>
+        <b>Balance:</b>
+        <span id="admin-modal-balance"></span>
+        <button id="admin-modal-button-withdraw" type="button" class="cesium-button"
+          style="margin: 0;">Withdraw</button>
+      </p>
+      <p id="admin-modal-withdraw-loader" style="display: none;">
+        <span id="admin-modal-withdraw-loader-text">Submitting transaction...</span> <span class="loader"></span>
+      </p>
+
+      <h2>Transfer ownership 🔀</h2>
+      <p>
+        <b>Current owner:</b>
+        <span id="admin-modal-current-owner" style="word-break: break-all;"></span>
+      </p>
+      <p>
+        <b>New owner:</b>
+        <input type="text" id="admin-modal-new-owner" style="max-width: 8em;">
+        <button id="admin-modal-button-transfer" type="button" class="cesium-button" style="margin: 0;">Transfer</button>
+      </p>
+      <p id="admin-modal-transfer-loader" style="display: none;">
+        <span id="admin-modal-transfer-loader-text">Submitting transaction...</span> <span class="loader"></span>
+      </p>
+    </div>
   </div>
-</div>
 
   <!-- Help modal -->
   <div id="help-modal" class="modal">
