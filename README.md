@@ -4,7 +4,8 @@ EARTH is an NFT project that defines an equal area mesh for planet Earth. The me
 
 ## Requirements
 
-- npm
+- Checkout with submodules 
+- Install npm
 
 ## Commands
 
