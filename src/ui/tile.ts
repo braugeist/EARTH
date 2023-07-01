@@ -1,8 +1,9 @@
-import { BoundingSphere, Cartesian3, Cartographic, ColorMaterialProperty, ConstantPositionProperty, ConstantProperty, Ellipsoid, LabelGraphics, NearFarScalar, Viewer } from "cesium";
+import { Cartographic, ConstantProperty, Viewer } from "cesium";
 import { utils } from "ethers";
 import { EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection } from "../util";
+import opensea from "../opensea.json";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {
   const modal = document.getElementById('tile-modal');
@@ -65,6 +66,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
     document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
+    (document.getElementById('help-modal-ownable-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();

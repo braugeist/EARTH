@@ -1,4 +1,4 @@
-import { BoundingSphere, Cartesian3, Cartographic, Ellipsoid } from "cesium";
+import { BoundingSphere, Cartesian3, Ellipsoid } from "cesium";
 
 export function rad2deg(rad) { return rad * 180 / Math.PI; }
 export function deg2rad(degr) { return degr * Math.PI / 180; }
