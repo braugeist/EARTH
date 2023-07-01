@@ -11,8 +11,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
   // Initialize provider.
   const ethereum = (window as any).ethereum;
   if (ethereum === undefined) {
-    const msg = "Error: window.ethereum undefined. Please install Web3 extension such as Metamask.";
-    alert(msg);
+    const msg = "Could not find Web3 extension. Please install and reload.";
     throw new Error(msg);
   }
   const provider = new ethers.providers.Web3Provider(ethereum);
