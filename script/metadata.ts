@@ -1,25 +1,24 @@
-import { writeFileSync } from 'fs';
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { size_n_grid } from "../src/grid/grid.js";
 import { tilePoints } from "../src/util.js";
 
 const basePath = "../tmp/metadata/json/";
+if (!existsSync(basePath)) {
+    mkdirSync(basePath);
+}
 
 const g = size_n_grid(4);
 for (var i = 0; i < g.tiles.length; i++) {
-
     const t = g.tiles[i];
     const points = tilePoints(t);
-    let lines = [];
-    lines.push(`# EARTH Tile ${i}`);
-    lines.push(``);
-    lines.push('| Latitude | Longitude |');
-    lines.push('| -------- | --------- |');
+    const precision = 8;
+    let items = [];
     for (var j = 0; j < points.length; j += 2) {
-        const lng = points[j];
-        const lat = points[j + 1];
-        lines.push(`| ${lat} | ${lng} |`);
+        const lng = (points[j] as Number).toFixed(precision);
+        const lat = (points[j + 1] as Number).toFixed(precision);
+        items.push(`(${lat}, ${lng})`);
     }
-    const description = lines.join('\n');
+    const description = `Coordinates (Lat, Lng): [${items.join(', ')}]`;
 
     const d = {
         "name": `Tile ${i}`,

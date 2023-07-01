@@ -35,10 +35,11 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
 
     function formatCoordinates(coords: number[]): string {
       var latLngs = [];
+      const precision = 8;
       for (let i=0; i<coords.length; i+=2) {
-        latLngs.push(`(${coords[i+1].toFixed(5)}, ${coords[i].toFixed(5)})`);
+        latLngs.push(`(${coords[i+1].toFixed(precision)}, ${coords[i].toFixed(precision)})`);
       }
-      return latLngs.join(', ');
+      return `<div>[${latLngs.join(', ')}]</div>`;
     }
 
     // Update HTML elements.
