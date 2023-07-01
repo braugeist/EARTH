@@ -1,13 +1,21 @@
-# EARTH
+# 🌎 EARTH
 
-EARTH is a 3D visualization of planet earth where the surface is divided into 812 evenly distributed tiles. 12 of these tiles are pentagons and the rest are hexagons. The tiles are represented in a smart contract as non-fungible tokens and can be owned and traded. Tile owners can set a custom message to be displayed along with their tile.
+EARTH is an NFT collection that celebrates the beauty of planet Earth in a 3D visualization.
 
-## Requirements
+<p align="center">
+<img src="./asset/EARTH_feature.jpg" alt="EARTH" width="400"/>
+</p>
+
+**Structure:** The collection consists of 812 evenly distributed Earth tiles that form a [truncated icosahedron](https://en.wikipedia.org/wiki/Truncated_icosahedron) and consist of 800 hexagons and 12 pentagons.
+
+**Customizable:** Tile owners can set a custom message that will be displayed along with their tile.
+
+## Development
+
+### Requirements
 
 - Checkout with submodules 
 - Install npm
-
-## Commands
 
 ### Build and run
 ```bash
