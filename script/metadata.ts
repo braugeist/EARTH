@@ -25,7 +25,7 @@ for (var i = 0; i < g.tiles.length; i++) {
         "name": `Tile #${i}`,
         "description": description,
         "external_url": `https://ownable.earth/?tile=${i}`,
-        "image": `ipfs://QmfTzz2sWivWn8C5AznPVE8j3FJyzn6qc8dqeoFf7GvRbF/tile${i}.jpeg`,
+        "image": `ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7/tile${i}.jpeg`,
         "attributes": [
             {
                 "trait_type": "Shape",

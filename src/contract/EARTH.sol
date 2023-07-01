@@ -7,7 +7,7 @@ import "./LAND.sol";
 contract EARTH is ERC721 {
     string constant NAME = "Earth";
     string constant SYMBOL = "EARTH";
-    string constant BASE_URI = "ipfs://QmSXodTFtwzPLXSpos8Ji94nM2ioVjAJdCkeH7FA4JWzq6/";
+    string constant BASE_URI = "ipfs://QmYjJDkjUG94JcYnk5TJ46qg5KjPaFfe6DAxD6iwRRHR2X/";
 
     event OwnershipTaken(uint256 indexed index);
 

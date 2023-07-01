@@ -4,10 +4,11 @@ import { ALPHA_SHAPE, ALPHA_SHAPE_OWNED, TileEntity } from "./grid";
 export function enableSnap(viewer: Viewer, tiles: TileEntity[]) {
     (window as any).snapTile = async function (i: number, callback: any) {
         tiles.forEach((t, j) => paintTile(t, i == j));
+        const height = 12673565 * 0.64;
         const offset = {
             heading: viewer.camera.heading,
             pitch: viewer.camera.pitch,
-            range: 2_500_000,
+            range: height,
         };
         await viewer.zoomTo(tiles[i], offset);
 
