@@ -9,55 +9,56 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     context: __dirname,
     entry: {
-        app: './src/index.ts'
+        app: './src/index.ts',
     },
     output: {
         filename: 'app.js',
         path: path.resolve(__dirname, 'dist'),
-        sourcePrefix: ''
+        sourcePrefix: '',
     },
     amd: {
         // Enable webpack-friendly use of require in Cesium
-        toUrlUndefined: true
+        toUrlUndefined: true,
     },
     resolve: {
         alias: {
-            cesium: path.resolve(__dirname, cesiumSource)
+            cesium: path.resolve(__dirname, cesiumSource),
         },
         mainFiles: ['index', 'Cesium'],
         extensions: ['.tsx', '.ts', '.js'],
     },
     module: {
-        rules: [{
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
-        }, {
-            test: /\.(png|gif|jpg|jpeg|svg|xml)$/,
-            use: ['url-loader']
-        },
-        {
-            test: /\.tsx?$/,
-            use: 'ts-loader',
-            exclude: /node_modules/,
-        }]
+        rules: [
+            {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader'],
+            },
+            {
+                test: /\.(png|gif|jpg|jpeg|svg|xml)$/,
+                use: ['url-loader'],
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
         }),
-        // Copy Cesium Assets, Widgets, and Workers to a static directory
+        // Copy Cesium Assets, Widgets, and Workers to a static directory.
         new CopyWebpackPlugin({
             patterns: [
                 { from: path.join(cesiumSource, cesiumWorkers), to: 'Workers' },
                 { from: path.join(cesiumSource, 'Assets'), to: 'Assets' },
-                { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }
+                { from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' },
             ]
         }),
         new webpack.DefinePlugin({
-            // Define relative base path in cesium for loading assets
-            CESIUM_BASE_URL: JSON.stringify('')
-        })
+            // Define relative base path in Cesium for loading assets.
+            CESIUM_BASE_URL: JSON.stringify(''),
+        }),
     ],
-    mode: 'development',
-    devtool: 'eval-source-map',
 };
