@@ -34,8 +34,8 @@
     "build-webpack": "webpack --config webpack.prod.js -o $npm_package_config_output",
     "build": "npm run build-contract && npm run build-webpack",
     "start-webpack": "webpack serve --config webpack.dev.js",
-    "start-ganache": "ganache --wallet.accounts $npm_package_config_sk,100000000000000000000 --database.dbPath $npm_package_config_ganachedb --miner.blockTime 15",
-    "deploy-contract-ganache": "cd script && node deploy.js --nodeURL http://127.0.0.1:8545 --privateKey $npm_package_config_sk --auctionDuration 15 --outFile contracts_ganache.json",
+    "start-ganache": "ganache --wallet.accounts $npm_package_config_sk,100000000000000000000 --database.dbPath $npm_package_config_ganachedb --miner.blockTime 5",
+    "deploy-contract-ganache": "cd script && node deploy.js --nodeURL http://127.0.0.1:8545 --privateKey $npm_package_config_sk --auctionDuration 60 --outFile contracts_ganache.json",
     "clear-ganache": "rm -r $npm_package_config_ganachedb",
     "generate-metadata": "cd script && npx ts-node metadata.ts",
     "generate-images": "cd script && python metadata_image.py"

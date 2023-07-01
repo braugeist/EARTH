@@ -83,6 +83,7 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
       }
     };
 
+    let timeout: NodeJS.Timeout;
     async function refreshModal() {
       // Update index.
       const index = (await land.index()).add(1);
@@ -105,8 +106,17 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
       (document.getElementById('auction-modal-input-bid') as HTMLInputElement).value = utils.formatEther(bid.add(utils.parseEther("1.0")));
 
       // Update payout visibility.
-      payoutButton.disabled = new Date() < date || !hasBidder;
-      document.getElementById('auction-modal-button-payout-info').style.display = new Date() >= date && !hasBidder ? 'initial' : 'none';
+      const readyToConclude = new Date() >= date;
+      payoutButton.disabled = !readyToConclude || !hasBidder;
+      document.getElementById('auction-modal-button-payout-info').style.display = !readyToConclude || !hasBidder ? 'initial' : 'none';
+
+      // Refresh modal once conclude date reached.
+      if (!readyToConclude) {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
+        timeout = setTimeout(refreshModal, date.getTime() - new Date().getTime());
+      }
     }
 
     async function showModal() {
