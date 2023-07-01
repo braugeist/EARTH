@@ -56,7 +56,8 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     }
 
     function formatOwner(addr: string): string {
-      return addr.substring(0, 18) + "...";
+      const onclickScript = `alert('${addr}')`;
+      return `<span onclick="${onclickScript}" style="text-decoration: underline; cursor: pointer;">${addr.substring(0, 18)}...</span>`;
     }
 
     const center = computeCenter(tiles[index]);

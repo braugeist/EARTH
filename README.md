@@ -42,7 +42,6 @@ The code is not pretty, but it should work.
 
 ### High priority
 
-- Tile modal: Extend shortened owner address on click.
 - Improve Performance by using different geometry for drawing tiles.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Refine LND auction model: Extend bid time on last minute bid?
