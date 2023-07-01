@@ -34,10 +34,9 @@ The code is not pretty, but it should work.
 
 ## Testnet URLs
 
-### Goerli (outdated)
-- [OpenSea](https://testnets.opensea.io/collection/earth-jylngymrm2)
-- [LAND](https://goerli.etherscan.io/address/0xC1ba7b9358adCBb202488EEdb3c94611804EcEE0)
-- [EARTH](https://goerli.etherscan.io/address/0x54B57291a1F5c7A7267Ef3e2e4307688501BA1C8)
+### Goerli
+- [OpenSea](https://testnets.opensea.io/collection/earth-eokepbd3mj)
+- [EARTH](https://goerli.etherscan.io/address/0x23154C4647cfa07E90F5e35B7084034D1586d072)
 
 ### Rinkeby (deprecated)
 - [OpenSea](https://testnets.opensea.io/collection/earth-tiles)
