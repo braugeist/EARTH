@@ -14,7 +14,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm ci
-          npm run build-select-network --chain=rinkeby
+          npm run build-select-network --chain=goerli
           npm run build-webpack
           touch dist/.nojekyll
           echo ownable.earth > dist/CNAME
