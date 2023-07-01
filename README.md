@@ -17,10 +17,14 @@ npm run start-webpack # start local web server
 
 ### Generate metadata
 ```bash
-npm run generate-metadata
-npm run generate-images # requires Python, Selenium, Firefox
+npm run generate-metadata-json
+npm run generate-metadata-images # requires Python, Selenium, Firefox
 ```
 
+### Deployment
+```bash
+npm run generate-contract-flat # generate single-file contracts
+```
 
 ## TODO
 
