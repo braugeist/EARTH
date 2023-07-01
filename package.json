@@ -20,24 +20,29 @@
   "main": "index.js",
   "config": {
     "contract": "src/contract/*.sol",
-    "build": "src/contract/build"
+    "build": "src/contract/build",
+    "sk": "0xb5dc82fc5f4d82b59a38ac963a15eaaedf414f496a037bb4a52310915ac84097",
+    "ganachedb": "test/ganachedb",
+    "output": "dist/"
   },
   "scripts": {
     "build-solc": "solc --abi --bin $npm_package_config_contract -o $npm_package_config_build --overwrite",
     "build-typechain": "typechain --target ethers-v5 --out-dir src/contract/type $npm_package_config_build/*.abi",
     "build-contract": "npm run build-solc && npm run build-typechain",
-    "build-webpack": "webpack --config webpack.config.js",
+    "build-webpack": "webpack --config webpack.config.js -o $npm_package_config_output && cp script/contracts_goerli.json $npm_package_config_output/contracts.json",
     "build": "npm run build-contract && npm run build-webpack",
-    "start-webpack": "webpack serve --config webpack.config.js --open",
-    "start": "cd script && bash ganache.sh",
-    "clean-ganache": "rm -r script/db"
+    "start-webpack": "webpack serve --config webpack.config.js",
+    "start-ganache": "ganache --wallet.accounts $npm_package_config_sk,100000000000000000000 --database.dbPath $npm_package_config_ganachedb",
+    "deploy-contract-ganache": "cd script && node deploy.js --nodeURL http://127.0.0.1:8545 --privateKey $npm_package_config_sk --auctionDuration 15 --outfile script/contracts_ganache.json",
+    "clear-ganache": "rm -r $npm_package_config_ganachedb"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^10.0.0",
+    "@types/yargs": "^17.0.10",
     "cesium": "^1.84.0",
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^6.2.0",
-    "ethers": "^5.6.2",
+    "ethers": "^5.6.4",
     "html-webpack-plugin": "^5.3.2",
     "style-loader": "^3.2.1",
     "ts-loader": "^9.2.8",
@@ -46,6 +51,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.3.1"
+    "webpack-dev-server": "^4.3.1",
+    "yargs": "^17.4.1"
   }
 }

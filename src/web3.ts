@@ -2,16 +2,12 @@ import Viewer from "cesium/Source/Widgets/Viewer/Viewer";
 import { ethers } from "ethers";
 import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
 import { TileEntity } from "./grid";
+import contracts from "./contracts.json";
 
-// Ganache local test network.
-const CHAIN_ID = '0x539';
-const CHAIN_NAME = 'Ganache';
-const EARTH_ADDRESS = '0x749D2cB17884896518D7f9dF3122C536b49e0185';
-const LAND_ADDRESS = '0x4FB8637Afd28492A3209017556e95Dc2F8086ddb';
-
-// // Goerli public test network.
-// const CHAIN_ID = '0x5';
-// const CHAIN_NAME = 'Goerli';
+const CHAIN_ID = contracts.ChainId;
+const CHAIN_NAME = contracts.ChainName;
+const EARTH_ADDRESS = contracts.EARTH;
+const LAND_ADDRESS = contracts.LAND;
 
 export async function initWeb3(viewer: Viewer, tiles: TileEntity[]): Promise<[EARTH, LAND]> {
   // Initialize provider.
@@ -39,7 +35,7 @@ export async function initWeb3(viewer: Viewer, tiles: TileEntity[]): Promise<[EA
   // Check network.
   const chainId = await provider.send('eth_chainId', []);
   if (chainId != CHAIN_ID) {
-    throw `Not connected to ${CHAIN_NAME} network. Please change network.`
+    throw `Not connected to network ${CHAIN_ID} (${CHAIN_NAME}). Please change network.`
   }
 
   // Get signer.
