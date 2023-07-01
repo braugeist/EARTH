@@ -25,8 +25,8 @@ function showConnectModal() {
     const optionPlugin = document.getElementById('connector-browserextension') as HTMLInputElement;
     optionPlugin.disabled = true;
     // Ensure other option checked.
-    const optionWalletConnect = document.getElementById('connector-walletconnect') as HTMLInputElement;
-    optionWalletConnect.checked = true;
+    const optionWeb3Auth = document.getElementById('connector-web3auth') as HTMLInputElement;
+    optionWeb3Auth.checked = true;
   }
 
   const connectModal = document.getElementById('connect-modal');

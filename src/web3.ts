@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
 import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import { Web3Auth } from "@web3auth/web3auth";
 
 const CHAIN_ID = contracts.ChainId;
 const CHAIN_NAME = contracts.ChainName;
@@ -45,11 +46,27 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     return ethereum as unknown as EthereumProvider;
   }
 
+  async function connectWithWeb3Auth(): Promise<EthereumProvider> {
+    const web3auth = new Web3Auth({
+      clientId: "BIElt7i0zJJCzhBEtjvM4b1Cf0VJSRIpBwA1pHABwVOHp7mojRoYGV4-ULzujHobKpypynFMN7flGMn6260nQhQ",
+      chainConfig: {
+        chainNamespace: "eip155",
+        chainId: "0x5",
+        rpcTarget: "https://goerli.infura.io/v3/de775d75c32e4d7f98f1e73caff8c616",
+      },
+    });
+    await web3auth.initModal();
+    const ethereum = await web3auth.connect();
+    return ethereum;
+  }
+
   var ethereum: EthereumProvider;
   if ((document.getElementById('connector-browserextension') as HTMLInputElement).checked) {
     ethereum = await connectWithWindow();
   } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
     ethereum = await connectWithWalletConnect();
+  } else if ((document.getElementById('connector-web3auth') as HTMLInputElement).checked) {
+    ethereum = await connectWithWeb3Auth();
   } else {
     throw new Error("Invalid Web3 provider selection.");
   }
