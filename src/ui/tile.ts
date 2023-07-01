@@ -35,9 +35,9 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     function formatCoordinates(coords: number[]): string {
       var latLngs = [];
       for (let i=0; i<coords.length; i+=2) {
-        latLngs.push(`<tr><td>${coords[i+1]}</td><td>${coords[i]}</td></tr>`);
+        latLngs.push(`(${coords[i+1].toFixed(5)}, ${coords[i].toFixed(5)})`);
       }
-      return `<table><tr><th>Latitude</th><th>Longitude</th></tr>${latLngs.join('')}</table>`;
+      return latLngs.join(', ');
     }
 
     // Update HTML elements.
