@@ -100,10 +100,10 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
       const bidder = await land.bidder();
       const bidDisplay = document.getElementById('auction-modal-field-bid');
       const hasBidder = bidder != ZERO_ADDRESS;
-      bidDisplay.innerHTML = hasBidder ? `${utils.formatEther(bid)} ETH by ${bidder}` : 'None';
+      bidDisplay.innerHTML = hasBidder ? `${utils.formatEther(bid)} ETH (${bidder})` : 'None';
 
       // Update bid value.
-      (document.getElementById('auction-modal-input-bid') as HTMLInputElement).value = utils.formatEther(bid.add(utils.parseEther("1.0")));
+      (document.getElementById('auction-modal-input-bid') as HTMLInputElement).value = utils.formatEther(bid);
 
       // Update payout visibility.
       const readyToConclude = new Date() >= date;

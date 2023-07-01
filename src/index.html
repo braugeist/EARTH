@@ -54,11 +54,19 @@
         <b>Owner:</b>
         <span id="tile-modal-owner" style="word-break: break-all;"></span>
       </p>
+
+      <p>
+        <b>Message:</b>
+        <span id="tile-modal-customdata-value"></span>
+      </p>
+
       <div id="tile-modal-buy">
+        <hr>
         <p>
-          <b>Mint:</b>
-          <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Mint for 1 LND</button>
-          <button id="tile-modal-button-get-lnd" type="button" class="cesium-button" style="margin: 0;">Get LND</button>
+          <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Take ownership for 1 LND</button>
+        </p>
+        <p>
+          <span id="tile-modal-button-get-lnd" style="text-decoration: underline; cursor: pointer;">Get LND via LND auction</span>
         </p>
         <p id="tile-modal-button-buy-loader" style="display: none;">
           <span id="tile-modal-button-buy-loader-text">Submitting transaction...</span> <span class="loader"></span>
@@ -66,10 +74,6 @@
       </div>
 
       <div id="tile-modal-customdata">
-        <p>
-          <b>Message:</b>
-          <span id="tile-modal-customdata-value"></span>
-        </p>
         <div id="tile-modal-customdata-setdata">
           <hr>
           <p>
@@ -90,29 +94,30 @@
   <div id="auction-modal" class="modal">
     <div class="modal-content cesium-infoBox-description">
       <span id="auction-modal-close" class="close">&times;</span>
-      <h1 id="auction-modal-title">LND Auction <span id="auction-modal-td-index">10 / 812</span></h1>
+      <h1 id="auction-modal-title">LND Auction</h1>
       <p>
-        Bid on next LND token. Hightest bid wins.
-      </p>
-      <p>
-        <b>Open until</b>: <span id="auction-modal-field-payout"></span>
+        Bid on LND token <span id="auction-modal-td-index">10 / 812</span>.
       </p>
       <p>
         <b>Highest bid:</b>
         <span id="auction-modal-field-bid" style="word-break: break-all;">50 ETH by 0x0</span>
       </p>
       <p>
-        <b>Enter bid:</b>
-        <input type="text" id="auction-modal-input-bid" style="max-width: 5em; text-align: right;" value="1.0"> ETH
-        <button type="button" id="auction-modal-button-bid" class="cesium-button">Submit Bid</button>
+        <b>Open until</b>: <span id="auction-modal-field-payout"></span>
+      </p>
+      <hr>
+      <p style="text-align: center;">
+        <b>Bid:</b>
+        <input type="text" id="auction-modal-input-bid" style="max-width: 8em; text-align: right;" value="1.0"> ETH
+        <button type="button" id="auction-modal-button-bid" class="cesium-button">Submit</button>
       </p>
       <p id="auction-modal-button-bid-loader" style="display: none;">
         <span id="auction-modal-button-bid-loader-text">Submitting bid...</span> <span class="loader"></span>
       </p>
       <div id="auction-modal-payout">
-        <p>
-          <b>Conclude auction:</b>
-          <button type="button" id="auction-modal-button-payout" class="cesium-button" style="margin-left: 0;">Conclude</button>
+        <p style="text-align: center;">
+          <b>Conclude:</b>
+          <button type="button" id="auction-modal-button-payout" class="cesium-button" style="margin-left: 0;">Conclude auction</button>
         </p>
         <p id="auction-modal-button-payout-loader" style="display: none;">
           <span id="auction-modal-button-payout-loader-text">Submitting transaction...</span> <span class="loader"></span>
