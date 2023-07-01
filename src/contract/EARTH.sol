@@ -11,16 +11,10 @@ contract EARTH is ERC721, Ownable {
 
     uint256 _maxSupply;
     mapping(uint256 => bytes) _customData;
+    mapping(uint256 => bool) private _transferred;
 
     constructor(uint256 maxSupply) ERC721(NAME, SYMBOL) {
         _maxSupply = maxSupply;
-    }
-
-    function owners() external view returns (address[] memory _owners) {
-        _owners = new address[](_maxSupply);
-        for (uint i=0; i<_owners.length; i++) {
-            _owners[i] = ownerOf(i);
-        }
     }
 
     /**
@@ -55,11 +49,32 @@ contract EARTH is ERC721, Ownable {
         return 0 <= tokenId && tokenId < _maxSupply;
     }
 
+    function transferred(uint256 tokenId) public view returns (bool) {
+        return _transferred[tokenId];
+    }
+
+    function transferredAll() external view returns (bool[] memory _transferredAll) {
+        _transferredAll = new bool[](_maxSupply);
+        for (uint i=0; i<_transferredAll.length; i++) {
+            _transferredAll[i] = transferred(i);
+        }
+    }
+
+    function _transfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual override {
+        ERC721._transfer(from, to, tokenId);
+        _transferred[tokenId] = true;
+    }
+
     function _baseURI() internal pure override returns (string memory) {
         return BASE_URI;
     }
 
     function setCustomData(uint256 index, bytes calldata data) public {
+        require(transferred(index), "not transferred");
         require(ownerOf(index) == msg.sender, "not owner");
         _customData[index] = data;
     }

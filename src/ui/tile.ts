@@ -2,7 +2,7 @@ import { BoundingSphere, Cartesian3, Cartographic, ColorMaterialProperty, Consta
 import { utils } from "ethers";
 import { EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
-import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
+import { closeAllModals, handlePromiseRejection } from "../util";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {
   const modal = document.getElementById('tile-modal');
@@ -23,6 +23,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
   async function showModal(index: number) {
     // Get current state and display information.
     const owner = await earth.ownerOf(index);
+    const transferred = await earth.transferred(index);
 
     function formatLatLng(lat: number, lng: number): string {
       const precision = 8;
@@ -55,16 +56,15 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     const center = computeCenter(tiles[index]);
 
     // Update HTML elements.
-    const hasOwner = owner != ZERO_ADDRESS;
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
-    document.getElementById('tile-modal-owner').innerHTML = hasOwner ? formatOwner(owner) : 'None';
+    document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();
-      document.getElementById('tile-modal-customdata-setdata').style.display = owner == acc ? 'initial' : 'none';
+      document.getElementById('tile-modal-customdata-setdata').style.display = transferred && owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
       const text = utils.toUtf8String(customData);

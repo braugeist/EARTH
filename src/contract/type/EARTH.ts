@@ -37,7 +37,6 @@ export interface EARTHInterface extends utils.Interface {
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
-    "owners()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
@@ -48,6 +47,8 @@ export interface EARTHInterface extends utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "transferred(uint256)": FunctionFragment;
+    "transferredAll()": FunctionFragment;
   };
 
   getFunction(
@@ -60,7 +61,6 @@ export interface EARTHInterface extends utils.Interface {
       | "name"
       | "owner"
       | "ownerOf"
-      | "owners"
       | "renounceOwnership"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
@@ -71,6 +71,8 @@ export interface EARTHInterface extends utils.Interface {
       | "tokenURI"
       | "transferFrom"
       | "transferOwnership"
+      | "transferred"
+      | "transferredAll"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -99,7 +101,6 @@ export interface EARTHInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "owners", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -150,6 +151,14 @@ export interface EARTHInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "transferred",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferredAll",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -165,7 +174,6 @@ export interface EARTHInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owners", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -198,6 +206,14 @@ export interface EARTHInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferred",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferredAll",
     data: BytesLike
   ): Result;
 
@@ -325,10 +341,6 @@ export interface EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    owners(
-      overrides?: CallOverrides
-    ): Promise<[string[]] & { _owners: string[] }>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -383,6 +395,15 @@ export interface EARTH extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    transferred(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    transferredAll(
+      overrides?: CallOverrides
+    ): Promise<[boolean[]] & { _transferredAll: boolean[] }>;
   };
 
   approve(
@@ -420,8 +441,6 @@ export interface EARTH extends BaseContract {
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  owners(overrides?: CallOverrides): Promise<string[]>;
 
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -478,6 +497,13 @@ export interface EARTH extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  transferred(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
+  transferredAll(overrides?: CallOverrides): Promise<boolean[]>;
+
   callStatic: {
     approve(
       to: PromiseOrValue<string>,
@@ -514,8 +540,6 @@ export interface EARTH extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    owners(overrides?: CallOverrides): Promise<string[]>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -569,6 +593,13 @@ export interface EARTH extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    transferred(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    transferredAll(overrides?: CallOverrides): Promise<boolean[]>;
   };
 
   filters: {
@@ -652,8 +683,6 @@ export interface EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    owners(overrides?: CallOverrides): Promise<BigNumber>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -708,6 +737,13 @@ export interface EARTH extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    transferred(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    transferredAll(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -746,8 +782,6 @@ export interface EARTH extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    owners(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -803,5 +837,12 @@ export interface EARTH extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    transferred(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    transferredAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

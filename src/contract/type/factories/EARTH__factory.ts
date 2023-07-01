@@ -258,19 +258,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "owners",
-    outputs: [
-      {
-        internalType: "address[]",
-        name: "_owners",
-        type: "address[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -448,6 +435,38 @@ const _abi = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transferred",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "transferredAll",
+    outputs: [
+      {
+        internalType: "bool[]",
+        name: "_transferredAll",
+        type: "bool[]",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ];

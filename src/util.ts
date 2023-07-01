@@ -1,5 +1,3 @@
-export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
-
 export function rad2deg(rad) { return rad * 180 / Math.PI; }
 export function deg2rad(degr) { return degr * Math.PI / 180; }
 

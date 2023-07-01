@@ -1,5 +1,5 @@
 {
-    "ChainId": 1337,
-    "ChainName": "unknown",
-    "EARTH": "0x6Ae0EeAFDCA585efA0c1C69f79032dABD38F2950"
+    "ChainId": "0x5",
+    "ChainName": "Goerli",
+    "EARTH": "0x5E12373Eb44825CecF5F19BDB1799C56aEC84D1d"
 }
