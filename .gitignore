@@ -1,0 +1,4 @@
+/dist/
+/node_modules/
+/src/contract/build/
+/script/db/

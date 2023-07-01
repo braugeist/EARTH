@@ -1,0 +1,3 @@
+[submodule "src/contract/openzeppelin-contracts"]
+	path = src/contract/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts.git

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <div id="cesiumContainer"></div>
+
+  <!-- Hide modal during initialization. -->
+  <style>
+    .modal {
+      display: none;
+    }
+  </style>
+
+  <!-- Connect modal -->
+  <div id="connect-modal" class="modal modal-full" style="display: none; padding: 0;">
+    <div class="modal-content cesium-infoBox-description" style="text-align: center; margin: auto; display: table-cell; vertical-align: middle;">
+      <h1>EARTH</h1>
+      <p>
+        <button id="connect-modal-button-connect" type="button" class="cesium-button" style="margin: 0; font-size: 125%;">Connect via MetaMask</button>
+      </p>
+      <p id="connect-modal-display-connecting" style="display: none;">Connecting...</p>
+      <p id="connect-modal-display-timeout" style="display: none;">Connecting with MetaMask takes longer than usual. Consider reloading the page.</p>
+    </div>
+  </div>
+
+  <!-- Tile modal -->
+  <div id="tile-modal" class="modal">
+    <div class="modal-content cesium-infoBox-description">
+      <span id="tile-modal-close" class="close">&times;</span>
+      <h1 style="padding-right: 1em;">EARTH Tile <span id="tile-modal-index"></span></h1>
+      <h2>Coordinates</h2>
+      <p id="tile-modal-coordinates"></p>
+      <h2>Owner</h2>
+      <p><span id="tile-modal-owner"></span></p>
+      <div>
+        <hr>
+        <p>
+          <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Take ownership for 1 LND</button>
+        </p>
+        <p id="tile-modal-trade-info">Ownership already taken. Go to your favorite market place for trading.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auction modal -->
+  <div id="auction-modal" class="modal">
+    <div class="modal-content cesium-infoBox-description">
+      <span id="auction-modal-close" class="close">&times;</span>
+      <h1 id="auction-modal-title">LND Auction <span id="auction-modal-td-index">10 / 812</span></h1>
+      <h2>Highest bid</h2>
+      <p>
+         <span id="auction-modal-field-bid" style="word-break: break-all;">50 ETH by 0x0</span>
+      </p>
+      <h2>Ready to conclude</h2>
+      <p>
+        <span id="auction-modal-field-payout"></span>
+      </p>
+      <hr>
+      <p>
+        <b>Enter bid:</b>
+        <input type="text" id="auction-modal-input-bid" style="max-width: 8em; text-align: right;" value="1.0"> ETH
+        <button type="button" id="auction-modal-button-bid" class="cesium-button">Submit Bid</button>
+      </p>
+      <hr>
+      <p>
+        <button type="button" id="auction-modal-button-payout" class="cesium-button" style="margin-left: 0;">Conclude Auction</button>
+      </p>
+      <p>
+        <span id="auction-modal-button-payout-info">Must have at least 1 bid to conclude.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Help modal -->
+  <div id="help-modal" class="modal">
+    <div class="modal-content cesium-infoBox-description">
+      <span id="help-modal-close" class="close">&times;</span>
+      <h1 style="min-width: 10em;">About EARTH</h1>
+      <p>EARTH defines an equal area mesh for planet Earth. The mesh consists of 812 tiles, out of which 12 are pentagons and the rest are hexagons.</p>
+      <p>Initially each EARTH tile is for sale at 1 LND. LND can be acquired via the LND auction. 812 LND are auctioned over time, 1 LND per day.</p>
+      <p style="font-size: 75%;">This project has been built with Cesium.</p>
+    </div>
+  </div>
+</body>
+
+</html>
