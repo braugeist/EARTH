@@ -1,6 +1,6 @@
 # EARTH
 
-EARTH is an NFT project that defines an equal area mesh for planet Earth. The mesh consists of 812 tiles, out of which 12 are pentagons and the rest are hexagons. The tiles are displayed visually on a globe and can be equipped with a custom message by their owner.
+EARTH is a 3D visualization of planet earth where the surface is divided into 812 evenly distributed tiles. 12 of these tiles are pentagons and the rest are hexagons. The tiles are represented in a smart contract as non-fungible tokens and can be owned and traded. Tile owners can set a custom message to be displayed along with their tile.
 
 ## Requirements
 
