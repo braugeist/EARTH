@@ -4,20 +4,12 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { EARTH, EARTHInterface } from "../EARTH";
+import type {
+  OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721,
+  OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721Interface,
+} from "../OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721";
 
 const _abi = [
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "maxSupply",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
   {
     anonymous: false,
     inputs: [
@@ -66,69 +58,6 @@ const _abi = [
       },
     ],
     name: "ApprovalForAll",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "fromTokenId",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "toTokenId",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "fromAddress",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "toAddress",
-        type: "address",
-      },
-    ],
-    name: "ConsecutiveTransfer",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "CustomDataChanged",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "OwnershipTransferred",
     type: "event",
   },
   {
@@ -186,40 +115,8 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "balance",
         type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-    ],
-    name: "customData",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "",
-        type: "bytes",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "customDataAll",
-    outputs: [
-      {
-        internalType: "bytes[]",
-        name: "_customDataAll",
-        type: "bytes[]",
       },
     ],
     stateMutability: "view",
@@ -237,7 +134,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "operator",
         type: "address",
       },
     ],
@@ -269,32 +166,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "name",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -306,18 +177,11 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "owner",
         type: "address",
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -380,29 +244,11 @@ const _abi = [
       },
       {
         internalType: "bool",
-        name: "approved",
+        name: "_approved",
         type: "bool",
       },
     ],
     name: "setApprovalForAll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "index",
-        type: "uint256",
-      },
-      {
-        internalType: "bytes",
-        name: "data",
-        type: "bytes",
-      },
-    ],
-    name: "setCustomData",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -421,38 +267,6 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "symbol",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "tokenURI",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
       },
     ],
     stateMutability: "view",
@@ -481,59 +295,23 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "transferred",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "transferredAll",
-    outputs: [
-      {
-        internalType: "bool[]",
-        name: "_transferredAll",
-        type: "bool[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
 ];
 
-export class EARTH__factory {
+export class OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721__factory {
   static readonly abi = _abi;
-  static createInterface(): EARTHInterface {
-    return new utils.Interface(_abi) as EARTHInterface;
+  static createInterface(): OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721Interface {
+    return new utils.Interface(
+      _abi
+    ) as OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): EARTH {
-    return new Contract(address, _abi, signerOrProvider) as EARTH;
+  static connect(
+    address: string,
+    signerOrProvider: Signer | Provider
+  ): OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721 {
+    return new Contract(
+      address,
+      _abi,
+      signerOrProvider
+    ) as OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721;
   }
 }

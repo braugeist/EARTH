@@ -5,11 +5,22 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  ERC721Consecutive,
-  ERC721ConsecutiveInterface,
-} from "../ERC721Consecutive";
+  EARTH_sol_EARTH,
+  EARTH_sol_EARTHInterface,
+} from "../EARTH_sol_EARTH";
 
 const _abi = [
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "maxSupply",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
   {
     anonymous: false,
     inputs: [
@@ -96,6 +107,38 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "CustomDataChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "from",
         type: "address",
@@ -148,6 +191,38 @@ const _abi = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+    ],
+    name: "customData",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "customDataAll",
+    outputs: [
+      {
+        internalType: "bytes[]",
+        name: "_customDataAll",
+        type: "bytes[]",
       },
     ],
     stateMutability: "view",
@@ -210,6 +285,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -226,6 +314,13 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -293,6 +388,24 @@ const _abi = [
       },
     ],
     name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "setCustomData",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -371,17 +484,62 @@ const _abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "transferred",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "transferredAll",
+    outputs: [
+      {
+        internalType: "bool[]",
+        name: "_transferredAll",
+        type: "bool[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
-export class ERC721Consecutive__factory {
+export class EARTH_sol_EARTH__factory {
   static readonly abi = _abi;
-  static createInterface(): ERC721ConsecutiveInterface {
-    return new utils.Interface(_abi) as ERC721ConsecutiveInterface;
+  static createInterface(): EARTH_sol_EARTHInterface {
+    return new utils.Interface(_abi) as EARTH_sol_EARTHInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): ERC721Consecutive {
-    return new Contract(address, _abi, signerOrProvider) as ERC721Consecutive;
+  ): EARTH_sol_EARTH {
+    return new Contract(address, _abi, signerOrProvider) as EARTH_sol_EARTH;
   }
 }

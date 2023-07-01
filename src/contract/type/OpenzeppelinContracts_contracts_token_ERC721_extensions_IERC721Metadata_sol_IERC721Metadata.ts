@@ -27,7 +27,8 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface IERC721MetadataInterface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721MetadataInterface
+  extends utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -203,12 +204,13 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface IERC721Metadata extends BaseContract {
+export interface OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IERC721MetadataInterface;
+  interface: OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721MetadataInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

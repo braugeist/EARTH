@@ -27,20 +27,18 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface ERC721ConsecutiveInterface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721Interface
+  extends utils.Interface {
   functions: {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
   };
 
@@ -50,14 +48,11 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
       | "balanceOf"
       | "getApproved"
       | "isApprovedForAll"
-      | "name"
       | "ownerOf"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
       | "setApprovalForAll"
       | "supportsInterface"
-      | "symbol"
-      | "tokenURI"
       | "transferFrom"
   ): FunctionFragment;
 
@@ -77,7 +72,6 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
@@ -107,11 +101,6 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     values: [PromiseOrValue<BytesLike>]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "tokenURI",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
     values: [
@@ -131,7 +120,6 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom(address,address,uint256)",
@@ -149,8 +137,6 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
     data: BytesLike
@@ -159,13 +145,11 @@ export interface ERC721ConsecutiveInterface extends utils.Interface {
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -193,20 +177,6 @@ export type ApprovalForAllEvent = TypedEvent<
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 
-export interface ConsecutiveTransferEventObject {
-  fromTokenId: BigNumber;
-  toTokenId: BigNumber;
-  fromAddress: string;
-  toAddress: string;
-}
-export type ConsecutiveTransferEvent = TypedEvent<
-  [BigNumber, BigNumber, string, string],
-  ConsecutiveTransferEventObject
->;
-
-export type ConsecutiveTransferEventFilter =
-  TypedEventFilter<ConsecutiveTransferEvent>;
-
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -219,12 +189,13 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface ERC721Consecutive extends BaseContract {
+export interface OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ERC721ConsecutiveInterface;
+  interface: OpenzeppelinContracts_contracts_token_ERC721_IERC721_sol_IERC721Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -255,12 +226,12 @@ export interface ERC721Consecutive extends BaseContract {
     balanceOf(
       owner: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber] & { balance: BigNumber }>;
 
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[string] & { operator: string }>;
 
     isApprovedForAll(
       owner: PromiseOrValue<string>,
@@ -268,12 +239,10 @@ export interface ERC721Consecutive extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[string] & { owner: string }>;
 
     "safeTransferFrom(address,address,uint256)"(
       from: PromiseOrValue<string>,
@@ -292,7 +261,7 @@ export interface ERC721Consecutive extends BaseContract {
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      _approved: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -300,13 +269,6 @@ export interface ERC721Consecutive extends BaseContract {
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -338,8 +300,6 @@ export interface ERC721Consecutive extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  name(overrides?: CallOverrides): Promise<string>;
-
   ownerOf(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -362,7 +322,7 @@ export interface ERC721Consecutive extends BaseContract {
 
   setApprovalForAll(
     operator: PromiseOrValue<string>,
-    approved: PromiseOrValue<boolean>,
+    _approved: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -370,13 +330,6 @@ export interface ERC721Consecutive extends BaseContract {
     interfaceId: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  symbol(overrides?: CallOverrides): Promise<string>;
-
-  tokenURI(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<string>;
 
   transferFrom(
     from: PromiseOrValue<string>,
@@ -408,8 +361,6 @@ export interface ERC721Consecutive extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    name(overrides?: CallOverrides): Promise<string>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -432,7 +383,7 @@ export interface ERC721Consecutive extends BaseContract {
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      _approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -440,13 +391,6 @@ export interface ERC721Consecutive extends BaseContract {
       interfaceId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<string>;
 
     transferFrom(
       from: PromiseOrValue<string>,
@@ -478,19 +422,6 @@ export interface ERC721Consecutive extends BaseContract {
       operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
-
-    "ConsecutiveTransfer(uint256,uint256,address,address)"(
-      fromTokenId?: PromiseOrValue<BigNumberish> | null,
-      toTokenId?: null,
-      fromAddress?: PromiseOrValue<string> | null,
-      toAddress?: PromiseOrValue<string> | null
-    ): ConsecutiveTransferEventFilter;
-    ConsecutiveTransfer(
-      fromTokenId?: PromiseOrValue<BigNumberish> | null,
-      toTokenId?: null,
-      fromAddress?: PromiseOrValue<string> | null,
-      toAddress?: PromiseOrValue<string> | null
-    ): ConsecutiveTransferEventFilter;
 
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
@@ -527,8 +458,6 @@ export interface ERC721Consecutive extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -551,19 +480,12 @@ export interface ERC721Consecutive extends BaseContract {
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      _approved: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -598,8 +520,6 @@ export interface ERC721Consecutive extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     ownerOf(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -622,19 +542,12 @@ export interface ERC721Consecutive extends BaseContract {
 
     setApprovalForAll(
       operator: PromiseOrValue<string>,
-      approved: PromiseOrValue<boolean>,
+      _approved: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenURI(
-      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

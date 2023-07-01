@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { IERC721, IERC721Interface } from "../IERC721";
+import type {
+  OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721Consecutive,
+  OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721ConsecutiveInterface,
+} from "../OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721Consecutive";
 
 const _abi = [
   {
@@ -62,6 +65,37 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "fromTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "toTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "fromAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "toAddress",
+        type: "address",
+      },
+    ],
+    name: "ConsecutiveTransfer",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "from",
         type: "address",
@@ -112,7 +146,7 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "balance",
+        name: "",
         type: "uint256",
       },
     ],
@@ -131,7 +165,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "operator",
+        name: "",
         type: "address",
       },
     ],
@@ -163,6 +197,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -174,7 +221,7 @@ const _abi = [
     outputs: [
       {
         internalType: "address",
-        name: "owner",
+        name: "",
         type: "address",
       },
     ],
@@ -241,7 +288,7 @@ const _abi = [
       },
       {
         internalType: "bool",
-        name: "_approved",
+        name: "approved",
         type: "bool",
       },
     ],
@@ -264,6 +311,38 @@ const _abi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "tokenURI",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -294,15 +373,21 @@ const _abi = [
   },
 ];
 
-export class IERC721__factory {
+export class OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721Consecutive__factory {
   static readonly abi = _abi;
-  static createInterface(): IERC721Interface {
-    return new utils.Interface(_abi) as IERC721Interface;
+  static createInterface(): OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721ConsecutiveInterface {
+    return new utils.Interface(
+      _abi
+    ) as OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721ConsecutiveInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IERC721 {
-    return new Contract(address, _abi, signerOrProvider) as IERC721;
+  ): OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721Consecutive {
+    return new Contract(
+      address,
+      _abi,
+      signerOrProvider
+    ) as OpenzeppelinContracts_contracts_token_ERC721_extensions_ERC721Consecutive_sol_ERC721Consecutive;
   }
 }

@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  IERC721Metadata,
-  IERC721MetadataInterface,
-} from "../IERC721Metadata";
+  OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata,
+  OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721MetadataInterface,
+} from "../OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata";
 
 const _abi = [
   {
@@ -342,15 +342,21 @@ const _abi = [
   },
 ];
 
-export class IERC721Metadata__factory {
+export class OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata__factory {
   static readonly abi = _abi;
-  static createInterface(): IERC721MetadataInterface {
-    return new utils.Interface(_abi) as IERC721MetadataInterface;
+  static createInterface(): OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721MetadataInterface {
+    return new utils.Interface(
+      _abi
+    ) as OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721MetadataInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IERC721Metadata {
-    return new Contract(address, _abi, signerOrProvider) as IERC721Metadata;
+  ): OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata {
+    return new Contract(
+      address,
+      _abi,
+      signerOrProvider
+    ) as OpenzeppelinContracts_contracts_token_ERC721_extensions_IERC721Metadata_sol_IERC721Metadata;
   }
 }

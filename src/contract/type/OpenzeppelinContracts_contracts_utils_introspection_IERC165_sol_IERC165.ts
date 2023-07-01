@@ -20,7 +20,8 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface ERC165Interface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_utils_introspection_IERC165_sol_IERC165Interface
+  extends utils.Interface {
   functions: {
     "supportsInterface(bytes4)": FunctionFragment;
   };
@@ -40,12 +41,13 @@ export interface ERC165Interface extends utils.Interface {
   events: {};
 }
 
-export interface ERC165 extends BaseContract {
+export interface OpenzeppelinContracts_contracts_utils_introspection_IERC165_sol_IERC165
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ERC165Interface;
+  interface: OpenzeppelinContracts_contracts_utils_introspection_IERC165_sol_IERC165Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

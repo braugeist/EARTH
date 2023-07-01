@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { IERC2309, IERC2309Interface } from "../IERC2309";
+import type {
+  OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309,
+  OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309Interface,
+} from "../OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309";
 
 const _abi = [
   {
@@ -40,15 +43,21 @@ const _abi = [
   },
 ];
 
-export class IERC2309__factory {
+export class OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309__factory {
   static readonly abi = _abi;
-  static createInterface(): IERC2309Interface {
-    return new utils.Interface(_abi) as IERC2309Interface;
+  static createInterface(): OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309Interface {
+    return new utils.Interface(
+      _abi
+    ) as OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): IERC2309 {
-    return new Contract(address, _abi, signerOrProvider) as IERC2309;
+  ): OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309 {
+    return new Contract(
+      address,
+      _abi,
+      signerOrProvider
+    ) as OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309;
   }
 }

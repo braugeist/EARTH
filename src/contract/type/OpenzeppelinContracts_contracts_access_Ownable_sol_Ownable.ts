@@ -26,7 +26,8 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface OwnableInterface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_access_Ownable_sol_OwnableInterface
+  extends utils.Interface {
   functions: {
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
@@ -76,12 +77,13 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface Ownable extends BaseContract {
+export interface OpenzeppelinContracts_contracts_access_Ownable_sol_Ownable
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: OwnableInterface;
+  interface: OpenzeppelinContracts_contracts_access_Ownable_sol_OwnableInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

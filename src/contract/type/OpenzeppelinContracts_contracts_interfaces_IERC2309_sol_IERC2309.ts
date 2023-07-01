@@ -18,7 +18,8 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface IERC2309Interface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309Interface
+  extends utils.Interface {
   functions: {};
 
   events: {
@@ -42,12 +43,13 @@ export type ConsecutiveTransferEvent = TypedEvent<
 export type ConsecutiveTransferEventFilter =
   TypedEventFilter<ConsecutiveTransferEvent>;
 
-export interface IERC2309 extends BaseContract {
+export interface OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IERC2309Interface;
+  interface: OpenzeppelinContracts_contracts_interfaces_IERC2309_sol_IERC2309Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

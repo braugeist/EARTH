@@ -23,7 +23,8 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface IERC721ReceiverInterface extends utils.Interface {
+export interface OpenzeppelinContracts_contracts_token_ERC721_IERC721Receiver_sol_IERC721ReceiverInterface
+  extends utils.Interface {
   functions: {
     "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
   };
@@ -48,12 +49,13 @@ export interface IERC721ReceiverInterface extends utils.Interface {
   events: {};
 }
 
-export interface IERC721Receiver extends BaseContract {
+export interface OpenzeppelinContracts_contracts_token_ERC721_IERC721Receiver_sol_IERC721Receiver
+  extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IERC721ReceiverInterface;
+  interface: OpenzeppelinContracts_contracts_token_ERC721_IERC721Receiver_sol_IERC721ReceiverInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
