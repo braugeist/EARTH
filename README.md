@@ -28,6 +28,7 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## TODO
 
+- Add LICENSE?
 - Prepare setup for deployment on Mainnet.
     - Which wallet to use?
     - Set auction duration to 1day.
@@ -36,6 +37,7 @@ npm run generate-contract-flat # generate single-file contracts
 ### Low Priority
 
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
+- Rename `EARTH.attributes` to `EARTH.customData`?
 
 ## Testnet URLs
 
