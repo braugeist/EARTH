@@ -32,7 +32,7 @@ html, body, #cesiumContainer {
   background: rgba(38, 38, 38, 0.95);
   color: #edffff;
   margin: auto 5px auto 5px;
-  padding: 10px;
+  padding: 1ex 3ex;
   border: 1px solid #888;
   max-width: 25em;
   border: 1px solid #444;

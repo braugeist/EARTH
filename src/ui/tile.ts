@@ -39,7 +39,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     console.log(text);
 
     function formatLatLng(lat: number, lng: number): string {
-      const precision = 8;
+      const precision = 5;
       return `${lat.toFixed(precision)}°N ${lng.toFixed(precision)}°E`;
     }
 
@@ -61,15 +61,15 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     const center = Cartographic.fromCartesian(pos);
 
     // Update HTML elements.
+    const acc = await earth.signer.getAddress();
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
     document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
-    (document.getElementById('tile-modal-link-opensea') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
+    (document.getElementById('tile-modal-trade-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
 
     async function updateCustomData() {
-      const acc = await earth.signer.getAddress();
       document.getElementById('tile-modal-customdata-setdata').style.display = transferred && owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
