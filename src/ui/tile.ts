@@ -2,6 +2,7 @@ import { ColorMaterialProperty, ConstantProperty, Viewer } from "cesium";
 import { EARTH, LAND } from "../contract/type";
 import { DEFAULT_SURFACE_COLOR, OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
+import { AUCTION_BUTTON_ID } from "./auction";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH, land: LAND) {
   const modal = document.getElementById('tile-modal');
@@ -17,6 +18,14 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     if (e.target == modal) {
       modal.style.display = "none";
     }
+  });
+
+  // Handle click on "Get LND".
+  const getLND = document.getElementById('tile-modal-button-get-lnd');
+  getLND.addEventListener('click', e => {
+    modal.style.display = "none";
+    const auctionButton = document.getElementById(AUCTION_BUTTON_ID);
+    auctionButton.dispatchEvent(new Event('click'));
   });
 
   async function showModal(index: number) {
@@ -36,7 +45,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     document.getElementById('tile-modal-index').innerHTML = `#${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-owner').innerHTML = hasOwner ? owner.toString() : 'None';
-    
+
     async function updateButton() {
       const buy = document.getElementById('tile-modal-button-buy') as HTMLButtonElement;
       const tradeInfo = document.getElementById('tile-modal-trade-info');
@@ -67,13 +76,23 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
             loading.style.display = "none";
           }
         };
-  
-        // Enable buy button.
-        buy.disabled = false;
+
+        // Update display.
+        const balance = await land.balanceOf(await land.signer.getAddress());
+        if (balance.eq(0)) {
+          // Disable buy button and hide LND hint.
+          buy.disabled = true;
+          getLND.style.display = 'initial';
+        } else {
+          // Enable buy button and show LND hint.
+          buy.disabled = false;
+          getLND.style.display = 'none';
+        }
         tradeInfo.style.display = 'none';
       } else {
         // Disable buy button.
         buy.disabled = true;
+        getLND.style.display = 'none';
         tradeInfo.style.display = 'initial';
       }
     }

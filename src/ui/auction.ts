@@ -2,8 +2,11 @@ import { utils } from "ethers";
 import { LAND } from "../contract/type";
 import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
 
+export const AUCTION_BUTTON_ID = 'auction-button';
+
 export function addAuctionButton(toolbar: Element, land: LAND) {
   const auctionButton = document.createElement("button");
+  auctionButton.id = AUCTION_BUTTON_ID;
   auctionButton.classList.add("cesium-button", "cesium-toolbar-button");
   auctionButton.innerHTML = "+";
   toolbar.appendChild(auctionButton);
