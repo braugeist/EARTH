@@ -47,6 +47,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
+            favicon: 'src/favicon.png',
         }),
         // Copy Cesium Assets, Widgets, and Workers to a static directory.
         new CopyWebpackPlugin({
