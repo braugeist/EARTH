@@ -39,6 +39,7 @@ export interface LANDInterface extends utils.Interface {
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "getBid()": FunctionFragment;
+    "income()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "index()": FunctionFragment;
     "maxSupply()": FunctionFragment;
@@ -65,6 +66,7 @@ export interface LANDInterface extends utils.Interface {
       | "decimals"
       | "decreaseAllowance"
       | "getBid"
+      | "income"
       | "increaseAllowance"
       | "index"
       | "maxSupply"
@@ -101,6 +103,7 @@ export interface LANDInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "getBid", values?: undefined): string;
+  encodeFunctionData(functionFragment: "income", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [string, BigNumberish]
@@ -148,6 +151,7 @@ export interface LANDInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "getBid", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "income", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
@@ -302,6 +306,8 @@ export interface LAND extends BaseContract {
 
     getBid(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    income(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -383,6 +389,8 @@ export interface LAND extends BaseContract {
 
   getBid(overrides?: CallOverrides): Promise<BigNumber>;
 
+  income(overrides?: CallOverrides): Promise<BigNumber>;
+
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
@@ -459,6 +467,8 @@ export interface LAND extends BaseContract {
     ): Promise<boolean>;
 
     getBid(overrides?: CallOverrides): Promise<BigNumber>;
+
+    income(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -577,6 +587,8 @@ export interface LAND extends BaseContract {
 
     getBid(overrides?: CallOverrides): Promise<BigNumber>;
 
+    income(overrides?: CallOverrides): Promise<BigNumber>;
+
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
@@ -661,6 +673,8 @@ export interface LAND extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getBid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    income(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: string,

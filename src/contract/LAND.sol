@@ -18,12 +18,14 @@ contract LAND is ERC20, Ownable {
     uint256 _index;
     uint256 _bid;
     address _bidder;
+    uint256 _income;
 
     constructor(uint256 maxSupply_, uint256 duration) ERC20(_name, _symbol) {
         _maxSupply = maxSupply_;
         _duration = duration;
         _start = block.timestamp;
         _index = 0;
+        _income = 0;
     }
 
     function bid() public payable {
@@ -52,6 +54,7 @@ contract LAND is ERC20, Ownable {
         require(_bidder != address(0), "no bidder");
 
         // Payout.
+        _income += _bid;
         _mint(_bidder, 1);
         emit Concluded(_bidder);
 
@@ -62,9 +65,13 @@ contract LAND is ERC20, Ownable {
         _index += 1;
     }
 
+    function income() public view returns (uint256) {
+        return _income;
+    }
+
     function withdraw() public onlyOwner {
-        uint256 bal = address(this).balance;
-        payable(msg.sender).transfer(bal);
+        payable(msg.sender).transfer(_income);
+        _income = 0;
     }
 
     function index() public view returns (uint256) {

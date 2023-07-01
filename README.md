@@ -27,4 +27,3 @@ npm run generate-images # requires Python, Selenium, Firefox
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Deploy contracts with source code.
 - Add arbitrary state to each NFT in contract.
-- Add withdraw functionality.
