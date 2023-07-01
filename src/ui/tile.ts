@@ -112,7 +112,10 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     // Reset outline color for all tiles.
     tiles.forEach(t => t.polygon.outlineColor = new ConstantProperty(OUTLINE_COLOR));
     viewer.scene.requestRender();
+
+    // If unselected, close all modals and return.
     if (e === undefined) {
+      closeAllModals();
       return;
     }
 
