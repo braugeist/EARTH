@@ -61,7 +61,6 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     const center = Cartographic.fromCartesian(pos);
 
     // Update HTML elements.
-    const acc = await earth.signer.getAddress();
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
@@ -70,6 +69,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     (document.getElementById('tile-modal-trade-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
 
     async function updateCustomData() {
+      const acc = await earth.signer.getAddress();
       document.getElementById('tile-modal-customdata-setdata').style.display = transferred && owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
