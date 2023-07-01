@@ -17,6 +17,7 @@ jobs:
           npm run build-select-network-goerli
           npm run build-webpack
           touch dist/.nojekyll
+          cat ownable.earth > dist/CNAME
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
