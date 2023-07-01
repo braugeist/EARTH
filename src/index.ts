@@ -19,6 +19,16 @@ import { ConstantProperty } from "cesium";
 enableSnap(viewer, tiles);
 
 function showConnectModal() {
+  // If window.ethereum unavailable, disable option.
+  if ((window as any).ethereum === undefined) {
+    // Disable window.Ethereum option.
+    const optionPlugin = document.getElementById('connector-browserextension') as HTMLInputElement;
+    optionPlugin.disabled = true;
+    // Ensure other option checked.
+    const optionWalletConnect = document.getElementById('connector-walletconnect') as HTMLInputElement;
+    optionWalletConnect.checked = true;
+  }
+
   const connectModal = document.getElementById('connect-modal');
   connectModal.style.display = 'table';
   const connect = document.getElementById('connect-modal-button-connect') as HTMLButtonElement;
