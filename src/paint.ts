@@ -1,6 +1,6 @@
 import { Color, ColorMaterialProperty, LabelGraphics, NearFarScalar, Viewer } from "cesium";
 import { utils } from "ethers";
-import { EARTH } from "./contract/type";
+import { EARTH_sol_EARTH as EARTH } from "./contract/type";
 import { ALPHA_SHAPE, ALPHA_SHAPE_OWNED, TileEntity } from "./grid";
 
 export async function paintTiles(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {

@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { EARTH, EARTH__factory } from "./contract/type";
+import { EARTH_sol_EARTH as EARTH, EARTH_sol_EARTH__factory as EARTH__factory } from "./contract/type";
 import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Web3Auth } from "@web3auth/web3auth";

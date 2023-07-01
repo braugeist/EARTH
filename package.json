@@ -25,7 +25,7 @@
     "output": "dist/"
   },
   "scripts": {
-    "build-solc": "solcjs --abi --bin $npm_package_config_contract -o $npm_package_config_build",
+    "build-solc": "solcjs --abi --bin $npm_package_config_contract -o $npm_package_config_build --base-path src/contract/",
     "build-typechain": "typechain --target ethers-v5 --out-dir src/contract/type $npm_package_config_build/*.abi",
     "build-contract": "npm run build-solc && npm run build-typechain",
     "build-select-network": "cp config/contracts_$npm_config_chain.json src/contracts.json",

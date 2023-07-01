@@ -1,6 +1,6 @@
 import { Cartographic, ConstantProperty, Viewer } from "cesium";
 import { utils } from "ethers";
-import { EARTH } from "../contract/type";
+import { EARTH_sol_EARTH as EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection } from "../util";
 import opensea from "../opensea.json";

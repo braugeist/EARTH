@@ -5,7 +5,7 @@ import { computeCenter, tilePoints } from "../src/util.js";
 
 const basePath = "../tmp/metadata/json/";
 if (!existsSync(basePath)) {
-    mkdirSync(basePath);
+    mkdirSync(basePath, { recursive: true });
 }
 
 function formatLatLng(lat: number, lng: number): string {

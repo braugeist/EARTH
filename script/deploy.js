@@ -51,7 +51,7 @@ async function deployEarthAndLand(argv) {
   }
 
   const numTiles = 812;
-  const EARTH = await deployContract('EARTH', numTiles);
+  const EARTH = await deployContract('EARTH_sol_EARTH', numTiles);
 
   const network = await provider.getNetwork();
   const addresses = {
