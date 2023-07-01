@@ -37,18 +37,22 @@ export function closeAllModals() {
 
 export function enableErrorHandling() {  
   window.onunhandledrejection = (e: PromiseRejectionEvent) => {
-    function extractMessage(reason: any) {
-      if (reason.code == -32603) {
-        return reason.data.message;
-      } else if (reason.code !== undefined) {
-        return reason.message;
-      } else {
-        return reason;
-      }
-    }
-
-    const msg = extractMessage(e.reason);
-    alert(msg);
     e.preventDefault();
+    handlePromiseRejection(e.reason);
   };
+}
+
+export function handlePromiseRejection(reason: any) {
+  function extractMessage(reason: any) {
+    if (reason.code == -32603) {
+      return reason.data.message;
+    } else if (reason.code !== undefined) {
+      return reason.message;
+    } else {
+      return reason;
+    }
+  }
+
+  const msg = extractMessage(reason);
+  alert(msg);
 }

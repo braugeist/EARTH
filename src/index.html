@@ -41,6 +41,9 @@
         <p>
           <button id="tile-modal-button-buy" type="button" class="cesium-button" style="margin: 0;">Take ownership for 1 LND</button>
         </p>
+        <p id="tile-modal-button-buy-loader" style="display: none;">
+          <span id="tile-modal-button-buy-loader-text">Submitting transaction...</span> <span class="loader"></span>
+        </p>
         <p id="tile-modal-trade-info">Ownership already taken. Go to your favorite market place for trading.</p>
       </div>
     </div>
@@ -62,13 +65,19 @@
       <hr>
       <p>
         <b>Enter bid:</b>
-        <input type="text" id="auction-modal-input-bid" style="max-width: 8em; text-align: right;" value="1.0"> ETH
+        <input type="text" id="auction-modal-input-bid" style="max-width: 5em; text-align: right;" value="1.0"> ETH
         <button type="button" id="auction-modal-button-bid" class="cesium-button">Submit Bid</button>
+      </p>
+      <p id="auction-modal-button-bid-loader" style="display: none;">
+        <span id="auction-modal-button-bid-loader-text">Submitting bid...</span> <span class="loader"></span>
       </p>
       <hr>
       <p>
         <b>Conclude auction:</b>
         <button type="button" id="auction-modal-button-payout" class="cesium-button" style="margin-left: 0;">Conclude</button>
+      </p>
+      <p id="auction-modal-button-payout-loader" style="display: none;">
+        <span id="auction-modal-button-payout-loader-text">Submitting transaction...</span> <span class="loader"></span>
       </p>
       <p>
         <span id="auction-modal-button-payout-info">Must have at least 1 bid to conclude.</span>

@@ -84,3 +84,19 @@ input {
 .cesium-infoBox-description {
   font-family: courier;
 }
+
+/* Spinner. */
+
+.loader {
+  border: 0.3em solid #f3f3f3;
+  width: 0.5em;
+  height: 0.5em;
+  animation: spin 2s linear infinite;
+  display: inline-block;
+  vertical-align: text-bottom;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -5,12 +5,12 @@ import "./openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "./LAND.sol";
 
 contract EARTH is ERC721 {
-    //TODO insert hash
+    //TODO insert hash of tile mesh coordinates
 
     event OwnershipTaken(uint256 indexed index);
 
-    string constant _name = "Earth Land";
-    string constant _symbol = "ELND";
+    string constant _name = "Earth";
+    string constant _symbol = "EARTH";
 
     address _token;
     uint256 _maxSupply;

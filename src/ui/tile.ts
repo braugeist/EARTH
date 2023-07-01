@@ -1,7 +1,7 @@
 import { ColorMaterialProperty, ConstantProperty, Viewer } from "cesium";
 import { EARTH, LAND } from "../contract/type";
 import { DEFAULT_SURFACE_COLOR, OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
-import { closeAllModals, ZERO_ADDRESS } from "../util";
+import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH, land: LAND) {
   const modal = document.getElementById('tile-modal');
@@ -43,14 +43,29 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
       if (!hasOwner) {
         // Update on click handler.
         buy.onclick = async e => {
-          const txApprove = await land.approve(earth.address, 1);
-          const txTake = await earth.takeOwnership(index);
-          await txApprove.wait();
-          await txTake.wait();
-          console.log(`bought ${index}`);
-          tiles[index].polygon.material = new ColorMaterialProperty(DEFAULT_SURFACE_COLOR);
-          viewer.scene.requestRender();
-          modal.style.display = "none";
+          let loading = document.getElementById("tile-modal-button-buy-loader");
+          let loadingText = document.getElementById("tile-modal-button-buy-loader-text");
+          buy.disabled = true;
+          loading.style.display = "initial";
+          try {
+            loadingText.innerText = "Submitting approve transaction...";
+            const txApprove = await land.approve(earth.address, 1);
+            loadingText.innerText = "Waiting for transaction to be mined...";
+            await txApprove.wait();
+            loadingText.innerText = "Submitting buy transaction...";
+            const txTake = await earth.takeOwnership(index);
+            loadingText.innerText = "Waiting for transaction to be mined...";
+            await txTake.wait();
+            console.log(`bought ${index}`);
+            tiles[index].polygon.material = new ColorMaterialProperty(DEFAULT_SURFACE_COLOR);
+            viewer.scene.requestRender();
+            modal.style.display = "none";
+          } catch (e) {
+            handlePromiseRejection(e);
+          } finally {
+            buy.disabled = false;
+            loading.style.display = "none";
+          }
         };
   
         // Enable buy button.

@@ -32,7 +32,7 @@
     "build-webpack": "webpack --config webpack.config.js -o $npm_package_config_output && cp script/contracts_goerli.json $npm_package_config_output/contracts.json",
     "build": "npm run build-contract && npm run build-webpack",
     "start-webpack": "webpack serve --config webpack.config.js",
-    "start-ganache": "ganache --wallet.accounts $npm_package_config_sk,100000000000000000000 --database.dbPath $npm_package_config_ganachedb",
+    "start-ganache": "ganache --wallet.accounts $npm_package_config_sk,100000000000000000000 --database.dbPath $npm_package_config_ganachedb --miner.blockTime 15",
     "deploy-contract-ganache": "cd script && node deploy.js --nodeURL http://127.0.0.1:8545 --privateKey $npm_package_config_sk --auctionDuration 15 --outfile script/contracts_ganache.json",
     "clear-ganache": "rm -r $npm_package_config_ganachedb"
   },

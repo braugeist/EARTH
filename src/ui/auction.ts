@@ -1,6 +1,6 @@
 import { utils } from "ethers";
 import { LAND } from "../contract/type";
-import { closeAllModals, ZERO_ADDRESS } from "../util";
+import { closeAllModals, handlePromiseRejection, ZERO_ADDRESS } from "../util";
 
 export function addAuctionButton(toolbar: Element, land: LAND) {
   const auctionButton = document.createElement("button");
@@ -25,7 +25,8 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
     });
 
     // Bid button click.
-    document.getElementById('auction-modal-button-bid').onclick = async e => {
+    const bidButton = document.getElementById('auction-modal-button-bid') as HTMLButtonElement;
+    bidButton.onclick = async e => {
       const bidValue = (document.getElementById('auction-modal-input-bid') as HTMLInputElement).value;
       const bidCurrency = 'ETH';
       const bid = ((value: string, currency: string) => {
@@ -39,17 +40,44 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
         }
       })(bidValue, bidCurrency);
 
-      const tx = await land.bid({ 'value': bid });
-      await tx.wait();
-      refreshModal();
+      let loading = document.getElementById("auction-modal-button-bid-loader");
+      let loadingText = document.getElementById("auction-modal-button-bid-loader-text");
+      bidButton.disabled = true;
+      loading.style.display = "initial";
+      try {
+        loadingText.innerText = "Submitting bid transaction...";
+        const tx = await land.bid({ 'value': bid });
+        loadingText.innerText = "Waiting for transaction to be mined...";
+        await tx.wait();
+        refreshModal();
+      } catch (e) {
+        handlePromiseRejection(e);
+      } finally {
+        bidButton.disabled = false;
+        loading.style.display = "none";
+      }
     };
 
     // Payout button click.
     const payoutButton = document.getElementById('auction-modal-button-payout') as HTMLButtonElement;
     payoutButton.onclick = async e => {
-      const tx = await land.conclude();
-      await tx.wait();
-      refreshModal();
+      let loading = document.getElementById("auction-modal-button-payout-loader");
+      let loadingText = document.getElementById("auction-modal-button-payout-loader-text");
+      payoutButton.disabled = true;
+      loading.style.display = "initial";
+
+      try {
+        loadingText.innerText = "Submitting conclude transaction...";
+        const tx = await land.conclude();
+        loadingText.innerText = "Waiting for transaction to be mined...";
+        await tx.wait();
+        refreshModal();
+      } catch (e) {
+        handlePromiseRejection(e);
+      } finally {
+        payoutButton.disabled = false;
+        loading.style.display = "none";
+      }
     };
 
     async function refreshModal() {

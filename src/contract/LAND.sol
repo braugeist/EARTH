@@ -8,8 +8,8 @@ contract LAND is ERC20, Ownable {
     event Bid();
     event Concluded(address indexed to);
 
-    string constant _name = "Earth Land";
-    string constant _symbol = "ELND";
+    string constant _name = "Land";
+    string constant _symbol = "LND";
     uint8 constant _decimals = 0;
     uint256 _maxSupply;
     uint256 _duration;
