@@ -47,7 +47,7 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
       try {
         loadingText.innerText = "Submitting bid transaction...";
         const tx = await land.bid({ 'value': bid });
-        loadingText.innerText = "Waiting for transaction to be mined...";
+        loadingText.innerText = "Waiting for transaction confirmation...";
         await tx.wait();
         refreshModal();
       } catch (e) {
@@ -69,7 +69,7 @@ export function addAuctionButton(toolbar: Element, land: LAND) {
       try {
         loadingText.innerText = "Submitting conclude transaction...";
         const tx = await land.conclude();
-        loadingText.innerText = "Waiting for transaction to be mined...";
+        loadingText.innerText = "Waiting for transaction confirmation...";
         await tx.wait();
         refreshModal();
       } catch (e) {

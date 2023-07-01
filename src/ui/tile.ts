@@ -50,11 +50,11 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
           try {
             loadingText.innerText = "Submitting approve transaction...";
             const txApprove = await land.approve(earth.address, 1);
-            loadingText.innerText = "Waiting for transaction to be mined...";
+            loadingText.innerText = "Waiting for confirmation of approval transaction...";
             await txApprove.wait();
             loadingText.innerText = "Submitting buy transaction...";
             const txTake = await earth.takeOwnership(index);
-            loadingText.innerText = "Waiting for transaction to be mined...";
+            loadingText.innerText = "Waiting for confirmation of buy transaction...";
             await txTake.wait();
             console.log(`bought ${index}`);
             tiles[index].polygon.material = new ColorMaterialProperty(DEFAULT_SURFACE_COLOR);

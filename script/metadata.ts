@@ -6,13 +6,26 @@ const basePath = "../data/metadata/";
 
 const g = size_n_grid(4);
 for (var i = 0; i < g.tiles.length; i++) {
+
     const t = g.tiles[i];
     const points = tilePoints(t);
+    let lines = [];
+    lines.push(`# EARTH Tile #${i}`);
+    lines.push(``);
+    lines.push('| Latitude | Longitude |');
+    lines.push('| -------- | --------- |');
+    for (var j = 0; j < points.length; j += 2) {
+        const lng = points[j];
+        const lat = points[j + 1];
+        lines.push(`| ${lat} | ${lng} |`);
+    }
+    const description = lines.join('\n');
+
     const d = {
         "name": `Tile #${i}`,
-        "description": `EARTH tile #${i}. Coordinates ${points}.`, //TODO create proper string / markdown
+        "description": description,
         "external_url": `https://ownable.earth/?tile=${i}`,
-        "image": `https://ownable.earth/image/${i}.png`,
+        "image": `ipfs://QmfTzz2sWivWn8C5AznPVE8j3FJyzn6qc8dqeoFf7GvRbF/tile${i}.jpeg`,
         "attributes": [
             {
                 "trait_type": "Shape",

@@ -32,6 +32,7 @@ npm run generate-images # requires Python, Selenium, Firefox
 - When ready to conclude time reached, enable conclude button.
 - Add favicon.ico
 - Add button in Tile Modal to LND auction if no LND
-- NFT Metadata
-    - Generate and upload images
-    - Revise description: Nicer showing of coordinates
+- Tile title: Remove "#" before number?
+    - on web page
+    - in metadata
+

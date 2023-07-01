@@ -43,11 +43,13 @@ async function deployEarthAndLand(argv) {
   const signer = new ethers.Wallet(argv.privateKey, provider);
 
   async function deployContract(name, ...args) {
+    console.log(`Deploying ${name}...`);
     const abi = JSON.parse(fs.readFileSync(`${argv.contractsDir}/${name}.abi`));
     const code = '0x' + fs.readFileSync(`${argv.contractsDir}/${name}.bin`);
     const factory = new ethers.ContractFactory(abi, code, signer);
     const contract = await factory.deploy(...args, {gasLimit: 3000000});
-    await contract.deployTransaction.wait();
+    const tr = await contract.deployTransaction.wait();
+    console.log(`Done. Gas used: ${tr.gasUsed}. Gas Price: ${tr.effectiveGasPrice}.`);
     return contract;
   }
 
