@@ -9,5 +9,12 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
-    }
+    },
+    "ts-node": {
+        "moduleTypes": {
+            "script/metadata.ts": "esm",
+            "src/*": "esm",
+        },
+        "esm": true,
+    },
 }

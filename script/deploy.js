@@ -64,7 +64,7 @@ async function deployEarthAndLand(argv) {
   }
   console.log(addresses);
   if (argv.outFile) {
-    let data = JSON.stringify(addresses, null, 2);
+    const data = JSON.stringify(addresses, null, 2);
     fs.writeFileSync(argv.outFile, data);
     console.log("Contract addresses written to: " + argv.outFile);
   }

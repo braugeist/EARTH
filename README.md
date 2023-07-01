@@ -17,11 +17,12 @@ npm run start-webpack # start local web server
 
 ## TODO
 
+- Add NFT Metadata.
+- Test with OpenSea.
 - Add links to Etherscan.
 - If connected to wrong network, prompt in MetaMask to change network.
 - Show world without connecting.
 - Deploy contracts with source code.
 - Add arbitrary state to each NFT in contract.
 - Add hash of data to contract.
-- Deploy to Rinkeby, test with OpenSea.
 - Add withdraw functionality.
