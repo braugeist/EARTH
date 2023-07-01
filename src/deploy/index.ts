@@ -98,7 +98,7 @@ async function main() {
   }
 
   const LAND = await deployContract('LAND', 2_100_000, numTiles, auctionDuration);
-  const EARTH = await deployContract('EARTH', 2_700_000, LAND.address);
+  const EARTH = await deployContract('EARTH', 3_000_000, LAND.address);
 
   // Output configuration.
   const network = await provider.getNetwork();
