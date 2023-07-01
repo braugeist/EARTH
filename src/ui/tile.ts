@@ -42,7 +42,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
 
     // Update HTML elements.
     const hasOwner = owner != ZERO_ADDRESS;
-    document.getElementById('tile-modal-index').innerHTML = `#${index.toString()}`;
+    document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-owner').innerHTML = hasOwner ? owner.toString() : 'None';
 

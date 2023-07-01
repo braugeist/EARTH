@@ -10,7 +10,7 @@ for (var i = 0; i < g.tiles.length; i++) {
     const t = g.tiles[i];
     const points = tilePoints(t);
     let lines = [];
-    lines.push(`# EARTH Tile #${i}`);
+    lines.push(`# EARTH Tile ${i}`);
     lines.push(``);
     lines.push('| Latitude | Longitude |');
     lines.push('| -------- | --------- |');
@@ -22,7 +22,7 @@ for (var i = 0; i < g.tiles.length; i++) {
     const description = lines.join('\n');
 
     const d = {
-        "name": `Tile #${i}`,
+        "name": `Tile ${i}`,
         "description": description,
         "external_url": `https://ownable.earth/?tile=${i}`,
         "image": `ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7/tile${i}.jpeg`,
