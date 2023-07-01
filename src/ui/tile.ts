@@ -73,7 +73,6 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     document.getElementById('tile-modal-buy').style.display = hasOwner ? 'none' : 'initial';
 
     async function updateCustomData() {
-      document.getElementById('tile-modal-customdata').style.display = hasOwner ? 'initial' : 'none';
       const acc = await earth.signer.getAddress();
       document.getElementById('tile-modal-customdata-setdata').style.display = owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
