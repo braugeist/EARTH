@@ -28,7 +28,8 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## TODO
 
-- Add more attributes? (Climate zone, Highest point, Lowest point, Population)
+- Improve Performance by using different geometry for drawing tiles.
+- If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Refine LND auction model: Extend bid time on last minute bid?
 - Prepare setup for deployment on Mainnet.
     - Set auction duration to 1day.
@@ -37,10 +38,10 @@ npm run generate-contract-flat # generate single-file contracts
 
 ### Low Priority
 
-- If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Rename `EARTH.attributes` to `EARTH.customData`?
 - Cleanup HTML and CSS
 - Re-introduce # before tile number (website and metadata title)?
+- Add more attributes? (Climate zone, Highest point, Lowest point, Population)
 
 ## Testnet URLs
 
