@@ -35,12 +35,7 @@ export function closeAllModals() {
   }
 }
 
-export function enableErrorHandling() {
-  window.onerror = (message, source, lineno, colno, error) => {
-    alert(message);
-    return true;
-  };
-  
+export function enableErrorHandling() {  
   window.onunhandledrejection = (e: PromiseRejectionEvent) => {
     function extractMessage(reason: any) {
       if (reason.code == -32603) {
