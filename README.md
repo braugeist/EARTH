@@ -63,7 +63,6 @@ The code is not pretty, but it should work.
 ### Low priority
 
 - Replace `alert` with modal
-- Rename `EARTH.attributes` to `EARTH.customData`?
 - Cleanup HTML and CSS
 - Re-introduce # before tile number (website and metadata title)?
 - Add more attributes? (Climate zone, Highest point, Lowest point, Population)
