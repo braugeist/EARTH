@@ -1,19 +1,11 @@
-import { BoundingSphere, Cartesian3, Cartographic, Ellipsoid } from 'cesium';
+import { Cartographic } from 'cesium';
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { size_n_grid } from "../src/grid/grid.js";
-import { tilePoints } from "../src/util.js";
+import { computeCenter, tilePoints } from "../src/util.js";
 
 const basePath = "../tmp/metadata/json/";
 if (!existsSync(basePath)) {
     mkdirSync(basePath);
-}
-
-function computeCenter(points: number[]): Cartographic {
-    var coords = Cartesian3.fromDegreesArray(points);
-    var center = BoundingSphere.fromPoints(coords).center;
-    Ellipsoid.WGS84.scaleToGeodeticSurface(center, center);
-    var centerCartographic = Cartographic.fromCartesian(center);
-    return centerCartographic;
 }
 
 function formatLatLng(lat: number, lng: number): string {
@@ -31,8 +23,11 @@ for (var i = 0; i < g.tiles.length; i++) {
         const lat = points[j + 1] as number;
         items.push(formatLatLng(lat, lng));
     }
-    const center = computeCenter(points);
-    const description = `This is tile number ${i} of ${g.tiles.length} EARTH tiles. Its vertex coordinates are [${items.join(', ')}]. Its center is at ${formatLatLng(center.latitude, center.longitude)}.`;
+    const centerCart = function() {
+        const center = computeCenter(points);
+        return Cartographic.fromCartesian(center);
+    }();
+    const description = `This is tile number ${i} of ${g.tiles.length} EARTH tiles. Its vertex coordinates are [${items.join(', ')}]. Its center is at ${formatLatLng(centerCart.latitude, centerCart.longitude)}.`;
 
     const d = {
         "name": `Tile ${i}`,

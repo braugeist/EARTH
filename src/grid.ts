@@ -1,6 +1,6 @@
-import { Cartesian3, Color, Entity, PolygonHierarchy, Viewer } from "cesium";
+import { BoundingSphere, Cartesian3, Cartographic, Color, ConstantPositionProperty, Ellipsoid, Entity, PolygonHierarchy, Viewer } from "cesium";
 import { size_n_grid } from "./grid/grid";
-import { tilePoints } from "./util";
+import { computeCenter, tilePoints } from "./util";
 
 export const ALPHA_SHAPE = 0.2;
 export const ALPHA_SHAPE_OWNED = 0.01;
@@ -20,6 +20,7 @@ export function createGrid(viewer: Viewer): TileEntity[] {
   for (var i = 0; i < g.tiles.length; i++) {
     const t = g.tiles[i];
     const points = tilePoints(t);
+    const center = computeCenter(points);
     var poly = viewer.entities.add({
       polygon: {
         hierarchy: new PolygonHierarchy(Cartesian3.fromDegreesArray(points)),
@@ -29,6 +30,7 @@ export function createGrid(viewer: Viewer): TileEntity[] {
         outlineColor: OUTLINE_COLOR,
       },
       description: `Tile ${i}`,
+      position: new ConstantPositionProperty(center),
     }) as TileEntity;
     poly.addProperty('index');
     poly.index = i;

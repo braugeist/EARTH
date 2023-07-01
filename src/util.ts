@@ -1,3 +1,5 @@
+import { BoundingSphere, Cartesian3, Cartographic, Ellipsoid } from "cesium";
+
 export function rad2deg(rad) { return rad * 180 / Math.PI; }
 export function deg2rad(degr) { return degr * Math.PI / 180; }
 
@@ -24,6 +26,13 @@ function spherical(v) {
     if (x == 0 && y < 0) return -Math.PI / 2;
   }(x, y, z));
   return [lat, lng];
+}
+
+export function computeCenter(points: number[]): Cartesian3 {
+  var coords = Cartesian3.fromDegreesArray(points);
+  var center = BoundingSphere.fromPoints(coords).center;
+  Ellipsoid.WGS84.scaleToGeodeticSurface(center, center);
+  return center;
 }
 
 export function closeAllModals() {

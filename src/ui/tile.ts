@@ -51,21 +51,13 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
       return `<div>${latLngs.join('<br>')}</div>`;
     }
 
-    function computeCenter(entity: TileEntity): Cartographic {
-      var coords = Cartesian3.fromDegreesArray(entity.coordinates);
-      var center = BoundingSphere.fromPoints(coords).center;
-      Ellipsoid.WGS84.scaleToGeodeticSurface(center, center);
-      entity.position = new ConstantPositionProperty(center);
-      var centerCartographic = Cartographic.fromCartesian(center);
-      return centerCartographic;
-    }
-
     function formatOwner(addr: string): string {
       const onclickScript = `alert('${addr}')`;
       return `<span onclick="${onclickScript}" style="text-decoration: underline; cursor: pointer;">${addr.substring(0, 10)}…${addr.substring(addr.length-8)}</span>`;
     }
 
-    const center = computeCenter(tiles[index]);
+    const pos = tiles[index].position.getValue(viewer.clock.currentTime);
+    const center = Cartographic.fromCartesian(pos);
 
     // Update HTML elements.
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
