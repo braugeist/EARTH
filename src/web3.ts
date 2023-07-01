@@ -37,10 +37,13 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     const ethereum = new WalletConnectProvider({
       infuraId: "de775d75c32e4d7f98f1e73caff8c616",
     });
-    { // Close existing connection.
+    { // Close existing connection if desired.
       const connector = await ethereum.getWalletConnector({disableSessionCreation: true});
       if (connector.connected) {
-        await ethereum.disconnect()
+        const keepConnection = window.confirm("Use existing WalletConnect session?");
+        if (!keepConnection) {
+          await ethereum.disconnect();
+        }
       }
     }
     await ethereum.enable();
