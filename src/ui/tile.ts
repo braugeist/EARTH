@@ -1,4 +1,4 @@
-import { ColorMaterialProperty, ConstantProperty, Viewer } from "cesium";
+import { BoundingSphere, Cartesian2, Cartesian3, Cartographic, ColorMaterialProperty, ConstantPositionProperty, ConstantProperty, Ellipsoid, Entity, Viewer } from "cesium";
 import { utils } from "ethers";
 import { EARTH, LAND } from "../contract/type";
 import { DEFAULT_SURFACE_COLOR, OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
@@ -33,20 +33,41 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
     // Get current state and display information.
     const owner = await earth.ownership(index);
 
+    function formatLatLng(lat: number, lng: number): string {
+      const precision = 8;
+      return `${lat.toFixed(precision)}°N ${lng.toFixed(precision)}°E`;
+    }
+
     function formatCoordinates(coords: number[]): string {
       var latLngs = [];
-      const precision = 8;
       for (let i=0; i<coords.length; i+=2) {
-        latLngs.push(`(${coords[i+1].toFixed(precision)}, ${coords[i].toFixed(precision)})`);
+        const latLng = formatLatLng(coords[i+1], coords[0]);
+        latLngs.push(latLng);
       }
-      return `<div>[${latLngs.join(', ')}]</div>`;
+      return `<div>${latLngs.join('<br>')}</div>`;
     }
+
+    function computeCenter(entity: TileEntity): Cartographic {
+      var coords = Cartesian3.fromDegreesArray(entity.coordinates);
+      var center = BoundingSphere.fromPoints(coords).center;
+      Ellipsoid.WGS84.scaleToGeodeticSurface(center, center);
+      var centerCartographic = Cartographic.fromCartesian(center);
+      return centerCartographic;
+    }
+
+    function formatOwner(addr: string): string {
+      return addr.substring(0, 18) + "...";
+    }
+
+    const center = computeCenter(tiles[index]);
 
     // Update HTML elements.
     const hasOwner = owner != ZERO_ADDRESS;
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
-    document.getElementById('tile-modal-owner').innerHTML = hasOwner ? owner.toString() : 'None';
+    document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
+    document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
+    document.getElementById('tile-modal-owner').innerHTML = hasOwner ? formatOwner(owner) : 'None';
     document.getElementById('tile-modal-buy').style.display = hasOwner ? 'none' : 'initial';
 
     async function updateCustomData() {
