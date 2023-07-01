@@ -79,9 +79,18 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 
-    // Show modal.
+    // Initialize modal.
     await web3auth.initModal();
-    // await web3auth.logout();
+    
+    // Disconnected from existing session if desired.
+    if (web3auth.status == "connected") {
+      const keepConnection = window.confirm("Use existing session?");
+      if (!keepConnection) {
+        await web3auth.logout();
+      }
+    }
+
+    // Show modal.
     const ethereum = await web3auth.connect();
     return ethereum;
   }
