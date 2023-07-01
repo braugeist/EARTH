@@ -35,11 +35,11 @@ The code is not pretty, but it should work.
 ## Testnet URLs
 
 ### Goerli
-- [OpenSea]() (tbd)
+- [OpenSea](https://testnets.opensea.io/collection/earth-jylngymrm2)
 - [LAND](https://goerli.etherscan.io/address/0xC1ba7b9358adCBb202488EEdb3c94611804EcEE0)
 - [EARTH](https://goerli.etherscan.io/address/0x54B57291a1F5c7A7267Ef3e2e4307688501BA1C8)
 
-### Rinkeby (outdated)
+### Rinkeby (deprecated)
 - [OpenSea](https://testnets.opensea.io/collection/earth-tiles)
 - [LAND](https://rinkeby.etherscan.io/token/0x36154023b3a7d15c60fe99f14c1ed4d0b0de53d4#writeContract)
 - [EARTH](https://rinkeby.etherscan.io/address/0x30E8782433b7cE079E8772c7f756E3bEfa6Aebb3#tokentxns)
@@ -48,7 +48,7 @@ The code is not pretty, but it should work.
 
 ### High priority
 
-- Display message on tile.
+- Add support for WalletConnect.
 - Improve Performance by using different geometry for drawing tiles.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Refine LND auction model: Extend bid time on last minute bid?
