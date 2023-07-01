@@ -48,10 +48,10 @@ The code is not pretty, but it should work.
 
 ### High priority
 
-- Add support for WalletConnect.
+- Test remove LND and auction.
 - Improve Performance by using different geometry for drawing tiles.
+- Show modal loading when reading chain state.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
-- Refine LND auction model: Extend bid time on last minute bid?
 - Prepare setup for deployment on Mainnet.
     - Set auction duration to 1day.
     - Prepare OpenSea text.
@@ -64,3 +64,4 @@ The code is not pretty, but it should work.
 - Cleanup HTML and CSS
 - Re-introduce # before tile number (website and metadata title)?
 - Add more attributes? (Climate zone, Highest point, Lowest point, Population)
+- Refine LND auction model: Extend bid time on last minute bid?
