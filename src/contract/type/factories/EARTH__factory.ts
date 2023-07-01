@@ -213,6 +213,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "customDataAll",
+    outputs: [
+      {
+        internalType: "bytes[]",
+        name: "_customDataAll",
+        type: "bytes[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",

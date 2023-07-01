@@ -106,4 +106,11 @@ contract EARTH is ERC721Consecutive, Ownable {
     function customData(uint256 index) public view returns (bytes memory) {
         return _customData[index];
     }
+
+    function customDataAll() external view returns (bytes[] memory _customDataAll) {
+        _customDataAll = new bytes[](_maxSupply);
+        for (uint i=0; i<_customDataAll.length; i++) {
+            _customDataAll[i] = customData(i);
+        }
+    }
 }

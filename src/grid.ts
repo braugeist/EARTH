@@ -11,6 +11,8 @@ export const OUTLINE_COLOR_SELECTED = Color.RED;
 export interface TileEntity extends Entity {
   index: number;
   coordinates: number[];
+  transferred: boolean;
+  message: string;
 }
 
 export function createGrid(viewer: Viewer): TileEntity[] {

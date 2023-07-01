@@ -73,11 +73,6 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
       const text = utils.toUtf8String(customData);
       customDataDisplay.innerText = text.length>0 ? text : "None";
-      tiles[index].label = new LabelGraphics({
-        text: text,
-        scaleByDistance: new NearFarScalar(1.5e2, 1.0, 8.0e7, 0.001),
-      });
-      viewer.scene.requestRender();
       
       const submit = document.getElementById('tile-modal-customdata-submit') as HTMLButtonElement;
       submit.onclick = async e => {

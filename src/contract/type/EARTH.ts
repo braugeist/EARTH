@@ -32,6 +32,7 @@ export interface EARTHInterface extends utils.Interface {
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "customData(uint256)": FunctionFragment;
+    "customDataAll()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
@@ -56,6 +57,7 @@ export interface EARTHInterface extends utils.Interface {
       | "approve"
       | "balanceOf"
       | "customData"
+      | "customDataAll"
       | "getApproved"
       | "isApprovedForAll"
       | "name"
@@ -86,6 +88,10 @@ export interface EARTHInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "customData",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "customDataAll",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "getApproved",
@@ -163,6 +169,10 @@ export interface EARTHInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "customData", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "customDataAll",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getApproved",
     data: BytesLike
@@ -350,6 +360,10 @@ export interface EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    customDataAll(
+      overrides?: CallOverrides
+    ): Promise<[string[]] & { _customDataAll: string[] }>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -451,6 +465,8 @@ export interface EARTH extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  customDataAll(overrides?: CallOverrides): Promise<string[]>;
+
   getApproved(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -549,6 +565,8 @@ export interface EARTH extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    customDataAll(overrides?: CallOverrides): Promise<string[]>;
 
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
@@ -712,6 +730,8 @@ export interface EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    customDataAll(overrides?: CallOverrides): Promise<BigNumber>;
+
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -811,6 +831,8 @@ export interface EARTH extends BaseContract {
       index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    customDataAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getApproved(
       tokenId: PromiseOrValue<BigNumberish>,
