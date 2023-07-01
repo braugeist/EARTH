@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { EARTH, EARTH__factory, LAND, LAND__factory } from "./contract/type";
 import contracts from "./contracts.json";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const CHAIN_ID = contracts.ChainId;
 const CHAIN_NAME = contracts.ChainName;
@@ -8,26 +9,46 @@ const EARTH_ADDRESS = contracts.EARTH;
 const LAND_ADDRESS = contracts.LAND;
 
 export async function initWeb3(): Promise<[EARTH, LAND]> {
-  // Initialize provider.
-  const ethereum = (window as any).ethereum;
-  if (ethereum === undefined) {
-    const msg = "Could not find Web3 extension. Please install and reload.";
-    throw new Error(msg);
-  }
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  ethereum.on('chainChanged', function (chainID: any) {
-    alert('Network changed. Please reload the page!');
-  });
-
-  // Connect to Web3.
-  const accounts = provider.send("eth_requestAccounts", []);
+  // Notify user if connecting takes longer than expected.
   const connecting = document.getElementById('connect-modal-display-connecting');
   connecting.style.display = 'block';
   setTimeout(() => {
     connecting.style.display = 'none';
     document.getElementById('connect-modal-display-timeout').style.display = 'block';
   }, 10_000);
-  await accounts;
+
+  async function connectWithWindow(): Promise<ethers.providers.ExternalProvider> {
+    const ethereum = (window as any).ethereum as ethers.providers.ExternalProvider;
+    if (ethereum === undefined) {
+      const msg = "Failed to load Web3 extension. Please install and reload.";
+      throw new Error(msg);
+    }
+    await ethereum.request({ method: 'eth_requestAccounts' });
+    return ethereum;
+  }
+
+  async function connectWithWalletConnect(): Promise<ethers.providers.ExternalProvider> {
+    const ethereum = new WalletConnectProvider({
+      infuraId: "de775d75c32e4d7f98f1e73caff8c616",
+    });
+    await ethereum.enable();
+    return ethereum;
+  }
+
+  var ethereum: ethers.providers.ExternalProvider;
+  if ((document.getElementById('connector-browserextension') as HTMLInputElement).checked) {
+    ethereum = await connectWithWindow();
+  } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
+    ethereum = await connectWithWalletConnect();
+  } else {
+    throw new Error("Invalid Web3 provider selection.");
+  }
+
+  // Initialize Web3 provider.
+  const provider = new ethers.providers.Web3Provider(ethereum);
+  provider.on('chainChanged', function (chainID: any) {
+    alert('Network changed. Please reload the page!');
+  });
 
   // Check network.
   const chainId = await provider.send('eth_chainId', []);
@@ -38,7 +59,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
   // Get signer.
   const signer = provider.getSigner();
   console.log(`account = ${await signer.getAddress()}`);
-  ethereum.on('accountsChanged', function (accounts: any[]) {
+  provider.on('accountsChanged', function (accounts: any[]) {
     alert('Account changed. Please reload the page!');
   });
 

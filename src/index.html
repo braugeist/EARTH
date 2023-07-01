@@ -24,6 +24,13 @@
       <p>
         <button id="connect-modal-button-connect" type="button" class="cesium-button" style="margin: 0; font-size: 125%;">Connect to Web3</button>
       </p>
+      <p>
+        <input type="radio" id="connector-browserextension" name="connector" value="BrowserExtension" style="height: inherit;" checked>
+        <label for="connector-browserextension">Browser Plugin</label>
+        <br>
+        <input type="radio" name="connector" id="connector-walletconnect" value="WalletConnect" style="height: inherit;">
+        <label for="connector-walletconnect">WalletConnect</label>
+      </p>
       <p id="connect-modal-display-connecting" style="display: none;">Connecting...</p>
       <p id="connect-modal-display-timeout" style="display: none;">Connecting to Web3 takes longer than expected. Consider <span onclick="location.reload()" style="text-decoration: underline; cursor: pointer;">reloading</span> the page.</p>
     </div>

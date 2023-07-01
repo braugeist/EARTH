@@ -62,5 +62,15 @@
     "webpack-dev-server": "^4.3.1",
     "webpack-merge": "^5.8.0",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "@walletconnect/web3-provider": "^1.8.0",
+    "assert": "^2.0.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "url": "^0.11.0"
   }
 }
