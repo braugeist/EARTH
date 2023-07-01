@@ -16,9 +16,9 @@ for (var i = 0; i < g.tiles.length; i++) {
     for (var j = 0; j < points.length; j += 2) {
         const lng = (points[j] as Number).toFixed(precision);
         const lat = (points[j + 1] as Number).toFixed(precision);
-        items.push(`(${lat}, ${lng})`);
+        items.push(`(${lat}°N, ${lng}°E)`);
     }
-    const description = `This is one of ${g.tiles.length} EARTH tiles. Its coordinates are (Lat, Lng): [${items.join(', ')}]`;
+    const description = `This is tile number ${i} of ${g.tiles.length} EARTH tiles. Its vertex coordinates are [${items.join(', ')}].`;
 
     const d = {
         "name": `Tile ${i}`,
