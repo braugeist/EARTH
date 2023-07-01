@@ -5,7 +5,7 @@ import { closeAllModals, handlePromiseRejection } from "../util";
 export function addWithdrawButton(toolbar: Element, land: LAND) {
   const toolbarButton = document.createElement("button");
   toolbarButton.classList.add("cesium-button", "cesium-toolbar-button");
-  toolbarButton.innerHTML = "💰";
+  toolbarButton.innerHTML = "A";
   toolbar.appendChild(toolbarButton);
 
   function initModal() {
