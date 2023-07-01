@@ -22,7 +22,7 @@
     "contract": "src/contract/*.sol",
     "build": "src/contract/build",
     "sk": "0xb5dc82fc5f4d82b59a38ac963a15eaaedf414f496a037bb4a52310915ac84097",
-    "ganachedb": "test/ganachedb",
+    "ganachedb": "tmp/ganachedb",
     "output": "dist/"
   },
   "scripts": {

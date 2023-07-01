@@ -52,7 +52,7 @@ async function deployEarthAndLand(argv) {
     const gasUsed = tr.gasUsed.toNumber().toLocaleString();
     const gasPrice = ethers.utils.formatUnits(tr.effectiveGasPrice, 'gwei');
     const gasCost = ethers.utils.formatEther(tr.gasUsed.mul(tr.effectiveGasPrice));
-    console.log(`Done. Gas used: ${gasUsed}. Gas Price: ${gasPrice} gwei. Gas cost: ${gasCost} ether.`);
+    console.log(`Done. Gas used: ${gasUsed}. Gas price: ${gasPrice} gwei. Gas cost: ${gasCost} ether.`);
     return contract;
   }
 
