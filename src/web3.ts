@@ -17,8 +17,12 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     document.getElementById('connect-modal-display-timeout').style.display = 'block';
   }, 10_000);
 
-  async function connectWithWindow(): Promise<ethers.providers.ExternalProvider> {
-    const ethereum = (window as any).ethereum as ethers.providers.ExternalProvider;
+  interface EthereumProvider extends ethers.providers.ExternalProvider {
+    on(eventName: string, listener: (...args: unknown[]) => void): void;
+  }
+
+  async function connectWithWindow(): Promise<EthereumProvider> {
+    const ethereum = (window as any).ethereum;
     if (ethereum === undefined) {
       const msg = "Failed to load Web3 extension. Please install and reload.";
       throw new Error(msg);
@@ -27,15 +31,15 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
     return ethereum;
   }
 
-  async function connectWithWalletConnect(): Promise<ethers.providers.ExternalProvider> {
+  async function connectWithWalletConnect(): Promise<EthereumProvider> {
     const ethereum = new WalletConnectProvider({
       infuraId: "de775d75c32e4d7f98f1e73caff8c616",
     });
     await ethereum.enable();
-    return ethereum;
+    return ethereum as unknown as EthereumProvider;
   }
 
-  var ethereum: ethers.providers.ExternalProvider;
+  var ethereum: EthereumProvider;
   if ((document.getElementById('connector-browserextension') as HTMLInputElement).checked) {
     ethereum = await connectWithWindow();
   } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
@@ -46,7 +50,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
 
   // Initialize Web3 provider.
   const provider = new ethers.providers.Web3Provider(ethereum);
-  provider.on('chainChanged', function (chainID: any) {
+  ethereum.on('chainChanged', function (chainID: any) {
     alert('Network changed. Please reload the page!');
   });
 
@@ -59,7 +63,7 @@ export async function initWeb3(): Promise<[EARTH, LAND]> {
   // Get signer.
   const signer = provider.getSigner();
   console.log(`account = ${await signer.getAddress()}`);
-  provider.on('accountsChanged', function (accounts: any[]) {
+  ethereum.on('accountsChanged', function (accounts: any[]) {
     alert('Account changed. Please reload the page!');
   });
 
