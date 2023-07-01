@@ -52,7 +52,7 @@ export async function initWeb3(): Promise<EARTH> {
   async function connectWithWeb3Auth(): Promise<EthereumProvider> {
     // Setup Web3Auth.
     const web3auth = new Web3Auth({
-      clientId: "BIElt7i0zJJCzhBEtjvM4b1Cf0VJSRIpBwA1pHABwVOHp7mojRoYGV4-ULzujHobKpypynFMN7flGMn6260nQhQ",
+      clientId: "BBCm24ar7rZgfJeMQyrd2KZ3GFGKiuWOANQTlXT-K4odQrtjVtVVlRzLTH0WZfFJ7WPXaiRSm2fjBIx2FCybma0",
       chainConfig: {
         chainNamespace: "eip155",
         chainId: "0x5",
