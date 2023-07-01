@@ -4,7 +4,9 @@
 export { EARTH__factory } from "./EARTH__factory";
 export { ERC165__factory } from "./ERC165__factory";
 export { ERC721__factory } from "./ERC721__factory";
+export { ERC721Consecutive__factory } from "./ERC721Consecutive__factory";
 export { IERC165__factory } from "./IERC165__factory";
+export { IERC2309__factory } from "./IERC2309__factory";
 export { IERC721__factory } from "./IERC721__factory";
 export { IERC721Metadata__factory } from "./IERC721Metadata__factory";
 export { IERC721Receiver__factory } from "./IERC721Receiver__factory";

@@ -73,6 +73,37 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "fromTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "toTokenId",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "fromAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "toAddress",
+        type: "address",
+      },
+    ],
+    name: "ConsecutiveTransfer",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "previousOwner",
         type: "address",
@@ -134,7 +165,7 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "addr",
+        name: "owner",
         type: "address",
       },
     ],
@@ -305,7 +336,7 @@ const _abi = [
       },
       {
         internalType: "bytes",
-        name: "_data",
+        name: "data",
         type: "bytes",
       },
     ],
