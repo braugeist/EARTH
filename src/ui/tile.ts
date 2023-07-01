@@ -43,12 +43,10 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
       if (!hasOwner) {
         // Update on click handler.
         buy.onclick = async e => {
-          // Approve transaction.
-          const tx = await land.approve(earth.address, 1);
-          await tx.wait();
-  
-          const tx2 = await earth.takeOwnership(index);
-          await tx2.wait();
+          const txApprove = await land.approve(earth.address, 1);
+          const txTake = await earth.takeOwnership(index);
+          await txApprove.wait();
+          await txTake.wait();
           console.log(`bought ${index}`);
           tiles[index].polygon.material = new ColorMaterialProperty(DEFAULT_SURFACE_COLOR);
           viewer.scene.requestRender();
