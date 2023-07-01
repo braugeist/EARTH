@@ -57,10 +57,15 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH,
           buy.disabled = true;
           loading.style.display = "initial";
           try {
-            loadingText.innerText = "Submitting approve transaction...";
-            const txApprove = await land.approve(earth.address, 1);
-            loadingText.innerText = "Waiting for confirmation of approval transaction...";
-            await txApprove.wait();
+            const caller = await land.signer.getAddress();
+            const allowance = await land.allowance(caller, earth.address);
+            const price = 1;
+            if (allowance.lt(price)) {
+              loadingText.innerText = "Submitting approve transaction...";
+              const txApprove = await land.approve(earth.address, price);
+              loadingText.innerText = "Waiting for confirmation of approval transaction...";
+              await txApprove.wait();
+            }
             loadingText.innerText = "Submitting buy transaction...";
             const txTake = await earth.takeOwnership(index);
             loadingText.innerText = "Waiting for confirmation of buy transaction...";

@@ -37,7 +37,6 @@ npm run generate-contract-flat # generate single-file contracts
 
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
 - Add more admin functions to UI? (e.g., `transferOwnership`)
-- Check allowance before requesting to set allowance.
 
 ## Testnet URLs
 
