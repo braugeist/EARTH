@@ -27,9 +27,9 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     const transferred = await earth.transferred(index);
 
     if (!transferred && owner == await earth.signer.getAddress()) {
-      const dest = prompt("Transfer to account?", "0xa298fc05bccff341f340a11fffa30567a00e651f");
+      const dest = prompt("Transfer to account?", "0x...");
       if (dest != null) {
-        const tx = await earth.transferFrom(await earth.signer.getAddress(), "0xa298fc05bccff341f340a11fffa30567a00e651f", index);
+        const tx = await earth.transferFrom(await earth.signer.getAddress(), dest, index);
         await tx.wait();
         alert("transferred");
       }
