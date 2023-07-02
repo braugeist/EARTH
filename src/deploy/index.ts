@@ -96,7 +96,7 @@ async function main() {
     return contract;
   }
 
-  const EARTH = await deployContract('EARTH', 4_004_588, numTiles);
+  const EARTH = await deployContract('EARTH_sol_EARTH', 4_004_588, numTiles);
 
   // Output configuration.
   const network = await provider.getNetwork();
