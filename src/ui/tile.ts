@@ -24,9 +24,10 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
   async function showModal(index: number) {
     // Get current state and display information.
     const owner = await earth.ownerOf(index);
+    const owned = owner == await earth.signer.getAddress();
     const transferred = await earth.transferred(index);
 
-    if (!transferred && owner == await earth.signer.getAddress()) {
+    if (!transferred && owned) {
       const dest = prompt("Transfer to account?", "0x...");
       if (dest != null) {
         const tx = await earth.transferFrom(await earth.signer.getAddress(), dest, index);
@@ -67,6 +68,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
     document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
     (document.getElementById('tile-modal-trade-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
+    document.getElementById('tile-modal-trade').style.display = owned ? 'none' : 'block';
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();
