@@ -28,7 +28,6 @@ export function addHelpButton(toolbar: Element) {
 
     helpButton.onclick = showModal;
 
-    (document.getElementById('help-modal-ownable-link') as HTMLAnchorElement).href = opensea.CollectionURL;
     (document.getElementById('help-modal-view-link') as HTMLAnchorElement).href = opensea.CollectionURL;
   }
 
