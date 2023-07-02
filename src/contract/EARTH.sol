@@ -73,8 +73,7 @@ contract EARTH is ERC721Consecutive, Ownable {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         bytes memory dataURI = abi.encodePacked(
             '{',
-                '"name": "Tile ', tokenId.toString(), '",',
-                '"description": "This is one of ', _maxSupply.toString(), ' EARTH tiles.",',
+                '"name": "Tile #', tokenId.toString(), '",',
                 '"image": "', IMAGE_BASE_URI, "/tile", tokenId.toString(), '.jpeg",',
                 '"attributes": ', '[',
                     '{',
