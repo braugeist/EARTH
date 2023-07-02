@@ -47,7 +47,18 @@ function showConnectModal() {
 
       // Display random tile.
       if (!parseUrlParams().get('tile')) {
-        displayRandomTile();
+        const owners = await earth.owners();
+        const addr = await earth.signer.getAddress();
+        // find tiles owned by the user
+        const ownedTiles = owners.map((owner, i) => owner == addr ? i : -1).filter(i => i != -1);
+        if (ownedTiles.length > 0) {
+          // display a random tile owned by the user
+          const i = ownedTiles[Math.floor(Math.random() * ownedTiles.length)];
+          displayTile(i);
+        } else {
+          // display a random tile
+          displayRandomTile();
+        }
       }
 
       connectModal.style.display = 'none';
@@ -89,9 +100,15 @@ function parseUrlParams() {
 }
 
 function displayRandomTile() {
-  // Select random tile.
-  const numTiles = 812;
-  const idx = Math.floor(Math.random() * numTiles);
+    // Select random tile.
+    const numTiles = 812;
+    const idx = Math.floor(Math.random() * numTiles);
+
+    // Display tile.
+    displayTile(idx);
+}
+
+function displayTile(idx: number) {
   const t = tiles[idx];
   viewer.selectedEntity = t;
 

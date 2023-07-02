@@ -38,6 +38,13 @@ contract EARTH is ERC721Consecutive, Ownable {
         }
     }
 
+    function owners() external view returns (address[] memory _owners) {
+        _owners = new address[](_maxSupply);
+        for (uint i=0; i<_owners.length; i++) {
+            _owners[i] = _ownerOf(i);
+        }
+    }
+
     /**
      * @dev Hook that is called after any token transfer. See contract ERC721
      * for more information.

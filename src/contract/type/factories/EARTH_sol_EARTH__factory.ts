@@ -318,6 +318,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "owners",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "_owners",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",

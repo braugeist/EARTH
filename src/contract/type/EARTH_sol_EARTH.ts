@@ -38,6 +38,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "owners()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,bytes)": FunctionFragment;
@@ -63,6 +64,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
       | "name"
       | "owner"
       | "ownerOf"
+      | "owners"
       | "renounceOwnership"
       | "safeTransferFrom(address,address,uint256)"
       | "safeTransferFrom(address,address,uint256,bytes)"
@@ -107,6 +109,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     functionFragment: "ownerOf",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: "owners", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
@@ -184,6 +187,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owners", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
@@ -384,6 +388,10 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    owners(
+      overrides?: CallOverrides
+    ): Promise<[string[]] & { _owners: string[] }>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -487,6 +495,8 @@ export interface EARTH_sol_EARTH extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
+  owners(overrides?: CallOverrides): Promise<string[]>;
+
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -587,6 +597,8 @@ export interface EARTH_sol_EARTH extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    owners(overrides?: CallOverrides): Promise<string[]>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -752,6 +764,8 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    owners(overrides?: CallOverrides): Promise<BigNumber>;
+
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -853,6 +867,8 @@ export interface EARTH_sol_EARTH extends BaseContract {
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    owners(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
