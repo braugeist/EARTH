@@ -1,12 +1,12 @@
 # 🌎 EARTH
 
-EARTH is an NFT collection that celebrates the beauty of planet Earth in a 3D visualization.
+Project EARTH is an NFT collection that celebrates planet Earth in a 3D visualization.
 
 <p align="center">
 <img src="./asset/EARTH_feature.jpg" alt="EARTH" width="400"/>
 </p>
 
-**Structure:** The collection consists of 812 evenly distributed Earth tiles that form a [truncated icosahedron](https://en.wikipedia.org/wiki/Truncated_icosahedron) and consist of 800 hexagons and 12 pentagons.
+**Structure:** There are 812 tiles in total, 800 hexagons and 12 pentagons.
 
 **Customizable:** Tile owners can set a custom message that will be displayed along with their tile.
 
