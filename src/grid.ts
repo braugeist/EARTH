@@ -11,7 +11,7 @@ export const OUTLINE_COLOR_SELECTED = Color.RED;
 export interface TileEntity extends Entity {
   index: number;
   coordinates: number[];
-  transferred: boolean;
+  minted: boolean;
   message: string;
 }
 

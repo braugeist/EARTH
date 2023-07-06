@@ -9,6 +9,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -35,9 +36,11 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     "customDataAll()": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "mint(uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
+    "ownerOfOrZero(uint256)": FunctionFragment;
     "owners()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -49,8 +52,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     "tokenURI(uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "transferred(uint256)": FunctionFragment;
-    "transferredAll()": FunctionFragment;
+    "withdraw()": FunctionFragment;
   };
 
   getFunction(
@@ -61,9 +63,11 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
       | "customDataAll"
       | "getApproved"
       | "isApprovedForAll"
+      | "mint"
       | "name"
       | "owner"
       | "ownerOf"
+      | "ownerOfOrZero"
       | "owners"
       | "renounceOwnership"
       | "safeTransferFrom(address,address,uint256)"
@@ -75,8 +79,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
       | "tokenURI"
       | "transferFrom"
       | "transferOwnership"
-      | "transferred"
-      | "transferredAll"
+      | "withdraw"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -103,10 +106,18 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "ownerOf",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "ownerOfOrZero",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "owners", values?: undefined): string;
@@ -160,14 +171,7 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferred",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferredAll",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: "withdraw", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -184,9 +188,14 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "ownerOfOrZero",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owners", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -222,19 +231,11 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferred",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferredAll",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
-    "ConsecutiveTransfer(uint256,uint256,address,address)": EventFragment;
     "CustomDataChanged(uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
@@ -242,7 +243,6 @@ export interface EARTH_sol_EARTHInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "ConsecutiveTransfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "CustomDataChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
@@ -271,20 +271,6 @@ export type ApprovalForAllEvent = TypedEvent<
 >;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
-
-export interface ConsecutiveTransferEventObject {
-  fromTokenId: BigNumber;
-  toTokenId: BigNumber;
-  fromAddress: string;
-  toAddress: string;
-}
-export type ConsecutiveTransferEvent = TypedEvent<
-  [BigNumber, BigNumber, string, string],
-  ConsecutiveTransferEventObject
->;
-
-export type ConsecutiveTransferEventFilter =
-  TypedEventFilter<ConsecutiveTransferEvent>;
 
 export interface CustomDataChangedEventObject {
   tokenId: BigNumber;
@@ -379,11 +365,21 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    mint(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    ownerOfOrZero(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string]>;
@@ -447,14 +443,9 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    transferred(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    transferredAll(
-      overrides?: CallOverrides
-    ): Promise<[boolean[]] & { _transferredAll: boolean[] }>;
+    withdraw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
   };
 
   approve(
@@ -486,11 +477,21 @@ export interface EARTH_sol_EARTH extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  mint(
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   ownerOf(
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  ownerOfOrZero(
     tokenId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
@@ -552,12 +553,9 @@ export interface EARTH_sol_EARTH extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transferred(
-    tokenId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  transferredAll(overrides?: CallOverrides): Promise<boolean[]>;
+  withdraw(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
     approve(
@@ -589,11 +587,21 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    mint(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    ownerOfOrZero(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
@@ -653,12 +661,7 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    transferred(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    transferredAll(overrides?: CallOverrides): Promise<boolean[]>;
+    withdraw(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -683,19 +686,6 @@ export interface EARTH_sol_EARTH extends BaseContract {
       operator?: PromiseOrValue<string> | null,
       approved?: null
     ): ApprovalForAllEventFilter;
-
-    "ConsecutiveTransfer(uint256,uint256,address,address)"(
-      fromTokenId?: PromiseOrValue<BigNumberish> | null,
-      toTokenId?: null,
-      fromAddress?: PromiseOrValue<string> | null,
-      toAddress?: PromiseOrValue<string> | null
-    ): ConsecutiveTransferEventFilter;
-    ConsecutiveTransfer(
-      fromTokenId?: PromiseOrValue<BigNumberish> | null,
-      toTokenId?: null,
-      fromAddress?: PromiseOrValue<string> | null,
-      toAddress?: PromiseOrValue<string> | null
-    ): ConsecutiveTransferEventFilter;
 
     "CustomDataChanged(uint256)"(
       tokenId?: PromiseOrValue<BigNumberish> | null
@@ -755,11 +745,21 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    mint(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    ownerOfOrZero(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -821,12 +821,9 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    transferred(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+    withdraw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    transferredAll(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -859,11 +856,21 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    mint(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ownerOf(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    ownerOfOrZero(
       tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -925,11 +932,8 @@ export interface EARTH_sol_EARTH extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    transferred(
-      tokenId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+    withdraw(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    transferredAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

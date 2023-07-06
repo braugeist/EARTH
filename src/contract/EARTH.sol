@@ -1,71 +1,69 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "./openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721Consecutive.sol";
+import "./openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
 import "./openzeppelin-contracts/contracts/access/Ownable.sol";
 import "./openzeppelin-contracts/contracts/utils/Strings.sol";
 import "./openzeppelin-contracts/contracts/utils/Base64.sol";
 
-contract EARTH is ERC721Consecutive, Ownable {
+contract EARTH is ERC721, Ownable {
     using Strings for uint256;
 
     string constant NAME = "Earth";
     string constant SYMBOL = "EARTH";
     string constant IMAGE_BASE_URI = "ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7";
+    uint constant NUM_TILES = 812;
     uint constant NUM_PENTAGONS = 12;
 
     event CustomDataChanged(uint256 indexed tokenId);
 
     uint256 _maxSupply;
     mapping(uint256 => bytes) _customData;
-    mapping(uint256 => bool) private _transferred;
 
-    constructor(uint256 maxSupply) ERC721(NAME, SYMBOL) {
-        require(maxSupply < _maxBatchSize(), "supply exceeds limit");
-        _maxSupply = maxSupply;
-        address contractOwner = owner();
-        _mintConsecutive(contractOwner, uint96(_maxSupply));
+    constructor() ERC721(NAME, SYMBOL) {
+        _maxSupply = NUM_TILES;
     }
 
-    function transferred(uint256 tokenId) public view returns (bool) {
-        return _transferred[tokenId];
+    function mint(uint256 index) payable public {
+        address minter = msg.sender;
+        require(index < _maxSupply, "out of bounds");
+        require(msg.value >= 0.08 ether, "not enough ETH (0.08)");
+
+        _safeMint(minter, index);
     }
 
-    function transferredAll() external view returns (bool[] memory _transferredAll) {
-        _transferredAll = new bool[](_maxSupply);
-        for (uint i=0; i<_transferredAll.length; i++) {
-            _transferredAll[i] = transferred(i);
+    /**
+     * Return owner of tile or zero address if not minted.
+     */
+    function ownerOfOrZero(uint256 tokenId) public view returns (address) {
+        if (!_exists(tokenId)) {
+            return address(0);
         }
+        return ownerOf(tokenId);
     }
 
+    /**
+     * Return an array with all tile owners. If tile is not minted, address is zero.
+     */
     function owners() external view returns (address[] memory _owners) {
         _owners = new address[](_maxSupply);
         for (uint i=0; i<_owners.length; i++) {
-            _owners[i] = _ownerOf(i);
+            _owners[i] = ownerOfOrZero(i);
         }
     }
 
     /**
-     * @dev Hook that is called after any token transfer. See contract ERC721
-     * for more information.
+     * Transfer contract funds to owner.
      */
-    function _afterTokenTransfer(
-        address from,
-        address to,
-        uint256 firstTokenId,
-        uint256 batchSize
-    ) internal virtual override {
-        super._afterTokenTransfer(from, to, firstTokenId, batchSize);
-
-        // If this is a minting operation, return.
-        if (from == address(0)) {
-            return;
-        }
-
-        for (uint i=firstTokenId; i<firstTokenId+batchSize; i++) {
-            _transferred[i] = true;
-        }
+    function withdraw() public onlyOwner {
+        address owner = owner();
+        uint256 balance = address(this).balance;
+        payable(owner).transfer(balance);
     }
+
+    /**
+     * Meta data
+     */
 
     /**
      * @dev See {IERC721Metadata-tokenURI}.
@@ -102,8 +100,11 @@ contract EARTH is ERC721Consecutive, Ownable {
         return "Hexagon";
     }
 
+    /**
+     * Custom data
+     */
+
     function setCustomData(uint256 index, bytes calldata data) public {
-        require(transferred(index), "not transferred");
         require(ownerOf(index) == msg.sender, "not owner");
         _customData[index] = data;
         emit CustomDataChanged(index);

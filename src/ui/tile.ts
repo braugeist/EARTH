@@ -1,5 +1,5 @@
 import { Cartographic, ConstantProperty, Viewer } from "cesium";
-import { utils } from "ethers";
+import { constants, utils } from "ethers";
 import { EARTH_sol_EARTH as EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection } from "../util";
@@ -23,20 +23,13 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
 
   async function showModal(index: number) {
     // Get current state and display information.
-    const owner = await earth.ownerOf(index);
+    const owner = await earth.ownerOfOrZero(index);
     const owned = owner == await earth.signer.getAddress();
-    const transferred = await earth.transferred(index);
+    const minted = owner != constants.AddressZero;
 
-    if (!transferred && owned) {
-      const dest = prompt("Transfer to account?", "0x...");
-      if (dest != null) {
-        const tx = await earth.transferFrom(await earth.signer.getAddress(), dest, index);
-        await tx.wait();
-        alert("transferred");
-      }
-    }
     const uri = await earth.tokenURI(index);
-    const text = window.atob(uri.substring(29));
+    const header_len = "data:application/json;base64,".length;
+    const text = window.atob(uri.substring(header_len));
     console.log(text);
 
     function formatLatLng(lat: number, lng: number): string {
@@ -66,13 +59,13 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
-    document.getElementById('tile-modal-owner').innerHTML = transferred ? formatOwner(owner) : 'None';
+    document.getElementById('tile-modal-owner').innerHTML = minted ? formatOwner(owner) : 'None';
     (document.getElementById('tile-modal-trade-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
     document.getElementById('tile-modal-trade').style.display = owned ? 'none' : 'block';
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();
-      document.getElementById('tile-modal-customdata-setdata').style.display = transferred && owner == acc ? 'initial' : 'none';
+      document.getElementById('tile-modal-customdata-setdata').style.display = owner == acc ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
       const text = utils.toUtf8String(customData);

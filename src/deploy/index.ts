@@ -3,8 +3,6 @@ import { ethers } from "ethers";
 const logDisplay = document.getElementById("logdisplay");
 const contractDir = './contract'
 
-const numTiles = 812;
-
 function log(msg: string) {
   console.log(msg);
   const date = (new Date()).toLocaleString();
@@ -96,7 +94,7 @@ async function main() {
     return contract;
   }
 
-  const EARTH = await deployContract('EARTH_sol_EARTH', 4_004_588, numTiles);
+  const EARTH = await deployContract('EARTH_sol_EARTH', 4_004_588);
 
   // Output configuration.
   const network = await provider.getNetwork();
