@@ -1,6 +1,6 @@
 # 🌎 EARTH
 
-EARTH is a [3D visualization](https://ownable.earth) featuring 812 ownable Earth tiles, which are represented as [non-fungible tokens](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) on Ethereum and can be customized with a message.
+EARTH is a [3D visualization](https://ownable.earth) of planet Earth that features 812 ownable Earth tiles. Each tile is represented by an [ERC-721 token](https://ethereum.org/en/developers/docs/standards/tokens/erc-721/) on Ethereum and can display a message chosen by its owner.
 
 <p align="center">
 <img src="./asset/EARTH_feature.jpg" alt="EARTH" width="400"/>
