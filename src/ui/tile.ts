@@ -59,9 +59,29 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
     document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
-    document.getElementById('tile-modal-owner').innerHTML = minted ? formatOwner(owner) : 'None';
-    (document.getElementById('tile-modal-trade-link') as HTMLAnchorElement).href = `${opensea.TileBaseURL}/${index}`;
-    document.getElementById('tile-modal-trade').style.display = owned ? 'none' : 'block';
+    document.getElementById('tile-modal-owner').innerHTML = minted ? formatOwner(owner) : 'none';
+    document.getElementById('tile-modal-mint').style.display = minted ? 'none' : 'initial';
+
+    const mintButton = document.getElementById('tile-modal-mint-button') as HTMLButtonElement;
+    mintButton.onclick = async e => {
+      let loading = document.getElementById("tile-modal-mint-loader");
+      let loadingText = document.getElementById("tile-modal-mint-loader-text");
+      mintButton.disabled = true;
+      loading.style.display = "initial";
+      loadingText.innerText = "Submitting transaction...";
+      try {
+        const tx = await earth.mint(index, { value: utils.parseEther('0.08') });
+        loadingText.innerText = "Waiting for transaction confirmation...";
+        await tx.wait();
+        document.getElementById('tile-modal-mint').style.display = 'none';
+        document.getElementById('tile-modal-owner').innerHTML = formatOwner(await earth.ownerOf(index));
+      } catch (e) {
+        handlePromiseRejection(e);
+      } finally {
+        mintButton.disabled = false;
+        loading.style.display = "none";
+      }
+    }
 
     async function updateCustomData() {
       const acc = await earth.signer.getAddress();

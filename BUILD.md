@@ -12,9 +12,9 @@ The code is not pretty, but it should work.
 ```bash
 npm install # install dependencies
 npm run build # build
-npm run start-ganache # start local blockchain
+npm run ganache # start local blockchain
 npm run deploy-contract-ganache # deploy contracts
-npm run start-webpack # start local web server
+npm run webpack # start local web server
 ```
 
 ## Generate metadata
