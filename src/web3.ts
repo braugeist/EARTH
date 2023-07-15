@@ -2,8 +2,6 @@ import { ethers } from "ethers";
 import { EARTH_sol_EARTH as EARTH, EARTH_sol_EARTH__factory as EARTH__factory } from "./contract/type";
 import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { Web3Auth } from "@web3auth/web3auth";
-import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
 import { showAlertModal } from "./util";
 
 const CHAIN_ID = contracts.ChainId;
@@ -50,54 +48,6 @@ export async function initWeb3(): Promise<EARTH> {
     return ethereum as unknown as EthereumProvider;
   }
 
-  async function connectWithWeb3Auth(): Promise<EthereumProvider> {
-    // Setup Web3Auth.
-    const web3auth = new Web3Auth({
-      clientId: "BBCm24ar7rZgfJeMQyrd2KZ3GFGKiuWOANQTlXT-K4odQrtjVtVVlRzLTH0WZfFJ7WPXaiRSm2fjBIx2FCybma0",
-      chainConfig: {
-        chainNamespace: "eip155",
-        chainId: "0x5",
-        rpcTarget: "https://goerli.infura.io/v3/de775d75c32e4d7f98f1e73caff8c616",
-      },
-    });
-
-    // Add Torus Wallet Plugin.
-    const torusPlugin = new TorusWalletConnectorPlugin({
-      torusWalletOpts: {},
-      walletInitOptions: {
-        whiteLabel: {
-          theme: { isDark: true, colors: { primary: "#00a8ff" } },
-          logoDark: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-          logoLight: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
-        },
-        useWalletConnect: true,
-        enableLogging: true,
-      },
-    });
-    web3auth.addPlugin(torusPlugin);
-
-    // Fix modal z-index.
-    const styles = '#w3a-container {position: fixed; z-index: 10;}';
-    var styleSheet = document.createElement("style");
-    styleSheet.innerText = styles;
-    document.head.appendChild(styleSheet);
-
-    // Initialize modal.
-    await web3auth.initModal();
-    
-    // Disconnected from existing session if desired.
-    if (web3auth.status == "connected") {
-      const keepConnection = window.confirm("Use existing session?");
-      if (!keepConnection) {
-        await web3auth.logout();
-      }
-    }
-
-    // Show modal.
-    const ethereum = await web3auth.connect();
-    return ethereum;
-  }
-
   var provider: ethers.providers.Provider;
   var signer: ethers.Signer;
   if ((document.getElementById('connector-infura') as HTMLInputElement).checked) {
@@ -110,8 +60,6 @@ export async function initWeb3(): Promise<EARTH> {
       ethereum = await connectWithWindow();
     } else if ((document.getElementById('connector-walletconnect') as HTMLInputElement).checked) {
       ethereum = await connectWithWalletConnect();
-    } else if ((document.getElementById('connector-web3auth') as HTMLInputElement).checked) {
-      ethereum = await connectWithWeb3Auth();
     } else {
       throw new Error("Invalid Web3 provider selection.");
     }

@@ -48,7 +48,6 @@ npm run generate-contract-flat # generate single-file contracts
 ### High priority
 
 - Support for no signer (read-only)
-- Remove unused code (e.g., w3a plugin from web3.ts and package.json)
 - Add LICENSE?
 
 ### Medium priority
