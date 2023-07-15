@@ -77,7 +77,6 @@ export async function initWeb3(): Promise<EARTH> {
   }
 
   // Check network.
-  provider.sendTransaction
   const chainId = (await provider.getNetwork()).chainId;
   if (chainId != CHAIN_ID) {
     throw `Not connected to network ${CHAIN_ID} (${CHAIN_NAME}). Please change network.`
