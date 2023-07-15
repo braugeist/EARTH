@@ -47,7 +47,6 @@ npm run generate-contract-flat # generate single-file contracts
 
 ### High priority
 
-- Error modal
 - Support for no signer (read-only)
 - Remove unused code (e.g., w3a plugin from web3.ts and package.json)
 - Add LICENSE?
@@ -62,7 +61,6 @@ npm run generate-contract-flat # generate single-file contracts
 
 ### Low priority
 
-- Replace `alert` with modal
 - Cleanup HTML and CSS
 - Re-introduce # before tile number (website and metadata title)?
 - Add more attributes? (Climate zone, Highest point, Lowest point, Population)

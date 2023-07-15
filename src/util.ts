@@ -61,5 +61,21 @@ export function handlePromiseRejection(reason: any) {
   }
 
   const msg = extractMessage(reason);
-  alert(msg);
+  showAlertModal(msg);
+}
+
+export function showAlertModal(msg: string) {
+  const modal = document.getElementById('alert-modal');
+  const modalContent = document.getElementById('alert-modal-content');
+  modal.style.display = 'flex';
+  modalContent.innerHTML = msg;
+}
+
+// Handle close alert modal.
+{
+  var close = document.getElementById("alert-modal-close");
+  close.onclick = function () {
+    var modal = document.getElementById("alert-modal");
+    modal.style.display = "none";
+  };
 }

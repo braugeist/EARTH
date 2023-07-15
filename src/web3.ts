@@ -4,6 +4,7 @@ import contracts from "./contracts.json";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { Web3Auth } from "@web3auth/web3auth";
 import { TorusWalletConnectorPlugin } from "@web3auth/torus-wallet-connector-plugin";
+import { showAlertModal } from "./util";
 
 const CHAIN_ID = contracts.ChainId;
 const CHAIN_NAME = contracts.ChainName;
@@ -117,10 +118,10 @@ export async function initWeb3(): Promise<EARTH> {
 
     // Handle events.
     ethereum.on('chainChanged', function (chainID: any) {
-      alert('Network changed. Please reload the page!');
+      showAlertModal('Network changed. Please reload the page!');
     });
     ethereum.on('accountsChanged', function (accounts: any[]) {
-      alert('Account changed. Please reload the page!');
+      showAlertModal('Account changed. Please reload the page!');
     });
 
     // Initialize Web3 provider.
