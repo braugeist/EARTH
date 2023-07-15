@@ -47,16 +47,18 @@ npm run generate-contract-flat # generate single-file contracts
 
 ### High priority
 
+- Error modal
+- Support for no signer (read-only)
+- Remove unused code (e.g., w3a plugin from web3.ts and package.json)
+- Add LICENSE?
+
+### Medium priority
+
 - Update metadata.
 - Toggle show/hide all text.
 - Indicate loading when read blockchain data.
 - Improve Performance by using different geometry for drawing tiles.
-- Show modal loading when reading chain state.
 - If connected to wrong network, prompt wallet to change network via `wallet_switchEthereumChain`.
-- Prepare setup for deployment on Mainnet.
-    - Set auction duration to 1day.
-    - Prepare OpenSea text.
-- Add LICENSE?
 
 ### Low priority
 
