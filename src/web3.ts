@@ -140,5 +140,6 @@ export async function initWeb3(): Promise<EARTH> {
 
   // Initialize contract.
   const earth = EARTH__factory.connect(EARTH_ADDRESS, signer);
+  document.getElementById('help-modal-contract').innerHTML = earth.address;
   return earth;
 }
