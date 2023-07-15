@@ -1,9 +1,8 @@
 import { Cartographic, ConstantProperty, Viewer } from "cesium";
-import { constants, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 import { EARTH_sol_EARTH as EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection } from "../util";
-import opensea from "../opensea.json";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {
   const modal = document.getElementById('tile-modal');
@@ -21,10 +20,9 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     }
   });
 
-  async function showModal(index: number) {
+  async function updateModal(index: number) {
     // Get current state and display information.
     const owner = await earth.ownerOfOrZero(index);
-    const owned = owner == await earth.signer.getAddress();
     const minted = owner != constants.AddressZero;
 
     const uri = await earth.tokenURI(index);
@@ -47,8 +45,12 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     }
 
     function formatOwner(addr: string): string {
-      const onclickScript = `alert('${addr}')`;
-      return `<span onclick="${onclickScript}" style="text-decoration: underline; cursor: pointer;">${addr.substring(0, 10)}…${addr.substring(addr.length-8)}</span>`;
+      const ownerDisplay = document.getElementById('tile-modal-owner')
+      ownerDisplay.onclick = () => {
+        ownerDisplay.innerText = addr;
+        ownerDisplay.onclick = null;
+      }
+      return `${addr.substring(0, 10)}…${addr.substring(addr.length-8)}`;
     }
 
     const pos = tiles[index].position.getValue(viewer.clock.currentTime);
@@ -62,6 +64,38 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-owner').innerHTML = minted ? formatOwner(owner) : 'none';
     document.getElementById('tile-modal-mint').style.display = minted ? 'none' : 'initial';
 
+    // Update message.
+    {
+      const owned = owner == await earth.signer.getAddress();
+      document.getElementById('tile-modal-customdata-setdata').style.display = owned ? 'initial' : 'none';
+      const customData = await earth.customData(index);
+      const customDataDisplay = document.getElementById('tile-modal-customdata-value');
+      const text = utils.toUtf8String(customData);
+      customDataDisplay.innerText = text.length>0 ? text : "None";
+    }
+  }
+
+  // Register event listener for minting.
+  const transfer = earth.filters.Transfer();
+  earth.on(transfer, (_from, _to, index) => {
+    const modalIndex = parseInt(document.getElementById('tile-modal-index').innerHTML);
+    if (modalIndex === Number(index)) {
+      updateModal(modalIndex);
+    }
+  });
+
+  // Register event listener for custom data changed.
+  const customDataChanged = earth.filters.CustomDataChanged();
+  earth.on(customDataChanged, (index) => {
+    const modalIndex = parseInt(document.getElementById('tile-modal-index').innerHTML);
+    if (modalIndex === Number(index)) {
+      updateModal(modalIndex);
+    }
+  });
+
+  async function showModal(index: number) {
+    updateModal(index);
+
     const mintButton = document.getElementById('tile-modal-mint-button') as HTMLButtonElement;
     mintButton.onclick = async e => {
       let loading = document.getElementById("tile-modal-mint-loader");
@@ -71,52 +105,41 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
       loadingText.innerText = "Submitting transaction...";
       try {
         const tx = await earth.mint(index, { value: utils.parseEther('0.08') });
-        loadingText.innerText = "Waiting for transaction confirmation...";
+        loadingText.innerText = "Waiting for confirmation...";
         await tx.wait();
-        document.getElementById('tile-modal-mint').style.display = 'none';
-        document.getElementById('tile-modal-owner').innerHTML = formatOwner(await earth.ownerOf(index));
       } catch (e) {
         handlePromiseRejection(e);
       } finally {
         mintButton.disabled = false;
         loading.style.display = "none";
+        updateModal(index);
       }
     }
 
-    async function updateCustomData() {
-      const acc = await earth.signer.getAddress();
-      document.getElementById('tile-modal-customdata-setdata').style.display = owner == acc ? 'initial' : 'none';
-      const customData = await earth.customData(index);
-      const customDataDisplay = document.getElementById('tile-modal-customdata-value');
-      const text = utils.toUtf8String(customData);
-      customDataDisplay.innerText = text.length>0 ? text : "None";
-      
-      const submit = document.getElementById('tile-modal-customdata-submit') as HTMLButtonElement;
-      submit.onclick = async e => {
-        let loading = document.getElementById("tile-modal-customdata-loader");
-        let loadingText = document.getElementById("tile-modal-customdata-loader-text");
-        submit.disabled = true;
-        loading.style.display = "initial";
-        loadingText.innerText = "Submitting transaction...";
+    const setMessageButton = document.getElementById('tile-modal-customdata-submit') as HTMLButtonElement;
+    setMessageButton.onclick = async e => {
+      let loading = document.getElementById("tile-modal-customdata-loader");
+      let loadingText = document.getElementById("tile-modal-customdata-loader-text");
+      setMessageButton.disabled = true;
+      loading.style.display = "initial";
+      loadingText.innerText = "Submitting transaction...";
 
-        try {
-          const input = document.getElementById('tile-modal-customdata-input') as HTMLInputElement;
-          const value = input.value;
-          const valueBytes = utils.toUtf8Bytes(value);
-          const tx = await earth.setCustomData(index, valueBytes);
-          loadingText.innerText = "Waiting for transaction confirmation...";
-          await tx.wait();
-          customDataDisplay.innerText = value;
-          input.value = '';
-        } catch (e) {
-          handlePromiseRejection(e);
-        } finally {
-          submit.disabled = false;
-          loading.style.display = "none";
-        }
+      try {
+        const input = document.getElementById('tile-modal-customdata-input') as HTMLInputElement;
+        const value = input.value;
+        const valueBytes = utils.toUtf8Bytes(value);
+        const tx = await earth.setCustomData(index, valueBytes);
+        loadingText.innerText = "Waiting for confirmation...";
+        await tx.wait();
+        input.value = '';
+      } catch (e) {
+        handlePromiseRejection(e);
+      } finally {
+        setMessageButton.disabled = false;
+        loading.style.display = "none";
+        updateModal(index);
       }
     }
-    await updateCustomData();
 
     // Show modal.
     modal.style.display = "block";
