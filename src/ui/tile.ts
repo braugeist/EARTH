@@ -71,7 +71,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
       const text = utils.toUtf8String(customData);
-      customDataDisplay.innerText = text.length>0 ? text : "None";
+      customDataDisplay.innerText = text.length>0 ? text : "none";
     }
   }
 
