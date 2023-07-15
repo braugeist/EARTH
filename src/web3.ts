@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { EARTH_sol_EARTH as EARTH, EARTH_sol_EARTH__factory as EARTH__factory } from "./contract/type";
 import contracts from "./contracts.json";
-import WalletConnectProvider from "@walletconnect/web3-provider";
+import EthereumProvider from "@walletconnect/ethereum-provider";
 import { showAlertModal } from "./util";
 
 const CHAIN_ID = contracts.ChainId;
@@ -32,20 +32,16 @@ export async function initWeb3(): Promise<EARTH> {
   }
 
   async function connectWithWalletConnect(): Promise<EthereumProvider> {
-    const ethereum = new WalletConnectProvider({
-      infuraId: "de775d75c32e4d7f98f1e73caff8c616",
+    const provider = await EthereumProvider.init({
+      projectId: "d43b3135fd56e5a5b8b2d4c1a1c37400",
+      chains: [CHAIN_ID],
+      showQrModal: true,
     });
-    { // Close existing connection if desired.
-      const connector = await ethereum.getWalletConnector({disableSessionCreation: true});
-      if (connector.connected) {
-        const keepConnection = window.confirm("Use existing WalletConnect session?");
-        if (!keepConnection) {
-          await ethereum.disconnect();
-        }
-      }
-    }
-    await ethereum.enable();
-    return ethereum as unknown as EthereumProvider;
+
+    await provider.disconnect();
+
+    await provider.enable();
+    return provider;
   }
 
   var provider: ethers.providers.Provider;
