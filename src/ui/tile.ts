@@ -2,7 +2,7 @@ import { Cartographic, ConstantProperty, Viewer } from "cesium";
 import { BigNumber, constants, utils } from "ethers";
 import { EARTH_sol_EARTH as EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
-import { closeAllModals, handlePromiseRejection } from "../util";
+import { closeAllModals, handlePromiseRejection, showAlertModal } from "../util";
 
 export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH) {
   const modal = document.getElementById('tile-modal');
@@ -66,7 +66,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
 
     // Update message.
     {
-      const owned = owner == await earth.signer.getAddress();
+      const owned = earth.signer && owner == await earth.signer.getAddress();
       document.getElementById('tile-modal-customdata-setdata').style.display = owned ? 'initial' : 'none';
       const customData = await earth.customData(index);
       const customDataDisplay = document.getElementById('tile-modal-customdata-value');
@@ -98,6 +98,11 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
 
     const mintButton = document.getElementById('tile-modal-mint-button') as HTMLButtonElement;
     mintButton.onclick = async e => {
+      if (!earth.signer) {
+        showAlertModal("You need to connect with a wallet to send a transaction. Please reload the page and connect with a wallet to continue.");
+        return;
+      }
+
       let loading = document.getElementById("tile-modal-mint-loader");
       let loadingText = document.getElementById("tile-modal-mint-loader-text");
       mintButton.disabled = true;

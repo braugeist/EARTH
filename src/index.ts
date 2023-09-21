@@ -16,6 +16,7 @@ const tiles = createGrid(viewer);
 
 import { enableSnap } from "./snap";
 import { ConstantProperty } from "cesium";
+import { constants } from "ethers";
 enableSnap(viewer, tiles);
 
 function showConnectModal() {
@@ -48,11 +49,18 @@ function showConnectModal() {
       // Display random tile.
       if (!parseUrlParams().get('tile')) {
         const owners = await earth.owners();
-        const addr = await earth.signer.getAddress();
-        // find tiles owned by the user
-        const ownedTiles = owners.map((owner, i) => owner == addr ? i : -1).filter(i => i != -1);
+        const ownedTiles = [];
+        if (earth.signer) {
+          const addr = await earth.signer.getAddress();
+          // find tiles owned by the user
+          ownedTiles.push(...owners.map((owner, i) => owner == addr ? i : -1).filter(i => i != -1));
+        }
+        if (ownedTiles.length == 0) {
+          // find tiles owned by any user
+          ownedTiles.push(...owners.map((owner, i) => owner != constants.AddressZero ? i : -1).filter(i => i != -1));
+        }
         if (ownedTiles.length > 0) {
-          // display a random tile owned by the user
+          // display a random tile from the selection of owned tiles
           const i = ownedTiles[Math.floor(Math.random() * ownedTiles.length)];
           displayTile(i);
         } else {

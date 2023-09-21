@@ -48,7 +48,7 @@ export async function initWeb3(): Promise<EARTH> {
   var signer: ethers.Signer;
   if ((document.getElementById('connector-infura') as HTMLInputElement).checked) {
     provider = new ethers.providers.InfuraProvider("goerli", "de775d75c32e4d7f98f1e73caff8c616");
-    signer = ethers.Wallet.createRandom().connect(provider);
+    signer = null;
   } else {
     // Instantiate Ethereum provider.
     var ethereum: EthereumProvider;
@@ -83,7 +83,7 @@ export async function initWeb3(): Promise<EARTH> {
   }
 
   // Initialize contract.
-  const earth = EARTH__factory.connect(EARTH_ADDRESS, signer);
+  const earth = EARTH__factory.connect(EARTH_ADDRESS, signer || provider);
   document.getElementById('help-modal-contract').innerHTML = earth.address;
   return earth;
 }
