@@ -76,10 +76,6 @@ export async function initWeb3(): Promise<EARTH> {
     signer = web3Provider.getSigner();
   }
 
-  // Display account.
-  const account = await signer.getAddress();
-  document.getElementById('help-modal-account').innerHTML = account;
-
   // Check network.
   const chainId = (await provider.getNetwork()).chainId;
   if (chainId != CHAIN_ID) {
