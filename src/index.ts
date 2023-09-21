@@ -49,19 +49,11 @@ function showConnectModal() {
       // Display random tile.
       if (!parseUrlParams().get('tile')) {
         const owners = await earth.owners();
-        const ownedTiles = [];
-        if (earth.signer) {
-          const addr = await earth.signer.getAddress();
-          // find tiles owned by the user
-          ownedTiles.push(...owners.map((owner, i) => owner == addr ? i : -1).filter(i => i != -1));
-        }
-        if (ownedTiles.length == 0) {
-          // find tiles owned by any user
-          ownedTiles.push(...owners.map((owner, i) => owner != constants.AddressZero ? i : -1).filter(i => i != -1));
-        }
-        if (ownedTiles.length > 0) {
-          // display a random tile from the selection of owned tiles
-          const i = ownedTiles[Math.floor(Math.random() * ownedTiles.length)];
+        // find owned tiles
+        const selection = owners.map((owner, i) => owner != constants.AddressZero ? i : -1).filter(i => i != -1);
+        if (selection.length > 0) {
+          // display a random tile from the selection
+          const i = selection[Math.floor(Math.random() * selection.length)];
           displayTile(i);
         } else {
           // display a random tile

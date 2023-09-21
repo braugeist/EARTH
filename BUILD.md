@@ -47,7 +47,7 @@ npm run generate-contract-flat # generate single-file contracts
 
 ### High priority
 
-- Support for no signer (read-only)
+- Show my tiles
 - Add LICENSE?
 
 ### Medium priority
