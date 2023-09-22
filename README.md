@@ -15,4 +15,4 @@ For development, confer [BUILD.md](./BUILD.md).
 
 ## License
 
-tbd
+See [LICENSE](./LICENSE) file.
