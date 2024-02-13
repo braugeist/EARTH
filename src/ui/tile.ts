@@ -1,5 +1,5 @@
-import { Cartographic, ConstantProperty, Viewer } from "cesium";
-import { BigNumber, constants, utils } from "ethers";
+import { Cartographic, ConstantProperty, Math, Viewer } from "cesium";
+import { constants, utils } from "ethers";
 import { EARTH_sol_EARTH as EARTH } from "../contract/type";
 import { OUTLINE_COLOR, OUTLINE_COLOR_SELECTED, TileEntity } from "../grid";
 import { closeAllModals, handlePromiseRejection, showAlertModal } from "../util";
@@ -31,8 +31,8 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     console.log(text);
 
     function formatLatLng(lat: number, lng: number): string {
-      const precision = 5;
-      return `${lat.toFixed(precision)}°N ${lng.toFixed(precision)}°E`;
+      const precision = 3;
+      return `${Math.toDegrees(lat).toFixed(precision)}°N ${Math.toDegrees(lng).toFixed(precision)}°E`;
     }
 
     function formatCoordinates(coords: number[]): string {
