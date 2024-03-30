@@ -30,7 +30,11 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## Testnet URLs
 
-### Goerli
+### Sepolia
+
+- [EARTH](https://sepolia.etherscan.io/address/0x689ccA9CcD739275069fb7FC0Ad4c08Dd66f9E70)
+
+### Goerli (Deprecated)
 - [EARTH](https://goerli.etherscan.io/address/0x892F72C82525994A27F8C6E6B9C462DE07AAA3b6)
 - [OpenSea](https://testnets.opensea.io/collection/earth-19)
 
