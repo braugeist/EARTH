@@ -32,7 +32,23 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
 
     function formatLatLng(lat: number, lng: number): string {
       const precision = 3;
-      return `${Math.toDegrees(lat).toFixed(precision)}°N ${Math.toDegrees(lng).toFixed(precision)}°E`;
+      const latDeg = (() => {
+        const latDeg = Math.toDegrees(lat);
+        if (latDeg >= 0) {
+          return `${latDeg.toFixed(precision)}°N`
+        } else {
+          return `${(latDeg * -1).toFixed(precision)}°S`
+        }
+      })();
+      const lngDeg = (() => {
+        const lngDeg = Math.toDegrees(lng);
+        if (lngDeg >= 0) {
+          return `${lngDeg.toFixed(precision)}°E`
+        } else {
+          return `${(lngDeg * -1).toFixed(precision)}°W`
+        }
+      })();
+      return `${latDeg} ${lngDeg}`;
     }
 
     function formatCoordinates(coords: number[]): string {
