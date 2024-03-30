@@ -9,7 +9,7 @@ import "./openzeppelin-contracts/contracts/utils/Base64.sol";
 contract EARTH is ERC721, Ownable {
     using Strings for uint256;
 
-    string constant NAME = "Earth";
+    string constant NAME = "EARTH";
     string constant SYMBOL = "EARTH";
     string constant IMAGE_BASE_URI = "ipfs://QmckZx54qkufApdV499BJSyTDZTw6bxGGtJdgRNvk8iaM7";
     uint constant NUM_TILES = 812;
