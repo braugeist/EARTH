@@ -108,3 +108,16 @@ async function main() {
 }
 
 document.getElementById("deploy-button").onclick = e => main();
+
+document.getElementById("connect-button").onclick = async e => {
+  const ethereum = (window as any).ethereum;
+  if (ethereum === undefined) {
+    const msg = "Could not find Web3 extension. Please install and reload.";
+    throw new Error(msg);
+  }
+  const provider = new ethers.providers.Web3Provider(ethereum);
+
+  // Connect to Web3.
+  const accounts = await provider.send("eth_requestAccounts", []);
+  log(`Connected to Web3 with account: ${accounts[0]}`);
+}
