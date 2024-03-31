@@ -30,6 +30,10 @@ npm run generate-contract-flat # generate single-file contracts
 
 ## Testnet URLs
 
+### Ethereum
+
+- [EARTH](https://etherscan.io/address/0x8FCF8BB7080C19f91Ebe6E1F901155e00d208E9D)
+
 ### Sepolia
 
 - [EARTH](https://sepolia.etherscan.io/address/0x689ccA9CcD739275069fb7FC0Ad4c08Dd66f9E70)
