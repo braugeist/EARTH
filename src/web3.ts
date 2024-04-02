@@ -62,7 +62,7 @@ export async function initWeb3(): Promise<EARTH> {
 
     // Handle events.
     ethereum.on('chainChanged', function (chainID: any) {
-      showAlertModal('Network changed. Please reload the page!');
+      showAlertModal(`Network changed to ${chainID}. Please reload the page!`);
     });
     ethereum.on('accountsChanged', function (accounts: any[]) {
       showAlertModal('Account changed. Please reload the page!');
@@ -85,5 +85,6 @@ export async function initWeb3(): Promise<EARTH> {
   // Initialize contract.
   const earth = EARTH__factory.connect(EARTH_ADDRESS, signer || provider);
   document.getElementById('help-modal-contract').innerHTML = earth.address;
+  document.getElementById('help-modal-account').innerHTML = signer ? await signer.getAddress() : "Not connected";
   return earth;
 }
