@@ -69,6 +69,16 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
       return `${addr.substring(0, 10)}…${addr.substring(addr.length-8)}`;
     }
 
+    function formatShape(t: TileEntity): string {
+      const l = tiles[index].coordinates.length / 2;
+      if (l == 5) {
+        return "Pentagon";
+      } else if (l == 6) {
+        return "Hexagon";
+      }
+      return "unknown";
+    }
+
     const pos = tiles[index].position.getValue(viewer.clock.currentTime);
     const center = Cartographic.fromCartesian(pos);
 
@@ -76,7 +86,7 @@ export function initTileModal(viewer: Viewer, tiles: TileEntity[], earth: EARTH)
     document.getElementById('tile-modal-index').innerHTML = `${index.toString()}`;
     document.getElementById('tile-modal-coordinates').innerHTML = formatCoordinates(tiles[index].coordinates);
     document.getElementById('tile-modal-center').innerHTML = formatLatLng(center.latitude, center.longitude);
-    document.getElementById('tile-modal-shape').innerHTML = tiles[index].coordinates.length==5?"Pentagon":"Hexagon";
+    document.getElementById('tile-modal-shape').innerHTML = formatShape(tiles[index]);
     document.getElementById('tile-modal-owner').innerHTML = minted ? formatOwner(owner) : 'none';
     document.getElementById('tile-modal-mint').style.display = minted ? 'none' : 'initial';
 
